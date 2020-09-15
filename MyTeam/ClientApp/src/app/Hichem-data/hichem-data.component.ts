@@ -9,7 +9,7 @@ export class HichemDataComponent {
   public forecasts: Hichem[];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Hichem[]>(baseUrl + 'hichemstest').subscribe(result => {
+    http.get<Hichem[]>(baseUrl + 'hichemstest/AnotherGet').subscribe(result => {
       this.forecasts = result;
     }, error => console.error(error));
   }
