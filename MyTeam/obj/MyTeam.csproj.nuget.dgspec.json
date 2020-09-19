@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Hichem\\Desktop\\Solar\\trunk\\MyTeam\\MyTeam.csproj": {}
+    "C:\\Users\\Hichem\\Desktop\\TestProjec\\trunk\\MyTeam\\MyTeam.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Hichem\\Desktop\\Solar\\trunk\\MyTeam\\MyTeam.csproj": {
+    "C:\\Users\\Hichem\\Desktop\\TestProjec\\trunk\\MyTeam\\MyTeam.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Hichem\\Desktop\\Solar\\trunk\\MyTeam\\MyTeam.csproj",
+        "projectUniqueName": "C:\\Users\\Hichem\\Desktop\\TestProjec\\trunk\\MyTeam\\MyTeam.csproj",
         "projectName": "MyTeam",
-        "projectPath": "C:\\Users\\Hichem\\Desktop\\Solar\\trunk\\MyTeam\\MyTeam.csproj",
+        "projectPath": "C:\\Users\\Hichem\\Desktop\\TestProjec\\trunk\\MyTeam\\MyTeam.csproj",
         "packagesPath": "C:\\Users\\Hichem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Hichem\\Desktop\\Solar\\trunk\\MyTeam\\obj\\",
+        "outputPath": "C:\\Users\\Hichem\\Desktop\\TestProjec\\trunk\\MyTeam\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Hichem\\AppData\\Roaming\\NuGet\\NuGet.Config",

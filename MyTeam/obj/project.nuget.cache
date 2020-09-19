@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zLbXvNMGTkj84QcyreiFQR0tXbsr4xauO4rz+i8ambKyo/NWRfSR2tBl1WWhB+uGnbvqAvBdanCcyBsH4vXDKw==",
+  "dgSpecHash": "676MjUoUE76j6eXdTf44DuG51SA5+qg2jASmJbEUii8cWSqNvrOOwW5GfkPVx7kBL0SUpzSRzJGIsVLIm6sAeA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hichem\\Desktop\\Solar\\trunk\\MyTeam\\MyTeam.csproj",
+  "projectFilePath": "C:\\Users\\Hichem\\Desktop\\TestProjec\\trunk\\MyTeam\\MyTeam.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hichem\\.nuget\\packages\\microsoft.aspnetcore.nodeservices\\3.1.8\\microsoft.aspnetcore.nodeservices.3.1.8.nupkg.sha512",
     "C:\\Users\\Hichem\\.nuget\\packages\\microsoft.aspnetcore.spaservices\\3.1.8\\microsoft.aspnetcore.spaservices.3.1.8.nupkg.sha512",
