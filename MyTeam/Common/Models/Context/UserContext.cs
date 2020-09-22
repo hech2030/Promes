@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+
 namespace MyTeam.Common.Models
 {
     public class UserContext : DbContext

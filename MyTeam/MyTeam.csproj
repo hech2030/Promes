@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -12,13 +12,19 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
   </PropertyGroup>
 
-  
-
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.7.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.1.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +45,7 @@
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Identity.UI">
       <HintPath>Libs\Microsoft.AspNetCore.Identity.UI.dll</HintPath>
-    </Reference>
+    </Reference>    
     <Reference Include="Microsoft.AspNetCore.Identity.UI.Views.V3">
       <HintPath>Libs\Microsoft.AspNetCore.Identity.UI.Views.V3.dll</HintPath>
     </Reference>
@@ -57,9 +63,6 @@
     </Reference>
     <Reference Include="Microsoft.AspNetCore.SpaServices.Extensions">
       <HintPath>Libs\Microsoft.AspNetCore.SpaServices.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
-      <HintPath>Libs\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode">
       <HintPath>Libs\Microsoft.Bcl.HashCode.dll</HintPath>
@@ -91,9 +94,9 @@
     <Reference Include="Microsoft.CodeAnalysis.Workspaces.resources">
       <HintPath>Libs\Microsoft.CodeAnalysis.Workspaces.resources.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.SqlClient">
+    <!--<Reference Include="Microsoft.Data.SqlClient">
       <HintPath>Libs\Microsoft.Data.SqlClient.dll</HintPath>
-    </Reference>
+    </Reference>-->
     <Reference Include="Microsoft.Data.Sqlite">
       <HintPath>Libs\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
@@ -102,9 +105,6 @@
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore">
       <HintPath>Libs\Microsoft.EntityFrameworkCore.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions">
-      <HintPath>Libs\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore.Design">
       <HintPath>Libs\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
@@ -208,9 +208,6 @@
     <Reference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core">
       <HintPath>Libs\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore">
-      <HintPath>Libs\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating">
       <HintPath>Libs\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll</HintPath>
     </Reference>
@@ -275,8 +272,7 @@
       <HintPath>Libs\System.Text.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
