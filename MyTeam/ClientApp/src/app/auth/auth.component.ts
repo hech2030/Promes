@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../Shared/user.service';
 import { Router } from '@angular/router';
-import { Local } from 'protractor/built/driverProviders';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -17,25 +17,21 @@ export class AuthComponent implements OnInit {
   constructor(private service: UserService, private router: Router) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null)
+    if (localStorage.getItem('token') != null) {
       this.router.navigate(['/Home']);
+    }
+    else {
+      var element = document.getElementById("MainClass");
+      element.classList.remove("container-fluid");
+      element.classList.remove("page-body-wrapper");
+    }
   }
 
+
+
+
   OnSubmit(form: NgForm) {
-    this.service.login(form).subscribe(
-      (res: any) => {
-        localStorage.setItem('token', res.token);
-        this.router.navigateByUrl('/Home');
-      },
-      err => {
-        if (err.status == 400) {
-          console.log("user name or p assword are incorrect");
-        }
-        else {
-          console.log(err);
-        }
-      }
-    );
+    this.service.login(form);
   } 
 
 }

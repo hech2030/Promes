@@ -1,6 +1,11 @@
 <body>
-  <app-nav-menu></app-nav-menu>
-  <!--<div class="container">-->
-    <router-outlet></router-outlet>
-<!--  </div>-->
+  <div class="container-scroller">
+    <!-- partial -->
+
+    <app-nav-menu></app-nav-menu>
+    <div class="container-fluid page-body-wrapper" id="MainClass">
+      <app-sid-menu></app-sid-menu>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </body>

@@ -67,7 +67,7 @@ namespace MyTeam
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        ClockSkew = TimeSpan.Zero
+                        ClockSkew = TimeSpan.FromMinutes(60)
                     };
                 }
             );
@@ -99,12 +99,20 @@ namespace MyTeam
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller}/{action=Index}/{id?}");
+            //});
 
             app.UseSpa(spa =>
             {

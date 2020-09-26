@@ -7,17 +7,25 @@ import { RouterModule } from '@angular/router';
 //Important dont remove
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { sideMenuComponent } from './sid-menu/sid-menu.component';
+
 
 import { AuthComponent } from './auth/auth.component'
 import { HomeComponent } from './bo/home/home.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AdminUsersComponent } from './bo/Admin/users/users.component';
+import { RoleGuard } from './auth/role-guard.guard';
+import { TokenInterceptorService } from './auth/token-interceptor.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
+    sideMenuComponent,
     AuthComponent,
-    HomeComponent
+    HomeComponent,
+    AdminUsersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,10 +33,15 @@ import { AuthGuard } from './auth/auth.guard';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: AuthComponent, pathMatch: 'full' },
-      { path: 'Home', component: HomeComponent, canActivate: [AuthGuard] }
+      { path: 'Home', component: HomeComponent, canActivate: [AuthGuard] },
+      { path: 'Users', component: AdminUsersComponent, canActivate: [RoleGuard]}
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

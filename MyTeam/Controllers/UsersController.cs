@@ -1,13 +1,16 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MyTeam.Common.Models;
 using MyTeam.Common.Requests.Auth;
+using MyTeam.Common.Requests.bo.Users;
 
 namespace MyTeam.Controllers
 {
@@ -64,12 +67,38 @@ namespace MyTeam.Controllers
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                     var token = tokenHandler.WriteToken(securityToken);
-                    return Ok(new { token });
+                    return Ok(new { token, user.NormalizedUserName, user.role });
                 }
                 else
                 {
                     return BadRequest(new { Message = "UserName or password is incorrect." });
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("FindUser")]
+        public ActionResult FindUser(UserGetRequest Request)
+        {
+            try
+            {
+                var user = _userManager.Users;
+                if (Request.id != null)
+                {
+                    user.Where(x => x.Id == Request.id);
+                }
+                if (Request.UserName != null)
+                {
+                    user.Where(x => x.UserName == Request.UserName);
+                }
+                var result = user.ToList();
+                return Ok(new { result });
             }
             catch (Exception ex)
             {
