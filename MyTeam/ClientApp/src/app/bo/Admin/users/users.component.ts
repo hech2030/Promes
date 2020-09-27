@@ -3,9 +3,8 @@ import { UserService } from '../../../Shared/user.service';
 import { User } from '../../../Models/bo/user.model';
 
 @Component({
-  //selector: 'div',
   templateUrl: './users.component.html',
-  host: { 'class': 'main-panel' },
+  host: { 'class': 'content-wrapper' },
   styleUrls: ['./users.component.css']
 })
 export class AdminUsersComponent implements OnInit {

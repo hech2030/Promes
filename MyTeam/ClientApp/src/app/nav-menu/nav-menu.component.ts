@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../Shared/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  styleUrls: ['./nav-menu.component.css'],
+  host: { 'class': 'navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row' }
 })
-export class NavMenuComponent implements OnInit{
+export class NavMenuComponent implements OnInit {
 
   constructor(private service: UserService) {
 
@@ -17,22 +19,13 @@ export class NavMenuComponent implements OnInit{
     this.isExpanded = false;
   }
 
-  //loginStatus$: Observable<boolean>;
-  loginStatus: boolean;
-
   ngOnInit(): void {
-    this.loginStatus = false;
-    if (localStorage.getItem('token') != null) {
-      this.loginStatus = true;
-    }
-    //this.loginStatus$ = this.service.isLoggedIn;
   }
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
 
   onLogout() {
-    this.loginStatus = false;
     this.service.logout();
   }
 

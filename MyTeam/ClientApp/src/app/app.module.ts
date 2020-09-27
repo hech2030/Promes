@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { sideMenuComponent } from './sid-menu/sid-menu.component';
+import { AppFooterComponent } from './footer/app-footer/app-footer.component';
 
 
 import { AuthComponent } from './auth/auth.component'
@@ -24,6 +25,7 @@ import { StockComponent } from './bo/Admin/stock/stock.component';
     AppComponent,
     NavMenuComponent,
     sideMenuComponent,
+    AppFooterComponent,
     AuthComponent,
     HomeComponent,
     AdminUsersComponent,

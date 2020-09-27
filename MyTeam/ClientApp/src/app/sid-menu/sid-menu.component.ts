@@ -6,27 +6,21 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sid-menu',
   templateUrl: './sid-menu.component.html',
-  styleUrls: ['./sid-menu.component.css']
+  styleUrls: ['./sid-menu.component.css'],
+  host: { 'class': 'sidebar sidebar-offcanvas','id':'sidebar' }
 })
 export class sideMenuComponent implements OnInit {
 
   constructor(private service: UserService, private router: Router) { }
-  
-  //loginStatus$: Observable<boolean>;
-  userName: string;
-  userRole: string;
-  loginStatus: boolean ;
+
+  //loggedIn$: Observable<boolean>;
+  userName$: Observable<string>;
+  userRole$: Observable<string>;
 
   ngOnInit(): void {
-    this.loginStatus = false;
-    if (localStorage.getItem('token') != null) {
-      this.loginStatus = true;
-      this.userName = localStorage.getItem('UserName');
-      this.userRole = localStorage.getItem('Role');
-    }
-    //this.loginStatus$ = this.service.isLoggedIn;
-    //this.userName = this.service.UserName;
-    //this.userRole = this.service.UserRole;
+    //this.loggedIn$ = this.service.isLoggedIn;
+    this.userName$ = this.service.getUserName;
+    this.userRole$ = this.service.getuserRole;
   }
   GetUsers() {
     this.router.navigate(['/Users']);

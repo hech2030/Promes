@@ -2,8 +2,8 @@
     min-height: calc(100vh - #{$navbar-height});
     display: flex;
     flex-direction: row;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0!important;
+    padding-right: 0!important;
 
     &.full-page-wrapper {
         width: 100%;

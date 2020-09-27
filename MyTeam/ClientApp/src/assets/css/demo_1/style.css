@@ -594,8 +594,9 @@
   min-height: calc(100vh - 63px);
   display: flex;
   flex-direction: row;
-  padding-left: 0;
-  padding-right: 0; }
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
   .page-body-wrapper.full-page-wrapper {
     width: 100%;
     min-height: 100vh; }

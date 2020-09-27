@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from '../Models/bo/user.model';
 import { catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 
 
@@ -14,6 +14,30 @@ export class UserService {
   readonly BaseURI = 'https://localhost:44384/api';//TODO: add this value in config file 
   constructor(private http: HttpClient, private router: Router) { }
 
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  private userName = new BehaviorSubject<string>('');
+  private userRole = new BehaviorSubject<string>('');
+
+  get isLoggedIn() {
+    if (localStorage.getItem('token') != null) {
+      this.loggedIn.next(true);
+    }
+    return this.loggedIn.asObservable();
+  }
+
+  get getUserName() {
+    if (localStorage.getItem('UserName') != null) {
+      this.userName.next(localStorage.getItem('UserName'));
+    }
+    return this.userName.asObservable();
+  }
+  get getuserRole() {
+    if (localStorage.getItem('Role') != null) {
+      this.userRole.next(localStorage.getItem('Role'));
+    }
+    return this.userRole.asObservable();
+  }
+
   login(formData) {
     var host = this.BaseURI + '/fw/Users/login';
     return this.http.post(host, formData)
@@ -21,19 +45,19 @@ export class UserService {
         (res: any) => {
           localStorage.setItem('token', res.token);
           localStorage.setItem('UserName', res.normalizedUserName);
-          localStorage.setItem('Role', res.Role);
-          //this.userFullName.next(res.normalizedUserName);
-          //this.userRole.next(res.role);
+          localStorage.setItem('Role', res.role);
+          this.userName.next(res.normalizedUserName);
+          this.userRole.next(res.Role);
           var element = document.getElementById("MainClass");
           element.classList.add("container-fluid");
           element.classList.add("page-body-wrapper");
-          //this.router.navigate(['/Home']);
-          //this.window.location.reload();
+          var mainPanel = document.getElementById("mainPanel");
+          mainPanel.classList.add("main-panel");
+          this.loggedIn.next(true);
           this.router.navigate(['/Home'])
             .then(() => {
-              window.location.reload();
+              //window.location.reload();
             });
-          //this.loggedIn.next(true);
         },
         err => {
           if (err.status == 400) {
@@ -48,10 +72,15 @@ export class UserService {
 
   logout() {
     localStorage.clear();
-    //this.loggedIn.next(false);
+    this.loggedIn.next(false);
+    this.userName.next('');
+    this.userRole.next('');
     var element = document.getElementById("MainClass");
     element.classList.remove("container-fluid");
     element.classList.remove("page-body-wrapper");
+
+    var mainPanel = document.getElementById("mainPanel");
+    mainPanel.classList.remove("main-panel");
     this.router.navigate(['/']);
   }
 

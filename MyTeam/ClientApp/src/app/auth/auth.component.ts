@@ -17,6 +17,8 @@ export class AuthComponent implements OnInit {
   constructor(private service: UserService, private router: Router) { }
 
   ngOnInit() {
+    //var MainElement = document.getElementById("MainPanel");
+    //MainElement.classList.remove("main-panel");
     if (localStorage.getItem('token') != null) {
       this.router.navigate(['/Home']);
     }

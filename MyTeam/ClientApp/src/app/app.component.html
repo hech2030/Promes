@@ -2,10 +2,13 @@
   <div class="container-scroller">
     <!-- partial -->
 
-    <app-nav-menu></app-nav-menu>
+    <app-nav-menu *ngIf="loggedIn$ | async"></app-nav-menu>
     <div class="container-fluid page-body-wrapper" id="MainClass">
-      <app-sid-menu></app-sid-menu>
-      <router-outlet></router-outlet>
+      <app-sid-menu *ngIf="loggedIn$ | async"></app-sid-menu>
+      <div id="mainPanel">
+        <router-outlet></router-outlet>
+        <footer></footer>
+      </div>
     </div>
   </div>
 </body>
