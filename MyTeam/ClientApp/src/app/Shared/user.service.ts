@@ -48,7 +48,7 @@ export class UserService {
         (res: any) => {
           localStorage.setItem('token', res.token);
           localStorage.setItem('UserName', res.normalizedUserName);
-          localStorage.setItem('Role', res.role);
+          localStorage.setItem('Role', res.roleLabel);
           this.userName.next(res.normalizedUserName);
           this.userRole.next(res.Role);
           var element = document.getElementById("MainClass");

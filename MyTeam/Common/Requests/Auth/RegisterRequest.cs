@@ -11,5 +11,7 @@ namespace MyTeam.Common.Requests.Auth
         public string fullName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public int RoleId { get; set; }
+        public string RoleLabel { get; set; }
     }
 }

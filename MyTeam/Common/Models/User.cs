@@ -8,5 +8,9 @@ namespace MyTeam.Common.Models
     {
         [Column(TypeName = "int")]
         public int role { get; set; }
+
+        [Column(TypeName = "VARCHAR(50)")]
+        public string roleLabel { get; set; }
+
     }
 }

@@ -34,7 +34,9 @@ namespace MyTeam.Controllers
             {
                 UserName = request.userName,
                 Email = request.Email,
-                NormalizedUserName = request.fullName
+                NormalizedUserName = request.fullName,
+                role= request.RoleId,
+                roleLabel = request.RoleLabel
             };
             try
             {
@@ -67,7 +69,7 @@ namespace MyTeam.Controllers
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                     var token = tokenHandler.WriteToken(securityToken);
-                    return Ok(new { token, user.NormalizedUserName, user.role });
+                    return Ok(new { token, user.NormalizedUserName, user.roleLabel });
                 }
                 else
                 {

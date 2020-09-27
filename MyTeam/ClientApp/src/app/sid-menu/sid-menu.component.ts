@@ -27,7 +27,8 @@ export class sideMenuComponent implements OnInit {
   }  GetStock() {
     this.router.navigate(['/Stock']);
   }
+
   GetHome() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/Home']);
   }
 }
