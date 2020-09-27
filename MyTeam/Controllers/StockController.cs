@@ -36,14 +36,73 @@ namespace MyTeam.Controllers
                 result.Add(new Product
                 {
                     designation = "PANNEAUX",
-                    marque = "ONDULEUR",
-                    type = "SUPPORT",
-                    quantite = "CABLE",
-                    code_fournisseur = "CHEMINEMENT",
-                    fournisseur = "DALLES",
-                    prix_achat = "VISSERIE"
+                    marque = "--",
+                    type = "--",
+                    quantite = "--",
+                    code_fournisseur = "--",
+                    fournisseur = "--",
+                    prix_achat = "--"
                 });
-                return Ok(new { result });
+                result.Add(new Product
+                {
+                    designation = "ONDULEUR",
+                    marque = "--",
+                    type = "--",
+                    quantite = "--",
+                    code_fournisseur = "--",
+                    fournisseur = "--",
+                    prix_achat = "--"
+                });
+                result.Add(new Product
+                {
+                    designation = "SUPPORT",
+                    marque = "--",
+                    type = "",
+                    quantite = "--",
+                    code_fournisseur = "--",
+                    fournisseur = "--",
+                    prix_achat = "--"
+                });
+                result.Add(new Product
+                {
+                    designation = "CABLE",
+                    marque = "--",
+                    type = "--",
+                    quantite = "--",
+                    code_fournisseur = "--",
+                    fournisseur = "--",
+                    prix_achat = "--"
+                });
+                result.Add(new Product
+                {
+                    designation = "CHEMINEMENT",
+                    marque = "--",
+                    type = "--",
+                    quantite = "--",
+                    code_fournisseur = "--",
+                    fournisseur = "--",
+                    prix_achat = "--"
+                });
+                result.Add(new Product
+                {
+                    designation = "DALLES",
+                    marque = "--",
+                    type = "--",
+                    quantite = "--",
+                    code_fournisseur = "--",
+                    fournisseur = "--",
+                    prix_achat = "--"
+                });
+                result.Add(new Product
+                {
+                    designation = "VISSERIE",
+                    marque = "--",
+                    type = "--",
+                    quantite = "--",
+                    code_fournisseur = "--",
+                    fournisseur = "--",
+                    prix_achat = "--"
+                });
             }
             catch (Exception ex)
             {
