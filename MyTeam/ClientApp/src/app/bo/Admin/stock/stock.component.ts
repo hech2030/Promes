@@ -4,7 +4,7 @@ import { StockService } from '../../../Shared/Stock/stock.service';
 
 @Component({
   templateUrl: './stock.component.html',
-  host: { 'class': 'main-panel' },
+  host: { 'class': 'content-wrapper' },
   styleUrls: ['./stock.component.css']
 })
 export class StockComponent implements OnInit {

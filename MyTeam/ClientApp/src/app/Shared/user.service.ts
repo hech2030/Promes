@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { User } from '../Models/bo/user.model';
 import { catchError, map } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
+import Swal from 'sweetalert2'
+
 
 
 
@@ -11,6 +13,7 @@ import { throwError, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+
   readonly BaseURI = 'https://localhost:44384/api';//TODO: add this value in config file 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -61,9 +64,10 @@ export class UserService {
         },
         err => {
           if (err.status == 400) {
-            console.log("user name or p assword are incorrect");
+            Swal.fire('Oops...', "user name or password are incorrect", 'error')
           }
           else {
+            Swal.fire('Oops...', 'Something wrong with the serveur, please contact your administrator', 'error')
             console.log(err);
           }
         }

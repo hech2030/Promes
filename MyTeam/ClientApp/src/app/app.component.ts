@@ -15,5 +15,9 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.loggedIn$ = this.service.isLoggedIn;
+    var mainPanel = document.getElementById("mainPanel");
+    if (!mainPanel.classList.contains("main-panel")) {
+      mainPanel.classList.add("main-panel");
+    }
   }
 }
