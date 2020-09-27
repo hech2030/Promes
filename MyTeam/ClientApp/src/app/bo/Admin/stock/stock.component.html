@@ -6,14 +6,24 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th> Product Reference </th>
-              <th> Product Name </th>
+              <th>DESIGNATION</th>
+              <th>MARQUE</th>
+              <th>TYPE</th>
+              <th>QUANTITE</th>
+              <th>CODE FOURNISSEUR</th>
+              <th>FOURNISSEUR</th>
+              <th>PRIX D'ACHAT</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of products; let i = index">
-              <td> {{item.productRef}} </td>
-              <td> {{item.productName}} </td>
+              <td> {{item.designation}} </td>
+              <td> {{item.marque}} </td>
+              <td> {{item.type}} </td>
+              <td> {{item.quantite}} </td>
+              <td> {{item.code_fournisseur}} </td>
+              <td> {{item.fournisseur}} </td>
+              <td> {{item.prix_achat}} </td>
             </tr>
           </tbody>
         </table>

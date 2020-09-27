@@ -69,6 +69,9 @@ namespace MyTeam.Migrations
                     b.Property<int>("role")
                         .HasColumnType("int");
 
+                    b.Property<string>("roleLabel")
+                        .HasColumnType("VARCHAR(50)");
+
                     b.HasKey("Id");
 
                     b.ToTable("user");

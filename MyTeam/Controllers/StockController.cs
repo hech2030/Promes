@@ -35,13 +35,13 @@ namespace MyTeam.Controllers
                 IList<Product> result = new List<Product>();
                 result.Add(new Product
                 {
-                    productRef = "P1",
-                    productName = "Produit 1"
-                });
-                result.Add(new Product
-                {
-                    productRef = "P2",
-                    productName = "Produit 2"
+                    designation = "PANNEAUX",
+                    marque = "ONDULEUR",
+                    type = "SUPPORT",
+                    quantite = "CABLE",
+                    code_fournisseur = "CHEMINEMENT",
+                    fournisseur = "DALLES",
+                    prix_achat = "VISSERIE"
                 });
                 return Ok(new { result });
             }

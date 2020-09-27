@@ -20,6 +20,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200919010855_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200919010855_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200927195136_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200927195136_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200927195434_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200927195434_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200927200652_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200927200652_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200927201330_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200927201330_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200927202740_AddBlogUrl.cs" />
+    <Compile Remove="Migrations\20200927202740_AddBlogUrl.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\src\app\Models\bo\Stock\stock.spec.ts" />
     <None Remove="ClientApp\src\app\Models\bo\Stock\stock.ts" />
     <None Remove="ClientApp\src\app\Models\stock.spec.ts" />
@@ -283,7 +298,12 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.7.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
