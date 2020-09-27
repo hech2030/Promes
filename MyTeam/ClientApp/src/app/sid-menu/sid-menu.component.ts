@@ -30,6 +30,8 @@ export class sideMenuComponent implements OnInit {
   }
   GetUsers() {
     this.router.navigate(['/Users']);
+  }  GetStock() {
+    this.router.navigate(['/Stock']);
   }
   GetHome() {
     this.router.navigate(['/']);

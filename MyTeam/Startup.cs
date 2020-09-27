@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MyTeam.Common.Models;
+using MyTeam.Common.Models.Context;
 
 namespace MyTeam
 {
@@ -36,6 +37,9 @@ namespace MyTeam
             });
 
             services.AddDbContext<UserContext>(options=>
+                options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
+            );
+            services.AddDbContext<StockContext>(options=>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             );
             services.AddDefaultIdentity<User>().AddEntityFrameworkStores<UserContext>();

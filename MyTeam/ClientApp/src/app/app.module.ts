@@ -16,6 +16,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { AdminUsersComponent } from './bo/Admin/users/users.component';
 import { RoleGuard } from './auth/role-guard.guard';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
+import { StockComponent } from './bo/Admin/stock/stock.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
     sideMenuComponent,
     AuthComponent,
     HomeComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    StockComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,7 +36,8 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
     RouterModule.forRoot([
       { path: '', component: AuthComponent, pathMatch: 'full' },
       { path: 'Home', component: HomeComponent, canActivate: [AuthGuard] },
-      { path: 'Users', component: AdminUsersComponent, canActivate: [RoleGuard]}
+      { path: 'Users', component: AdminUsersComponent, canActivate: [RoleGuard]},
+      { path: 'Stock', component: StockComponent, canActivate: [RoleGuard]}
     ])
   ],
   providers: [{

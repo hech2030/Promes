@@ -11,7 +11,7 @@ export class RoleGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    if (localStorage.getItem('token') != null && localStorage.getItem('UserName') == 'HICHEM')
+    if (localStorage.getItem('token') != null )
       return true;
     else {
       this.router.navigate(['/']);
