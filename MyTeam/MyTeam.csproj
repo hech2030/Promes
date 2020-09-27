@@ -20,20 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200919010855_InitialCreate.cs" />
-    <Compile Remove="Migrations\20200919010855_InitialCreate.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.7.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.1.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+    <None Remove="ClientApp\src\app\Models\bo\Stock\stock.spec.ts" />
+    <None Remove="ClientApp\src\app\Models\bo\Stock\stock.ts" />
+    <None Remove="ClientApp\src\app\Models\stock.spec.ts" />
+    <None Remove="ClientApp\src\app\Models\stock.ts" />
   </ItemGroup>
 
 
@@ -285,7 +275,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\Models\bo\" />
+    <Folder Include="ClientApp\src\app\Models\bo\Stock\" />
+    <Folder Include="ClientApp\src\app\Shared\Stock\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.7.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
