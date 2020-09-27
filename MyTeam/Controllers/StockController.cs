@@ -103,6 +103,7 @@ namespace MyTeam.Controllers
                     fournisseur = "--",
                     prix_achat = "--"
                 });
+                return Ok(new { result });
             }
             catch (Exception ex)
             {
