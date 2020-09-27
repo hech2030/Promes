@@ -1,5 +1,17 @@
   <!-- partial:partials/_sidebar.html -->
 <ul class="nav">
+  <li class="nav-item nav-profile">
+    <a href="#" class="nav-link">
+      <div class="profile-image">
+        <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="profile image">
+        <div class="dot-indicator bg-success"></div>
+      </div>
+      <div class="text-wrapper">
+        <p class="profile-name">{{userName$ | async}}</p>
+        <p class="designation">{{userRole$ | async}}</p>
+      </div>
+    </a>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="javascript:void(0)" (click)="GetUsers()">
       <i class="menu-icon typcn typcn-user-outline"></i>
