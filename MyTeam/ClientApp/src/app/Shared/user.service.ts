@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../Models/bo/user.model';
 import { catchError, map } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 
 
