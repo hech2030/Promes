@@ -27,24 +27,26 @@ namespace MyTeam.Controllers
             _userManager = userManager;
         }
         [HttpPost]
+        [Authorize]
         [Route("Register")]
-        public async Task<object> PostApplicationUser(RegisterRequest request)
+        public async Task<ActionResult> PostApplicationUser(RegisterRequest request)
         {
             var User = new User()
             {
                 UserName = request.userName,
-                Email = request.Email,
+                Email = request.emailAdress,
                 NormalizedUserName = request.fullName,
-                role= request.RoleId,
-                roleLabel = request.RoleLabel
+                role = request.roleId,
+                roleLabel = request.role
             };
             try
             {
-                var result = await _userManager.CreateAsync(User, request.Password);
+                var result = await _userManager.CreateAsync(User, request.password);
                 return Ok(result);
             }
             catch (Exception ex)
             {
+                return BadRequest(new { Message = ex.Message });
                 throw ex;
             }
         }
@@ -69,7 +71,7 @@ namespace MyTeam.Controllers
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                     var token = tokenHandler.WriteToken(securityToken);
-                    return Ok(new { token, user.NormalizedUserName, user.roleLabel });
+                    return Ok(new { token, user.NormalizedUserName, user.roleLabel, user.role });
                 }
                 else
                 {

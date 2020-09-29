@@ -20,6 +20,7 @@ export class UserService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private userName = new BehaviorSubject<string>('');
   private userRole = new BehaviorSubject<string>('');
+  private RoleId = new BehaviorSubject<number>(-1);
 
   get isLoggedIn() {
     if (localStorage.getItem('token') != null) {
@@ -40,6 +41,12 @@ export class UserService {
     }
     return this.userRole.asObservable();
   }
+  get getuserRoleId() {
+    if (sessionStorage.getItem('RoleId')) {
+      this.RoleId.next(parseInt(sessionStorage.getItem('RoleId')));
+    }
+    return this.RoleId.asObservable();
+  }
 
   login(formData) {
     var host = this.BaseURI + '/fw/Users/login';
@@ -49,8 +56,10 @@ export class UserService {
           localStorage.setItem('token', res.token);
           localStorage.setItem('UserName', res.normalizedUserName);
           localStorage.setItem('Role', res.roleLabel);
+          sessionStorage.setItem('RoleId', res.role)
           this.userName.next(res.normalizedUserName);
-          this.userRole.next(res.Role);
+          this.userRole.next(res.roleLabel);
+          this.RoleId.next(res.role);
           var element = document.getElementById("MainClass");
           element.classList.add("container-fluid");
           element.classList.add("page-body-wrapper");
@@ -72,6 +81,11 @@ export class UserService {
           }
         }
       );
+  }
+
+  register(formData) {
+    var host = this.BaseURI + '/fw/Users/Register';
+    return this.http.post(host, formData);
   }
 
   logout() {

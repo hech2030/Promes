@@ -18,6 +18,11 @@ import { AdminUsersComponent } from './bo/Admin/users/users.component';
 import { RoleGuard } from './auth/role-guard.guard';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { StockComponent } from './bo/Admin/stock/stock.component';
+//import { InputsModule } from '@progress/kendo-angular-inputs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
 
 
 @NgModule({
@@ -40,7 +45,9 @@ import { StockComponent } from './bo/Admin/stock/stock.component';
       { path: 'Home', component: HomeComponent, canActivate: [AuthGuard] },
       { path: 'Users', component: AdminUsersComponent, canActivate: [RoleGuard]},
       { path: 'Stock', component: StockComponent, canActivate: [RoleGuard]}
-    ])
+    ]),
+    //InputsModule,
+    BrowserAnimationsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

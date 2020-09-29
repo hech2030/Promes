@@ -16,11 +16,13 @@ export class sideMenuComponent implements OnInit {
   //loggedIn$: Observable<boolean>;
   userName$: Observable<string>;
   userRole$: Observable<string>;
+  RoleId$: Observable<number>;
 
   ngOnInit(): void {
     //this.loggedIn$ = this.service.isLoggedIn;
     this.userName$ = this.service.getUserName;
     this.userRole$ = this.service.getuserRole;
+    this.RoleId$ = this.service.getuserRoleId;
   }
   GetUsers() {
     this.router.navigate(['/Users']);
