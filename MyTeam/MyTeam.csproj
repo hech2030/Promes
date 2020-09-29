@@ -22,6 +22,13 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200919010855_InitialCreate.cs" />
     <Compile Remove="Migrations\20200919010855_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200927195428_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200927195428_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200919010855_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200919010855_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200927195136_InitialCreate.cs" />
     <Compile Remove="Migrations\20200927195136_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200927195434_InitialCreate.cs" />

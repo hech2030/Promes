@@ -7,10 +7,12 @@
 	Post
 	raw / json
 	{
-    	"userName":"taoufik",
-    	"password":"****",
-    	"email":"tawfikhadded@gmail.com",
-    	"fullName":"taoufik haddad"
-	}
+    "userName":"HichemTest",
+    "password":"1234",
+    "email":"heche.hech@hotmail.fr",
+    "fullName":"Hichem Fakhfakh",
+    "roleId": 0,
+    "roleLabel":"Admin"
+    }
 4.test login logout
 
