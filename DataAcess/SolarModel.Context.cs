@@ -26,5 +26,6 @@ namespace DataAcess
         }
     
         public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<STOCK> STOCK { get; set; }
     }
 }

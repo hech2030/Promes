@@ -4,7 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SolarThermalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SolarThermalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="STOCK">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="designation" Type="nvarchar(max)" />
+          <Property Name="marque" Type="nvarchar(max)" />
+          <Property Name="type" Type="nvarchar(max)" />
+          <Property Name="quantite" Type="nvarchar(max)" />
+          <Property Name="codeFournisseur" Type="nvarchar(max)" />
+          <Property Name="fournisseur" Type="nvarchar(max)" />
+          <Property Name="prixAchat" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="Id" />
@@ -28,10 +41,10 @@
           <Property Name="roleLabel" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="SolarThermalModelStoreContainer">
+          <EntitySet Name="STOCK" EntityType="Self.STOCK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SolarThermalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -59,7 +72,21 @@
         </EntityType>
         <EntityContainer Name="SolarThermalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="user" EntityType="Self.user" />
+          <EntitySet Name="STOCK" EntityType="SolarThermalModel.STOCK" />
         </EntityContainer>
+        <EntityType Name="STOCK">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="designation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="marque" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="quantite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="codeFournisseur" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fournisseur" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="prixAchat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -86,6 +113,20 @@
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="roleLabel" ColumnName="roleLabel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STOCK">
+            <EntityTypeMapping TypeName="SolarThermalModel.STOCK">
+              <MappingFragment StoreEntitySet="STOCK">
+                <ScalarProperty Name="prixAchat" ColumnName="prixAchat" />
+                <ScalarProperty Name="fournisseur" ColumnName="fournisseur" />
+                <ScalarProperty Name="codeFournisseur" ColumnName="codeFournisseur" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="marque" ColumnName="marque" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
