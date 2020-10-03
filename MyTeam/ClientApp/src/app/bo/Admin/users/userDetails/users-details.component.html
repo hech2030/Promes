@@ -1,0 +1,55 @@
+<!--<div class="content-wrapper">-->
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">User Details</h4>
+        <form class="form-sample" (ngSubmit)="Update()">
+          <p class="card-description"></p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Full Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="FulName" placeholder="Enter full name" name="fullName" [(ngModel)]="user.normalizedUserName">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">User Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="userName" placeholder="Enter user name" name="UserName" [(ngModel)]="user.userName">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="Email" placeholder="Enter full name" name="Email" [(ngModel)]="user.normalizedEmail">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">User Role</label>
+                <div class="col-sm-9">
+                  <input id="dropdownlist" />
+                  <!--<input type="text" class="form-control" id="Role" placeholder="Enter user Role" name="RoleLabel" [(ngModel)]="user.roleLabel">-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
+            <button type="submit" class="btn btn-success">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--</div>-->
