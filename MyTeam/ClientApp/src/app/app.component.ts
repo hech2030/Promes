@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserService } from './Shared/user.service';
 
@@ -8,7 +8,7 @@ import { UserService } from './Shared/user.service';
   //host: { 'class': 'content-wrapper' }
 
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'app';
   loggedIn$: Observable<boolean>;
   constructor(private service: UserService) {}
@@ -19,5 +19,10 @@ export class AppComponent {
     if (!mainPanel.classList.contains("main-panel")) {
       mainPanel.classList.add("main-panel");
     }
+  }
+  @HostListener("window:onbeforeunload", ["$event"])
+  clearLocalStorage(event) {
+    localStorage.clear();
+    console.log('####Destroy local storage####');
   }
 }

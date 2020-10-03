@@ -104,7 +104,7 @@ export class UserService {
 
   GetUsers(form) {
     var host = this.BaseURI + '/fw/Users/FindUser';
-    return this.http.post<any[]>(host, {}).pipe(
+    return this.http.post(host, form).pipe(
       map((data: User[]) => {
         return data;
       }), catchError(error => {

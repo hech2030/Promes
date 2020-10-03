@@ -31,18 +31,50 @@ namespace MyTeam.Controllers
         [Route("Register")]
         public async Task<ActionResult> PostApplicationUser(RegisterRequest request)
         {
-            var User = new User()
+            User User = null;
+            if (request.id != null)
             {
-                UserName = request.userName,
-                Email = request.emailAdress,
-                NormalizedUserName = request.fullName,
-                role = request.roleId,
-                roleLabel = request.role
-            };
+                User = await _userManager.FindByIdAsync(request.id);
+                User.UserName = request.username;
+                User.Email = request.email;
+                User.role = request.role;
+                User.roleLabel = request.roleLabel;
+                User.NormalizedEmail = request.fullName;
+                //User = new User
+                //{
+                //    Id = request.id != null ? request.id : null,
+                //    UserName = request.username,
+                //    Email = request.email,
+                //    NormalizedUserName = request.fullName,
+                //    role = request.role,
+                //    roleLabel = request.roleLabel
+                //};
+            }
+            else
+            {
+                User = new User
+                {
+                    UserName = request.username,
+                    Email = request.email,
+                    NormalizedUserName = request.fullName,
+                    role = request.role,
+                    roleLabel = request.roleLabel,
+                };
+            }
             try
             {
-                var result = await _userManager.CreateAsync(User, request.password);
-                return Ok(result);
+                if (request.password != null)
+                {
+                    var result = await _userManager.CreateAsync(User, request.password);
+                    return Ok(result);
+                }
+                else
+                {
+                    var ExistingUser = await _userManager.FindByIdAsync(User.Id);
+                    User.PasswordHash = ExistingUser.PasswordHash;
+                    var result = await _userManager.UpdateAsync(User);
+                    return Ok(result);
+                }
             }
             catch (Exception ex)
             {
@@ -95,11 +127,15 @@ namespace MyTeam.Controllers
                 var user = _userManager.Users;
                 if (Request.id != null)
                 {
-                    user.Where(x => x.Id == Request.id);
+                    user = user.Where(x => x.Id == Request.id);
                 }
                 if (Request.UserName != null)
                 {
-                    user.Where(x => x.UserName == Request.UserName);
+                    user = user.Where(x => x.NormalizedUserName.Contains(Request.UserName));
+                }
+                if (Request.UserRole > 0)
+                {
+                    user = user.Where(x => x.role == Request.UserRole);
                 }
                 var result = user.ToList();
                 return Ok(new { result });

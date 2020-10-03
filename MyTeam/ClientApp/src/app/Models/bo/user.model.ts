@@ -1,8 +1,16 @@
 export class User {
-  id: string;
+  constructor() {
+    this.id = '';
+  }
+  id: string ='';
   username: string;
-  normalizedUserName: string;
-  email: string;
   phoneNumber: string;
   accessFailedCount: number;
+  email: string;
+  lockoutEnabled: string;
+  normalizedEmail: string;
+  normalizedUserName: string;
+  roleLabel: string;
+  role: number;
+  userName: string;
 }
