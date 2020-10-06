@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../../Shared/user.service';
 import { User } from '../../../../Models/bo/user.model';
 import Swal from 'sweetalert2';
@@ -22,7 +22,7 @@ export class UsersDetailsComponent implements OnInit {
   user: User = new User();
 
   constructor(private route: ActivatedRoute, private userService: UserService,
-    private tools: MyToolsService) { }
+    private tools: MyToolsService, private router: Router) { }
 
   ngOnInit() {
     $("#dropdownlist").kendoDropDownList({
@@ -61,7 +61,8 @@ export class UsersDetailsComponent implements OnInit {
       this.userService.register(this.user).subscribe(
         (res: any) => {
           if (res.succeeded) {
-            this.tools.ShowSuccessNotification("User", "User Added Successfully", '10000');
+            this.tools.ShowSuccessNotification("Utilsateur", "Utilisateur modifié avec succèes", '10000');
+            this.router.navigate(['/Users']);
           }
           else {
             Swal.fire('Oops...', res.errors[0].description, 'error');

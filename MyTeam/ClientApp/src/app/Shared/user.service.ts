@@ -112,6 +112,16 @@ export class UserService {
       })
     )
   }
+  DeleteUser(id) {
+    var host = this.BaseURI + '/fw/Users/DeleteUser';
+    return this.http.post(host, {id : id}).pipe(
+      map((data: boolean) => {
+        return data;
+      }), catchError(error => {
+        return throwError('Something went wrong!');
+      })
+    )
+  }
 
   getToken() {
     return localStorage.getItem('token');

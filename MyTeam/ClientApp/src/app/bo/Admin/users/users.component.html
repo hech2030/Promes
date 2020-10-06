@@ -47,7 +47,36 @@
       </div>
       <div class="card-body">
         <div class="grid-wrapper">
-          <div id="grid"></div>
+          <!--<div id="grid"></div>-->
+          <!--          <div *ngIf="Isloading" class="k-i-loading"></div>-->
+          <kendo-grid [kendoGridBinding]="gridData"
+                      [pageSize]="20"
+                      [pageable]="true"
+                      [sortable]="true"
+                      [groupable]="true"
+                      [reorderable]="true"
+                      [resizable]="true"
+                      [height]="480"
+                      [columnMenu]="{ filter: true }">
+            <kendo-grid-column field="email">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a [routerLink]="['/Users/UsersDetails',dataItem.id]">
+                  {{ dataItem.email }}
+                </a>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column title="User Name" field="userName"></kendo-grid-column>
+            <kendo-grid-column title="Role" field="roleLabel"></kendo-grid-column>
+            <kendo-grid-column title="Phone number" field="phoneNumber"></kendo-grid-column>
+            <kendo-grid-column title="Action">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <button class="close rounded-circle col-md-12" kendoButton (click)="DeleteUser(dataItem.id)">
+                  <span aria-hidden="true">&times;</span>
+                  <!--<i class="fa fa-window-close"></i>-->
+                </button>
+              </ng-template>
+            </kendo-grid-column>
+          </kendo-grid>
           <div *ngIf="Isloading" class="k-i-loading"></div>
         </div>
       </div>
@@ -72,27 +101,27 @@
               <form class="forms-sample" (ngSubmit)="AddUser(userModel)" validate>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" [(ngModel)]="userModel.email">
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" [(ngModel)]="userModel.email" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">User Name</label>
-                  <input type="email" class="form-control" id="username" placeholder="Enter User Name" name="username" [(ngModel)]="userModel.username">
+                  <input type="email" class="form-control" id="username" placeholder="Enter User Name" name="username" [(ngModel)]="userModel.username" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">full Name</label>
-                  <input type="email" class="form-control" id="fullName" placeholder="Enter full Name" name="fullName" [(ngModel)]="userModel.fullName">
+                  <input type="email" class="form-control" id="fullName" placeholder="Enter full Name" name="fullName" [(ngModel)]="userModel.fullName" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="Password" placeholder="Password" name="Password" [(ngModel)]="userModel.Password">
+                  <input type="password" class="form-control" id="Password" placeholder="Password" name="Password" [(ngModel)]="userModel.Password" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Repeat Password</label>
-                  <input type="password" class="form-control" id="RepeatedPassword" placeholder="Password" name="RepeatedPassword" [(ngModel)]="userModel.RepeatedPassword">
+                  <input type="password" class="form-control" id="RepeatedPassword" placeholder="Password" name="RepeatedPassword" [(ngModel)]="userModel.RepeatedPassword" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleFormControlSelect3">Select Role</label>
-                  <select class="form-control form-control-sm" id="role" [(ngModel)]="userModel.roleLabel" name="role">
+                  <select class="form-control form-control-sm" id="role" [(ngModel)]="userModel.roleLabel" name="role" required>
                     <option>Gestionnaire</option>
                     <option>Superviseur</option>
                     <option>Admin</option>

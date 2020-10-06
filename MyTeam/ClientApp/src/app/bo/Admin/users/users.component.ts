@@ -35,6 +35,8 @@ export class AdminUsersComponent implements OnInit {
     { id: 2, Label: "Superviseur" }] // TODO : à les mettres dans une table referentiel
   users: User[];
 
+  public gridData: User[];
+
   constructor(private userService: UserService, private tools: MyToolsService) { }
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class AdminUsersComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data);
         this.users = data.result;
-        this.loadGrid(data.result);
+        this.gridData = data.result;
         this.Isloading = false;
       });
   }
@@ -58,46 +60,41 @@ export class AdminUsersComponent implements OnInit {
     }
     this.ngOnInit();
   }
-  loadGrid(users) {
-    var gridDataSource = new kendo.data.DataSource({
-      pageSize: 5,
-      serverPaging: false,
-      serverSorting: false,
-      data: { "values": [], "total": 0 },
-      transport: {
-        read: function (options) {
-          options.success(users);
-        }
-      },
-      schema: {
-        data: function (response) {
-          return response;
-        },
-        total: function (response) {
-          return response.length;
-        }
-      }
-    });
-    $("#grid").kendoGrid({
-      dataSource: gridDataSource,
-      columns: [
-        { field: "email", title: "Email Adress" },
-        { field: "userName", title: "User name" },
-        { field: "roleLabel", title: "User Role" },
-        { field: "phoneNumber", title: "Phone Number" },
-        {
-          template: "<a class=\"btn-circle btn-xl\" href='\\" + this.root + "#:id#' > <i class=\"fa fa-eye\"></i>"
-          + "</a>"
-        }
+  DeleteUser(id) {
+    Swal.fire({
+      title: 'Êtes-vous sûr de vouloir supprimer?',
+      text: "Vous ne pourrez pas revenir en arrière!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, Supprimer!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.DeleteUser(id)
+          .subscribe((data: any) => {
+            if (data.success) {
+              this.ngOnInit();
+              Swal.fire(
+                'Supprimé!',
+                'Succès',
+                'success'
+              )
+            }
+            else {
+              Swal.fire(
+                'Erreur!',
+                'Un problème est survenu avec le serveur.',
+                'error'
+              )
+            }
+          });
 
-      ],
-      pageable: {
-        pageSize: 5
       }
-    });
+    })
   }
+
   AddUser(Userform: NgForm) {
-    //if (Userform.valid) {
     if (this.userModel.Password != this.userModel.RepeatedPassword) {
       Swal.fire('Oops...', "Passwords don't match", 'error');
     }
@@ -119,7 +116,6 @@ export class AdminUsersComponent implements OnInit {
         this.userService.register(this.userModel).subscribe(
           (res: any) => {
             if (res.succeeded) {
-              //res.succeeded;
               this.ngOnInit();
               this.resetModel();
               $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -140,7 +136,6 @@ export class AdminUsersComponent implements OnInit {
         );
       }
     }
-    //}
   }
   resetModel() {
     this.userModel.email = '';
