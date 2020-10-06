@@ -1,8 +1,8 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'MAGASIN'))
 BEGIN
 	CREATE TABLE [dbo].[MAGASIN](
-		[Id] [BIGINT] NOT NULL,
-		[nomMagasin] [nvarchar](max) NULL,
+		[Id] bigint  NOT NULL,
+    	[nomMagasin] nvarchar(max)  NULL
 	 CONSTRAINT [PK_MAGASIN] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

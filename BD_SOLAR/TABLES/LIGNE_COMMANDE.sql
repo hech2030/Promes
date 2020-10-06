@@ -1,13 +1,13 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'LIGNE_COMMANDE'))
 BEGIN
 	CREATE TABLE [dbo].[LIGNE_COMMANDE](
-		[Id] [BIGINT] NOT NULL,
-		[index] [BIGINT] NULL,
-		[quantite] [BIGINT] NULL,
-		[prix] [BIGINT] NULL,
-		[montant] [FLOAT] NULL,
-		[IdArticle] [BIGINT] NOT NULL,
-		[IdCommande] [BIGINT] NOT NULL		
+		[Id] bigint  NOT NULL,
+	    [index] bigint  NULL,
+	    [quantite] bigint  NULL,
+	    [prix] bigint  NULL,
+	    [montant] float  NULL,
+	    [ARTICLEId] bigint  NOT NULL,
+	    [COMMANDEId] bigint  NOT NULL		
 	 CONSTRAINT [PK_LIGNE_COMMANDE] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

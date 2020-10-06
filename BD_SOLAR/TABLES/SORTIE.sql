@@ -1,12 +1,12 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'SORTIE'))
 BEGIN
 	CREATE TABLE [dbo].[SORTIE](
-		[Id] [BIGINT] NOT NULL,
-		[numSortie] [BIGINT] NULL,
-		[quantite] [BIGINT] NULL,
-		[dateSortie] [DATETIME] NULL,
-		[prixDSortie] [BIGINT] NULL,
-		[IdArticle] [BIGINT] NOT NULL
+		[Id] bigint  NOT NULL,
+	    [numSortie] bigint  NULL,
+	    [quantite] bigint  NULL,
+	    [dateSortie] datetime  NULL,
+	    [prixDSortie] bigint  NULL,
+	    [ARTICLEId] bigint  NOT NULL
 	 CONSTRAINT [PK_SORTIE] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

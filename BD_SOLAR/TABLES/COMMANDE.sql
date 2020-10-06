@@ -1,12 +1,12 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'COMMANDE'))
 BEGIN
 	CREATE TABLE [dbo].[COMMANDE](
-		[Id] [BIGINT] NOT NULL,
-		[numCommande] [BIGINT] NULL,
-		[dateCOMMANDE] [DATETIME] NULL,
-		[etat] [nvarchar](max) NULL,
-		[IdFornisseur] [BIGINT] NOT NULL,
-		[IdReception] [BIGINT] NOT NULL		
+		[Id] bigint  NOT NULL,
+	    [numCommande] bigint  NULL,
+	    [dateCOMMANDE] datetime  NULL,
+	    [etat] nvarchar(max)  NULL,
+	    [RECEPTIONId] bigint  NOT NULL,
+	    [FOURNISSEURId] bigint  NOT NULL		
 	 CONSTRAINT [PK_COMMANDE] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

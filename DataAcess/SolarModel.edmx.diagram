@@ -7,6 +7,25 @@
       <Diagram DiagramId="774ac1577835459890408fabb759ce27" Name="Diagram1">
         <EntityTypeShape EntityType="SolarThermalModel.user" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SolarThermalModel.STOCK" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SolarThermalModel.C__EFMigrationsHistory" Width="1.5" PointX="0.5" PointY="5.125" />
+        <EntityTypeShape EntityType="SolarThermalModel.ARTICLE" Width="1.5" PointX="5.75" PointY="4.25" />
+        <EntityTypeShape EntityType="SolarThermalModel.CATEGORIE_ART" Width="1.5" PointX="6" PointY="1.75" />
+        <EntityTypeShape EntityType="SolarThermalModel.COMMANDE" Width="1.5" PointX="2.125" PointY="6.875" />
+        <EntityTypeShape EntityType="SolarThermalModel.ENTREE" Width="1.5" PointX="7.875" PointY="3.125" />
+        <EntityTypeShape EntityType="SolarThermalModel.FOURNISSEUR" Width="1.5" PointX="5.75" PointY="8.5" />
+        <EntityTypeShape EntityType="SolarThermalModel.LIGNE_COMMANDE" Width="1.5" PointX="3.5" PointY="3.5" />
+        <EntityTypeShape EntityType="SolarThermalModel.MAGASIN" Width="1.5" PointX="7.875" PointY="5.5" />
+        <EntityTypeShape EntityType="SolarThermalModel.RECEPTION" Width="1.5" PointX="2.125" PointY="9.5" />
+        <EntityTypeShape EntityType="SolarThermalModel.SORTIE" Width="1.5" PointX="7.875" PointY="7" />
+        <AssociationConnector Association="SolarThermalModel.ARTICLECATEGORIE_ART" />
+        <AssociationConnector Association="SolarThermalModel.ARTICLEENTREE" />
+        <AssociationConnector Association="SolarThermalModel.ARTICLESORTIE" />
+        <AssociationConnector Association="SolarThermalModel.ARTICLELIGNE_COMMANDE" />
+        <AssociationConnector Association="SolarThermalModel.COMMANDELIGNE_COMMANDE" />
+        <AssociationConnector Association="SolarThermalModel.RECEPTIONCOMMANDE" />
+        <AssociationConnector Association="SolarThermalModel.FOURNISSEURCOMMANDE" />
+        <AssociationConnector Association="SolarThermalModel.FOURNISSEURARTICLE" />
+        <AssociationConnector Association="SolarThermalModel.MAGASINARTICLE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,16 +1,16 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'FOURNISSEUR'))
 BEGIN
 	CREATE TABLE [dbo].[FOURNISSEUR](
-		[Id] [BIGINT] NOT NULL,
-		[numF] [BIGINT] NOT NULL,
-		[NomF] [nvarchar](max) NULL,
-		[adresse] [nvarchar](max) NULL,
-		[codP] [INT] NULL,
-		[ville] [nvarchar](max) NULL,
-		[payes] [nvarchar](max) NULL,
-		[tele] [BIGINT] NULL,
-		[fax] [BIGINT] NULL,
-		[email] [nvarchar](max) NULL
+		[Id] bigint  NOT NULL,
+	    [numF] bigint  NOT NULL,
+	    [NomF] nvarchar(max)  NULL,
+	    [adresse] nvarchar(max)  NULL,
+	    [codP] int  NULL,
+	    [ville] nvarchar(max)  NULL,
+	    [payes] nvarchar(max)  NULL,
+	    [tele] bigint  NULL,
+	    [fax] bigint  NULL,
+	    [email] nvarchar(max)  NULL
 	 CONSTRAINT [PK_FOURNISSEUR] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

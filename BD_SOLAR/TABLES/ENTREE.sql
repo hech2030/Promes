@@ -1,12 +1,12 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'ENTREE'))
 BEGIN
 	CREATE TABLE [dbo].[ENTREE](
-		[Id] [BIGINT] NOT NULL,
-		[numEntree] [BIGINT] NULL,
-		[quantite] [BIGINT] NULL,
-		[dateEntree] [DATETIME] NULL,
-		[prixDentree] [BIGINT] NULL,
-		[IdArticle] [BIGINT] NOT NULL
+		[Id] bigint  NOT NULL,
+	    [numEntree] bigint  NULL,
+	    [quantite] bigint  NULL,
+	    [dateEntree] datetime  NULL,
+	    [prixDentree] bigint  NULL,
+	    [ARTICLEId] bigint  NOT NULL
 	 CONSTRAINT [PK_ENTREE] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

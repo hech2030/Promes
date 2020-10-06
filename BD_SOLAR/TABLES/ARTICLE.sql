@@ -1,16 +1,16 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'ARTICLE'))
 BEGIN
 	CREATE TABLE [dbo].[ARTICLE](
-		[Id] [BIGINT] NOT NULL,
-		[designation] [nvarchar](max) NULL,
-		[unit] [nvarchar](max) NULL,
-		[quantite] [BIGINT] NULL,
-		[prix] [BIGINT] NULL,
-		[newAttr] [BIGINT] NULL,
-		[emplacement] [nvarchar](max) NULL,
-		[IdFournisseur] [BIGINT] NOT NULL,
-		[IdCtegorieArt] [BIGINT] NOT NULL,
-		[IdMagasin] [BIGINT] NOT NULL
+		[Id] bigint  NOT NULL,
+	    [designation] nvarchar(max)  NULL,
+	    [unit] nvarchar(max)  NULL,
+	    [quantite] bigint  NULL,
+	    [prix] bigint  NULL,
+	    [newAttr] bigint  NULL,
+	    [emplacement] nvarchar(max)  NULL,
+	    [CATEGORIE_ARTId] bigint  NOT NULL,
+	    [FOURNISSEURId] bigint  NOT NULL,
+	    [MAGASINId] bigint  NOT NULL
 	 CONSTRAINT [PK_ARTICLE] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

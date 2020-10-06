@@ -1,9 +1,9 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'CATEGORIE_ART'))
 BEGIN
 	CREATE TABLE [dbo].[CATEGORIE_ART](
-		[Id] [BIGINT] NOT NULL,
-		[nomCate] [nvarchar](max) NULL,
-		[description] [nvarchar](max) NULL
+		[Id] bigint  NOT NULL,
+	    [nomCate] nvarchar(max)  NULL,
+	    [description] nvarchar(max)  NULL
 	 CONSTRAINT [PK_CATEGORIE_ART] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

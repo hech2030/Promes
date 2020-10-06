@@ -50,7 +50,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ARTICLE.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CATEGORIE_ART.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMMANDE.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="C__EFMigrationsHistory.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ENTREE.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FOURNISSEUR.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LIGNE_COMMANDE.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MAGASIN.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RECEPTION.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SolarModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -65,6 +92,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SolarModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="SORTIE.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STOCK.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="user.cs">
       <DependentUpon>SolarModel.tt</DependentUpon>
@@ -90,6 +123,7 @@
       <DependentUpon>SolarModel.edmx</DependentUpon>
       <LastGenOutput>SolarModel.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="SolarModel.edmx.sql" />
     <Content Include="SolarModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SolarModel.edmx</DependentUpon>
