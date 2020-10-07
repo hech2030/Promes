@@ -2,6 +2,7 @@ using System;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
+using DataAcess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,9 @@ namespace MyTeam
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             );
             services.AddDbContext<StockContext>(options=>
+                options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
+            );
+            services.AddDbContext<SolarThermalEntities>(options=>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             );
             services.AddDefaultIdentity<User>().AddEntityFrameworkStores<UserContext>();

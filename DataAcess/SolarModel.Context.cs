@@ -9,25 +9,15 @@
 
 namespace DataAcess
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
+    using Microsoft.EntityFrameworkCore;
     
-    public partial class SolarThermalEntities : DbContext
+    public partial class SolarThermalEntities : Microsoft.EntityFrameworkCore.DbContext
     {
-        public SolarThermalEntities()
-            : base("name=SolarThermalEntities")
+        public SolarThermalEntities(DbContextOptions<SolarThermalEntities> options) : base(options)
         {
+
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
-    
-        public virtual DbSet<user> user { get; set; }
-        public virtual DbSet<STOCK> STOCK { get; set; }
-        public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<ARTICLE> ARTICLE { get; set; }
         public virtual DbSet<CATEGORIE_ART> CATEGORIE_ART { get; set; }
         public virtual DbSet<COMMANDE> COMMANDE { get; set; }

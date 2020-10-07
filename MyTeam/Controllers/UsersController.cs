@@ -27,7 +27,6 @@ namespace MyTeam.Controllers
             _userManager = userManager;
         }
         [HttpPost]
-        [Authorize]
         [Route("Register")]
         public async Task<ActionResult> PostApplicationUser(RegisterRequest request)
         {
@@ -146,23 +145,23 @@ namespace MyTeam.Controllers
                 return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
             }
         }
-        [HttpPost]
-        [Authorize]
-        [Route("DeleteUser")]
-        public async Task<ActionResult> DeleteUser(UserDeleteRequest request)
-        {
-            bool success = false;
-            try
-            {
-                var user = await _userManager.FindByIdAsync(request.id);
-                var result = await _userManager.DeleteAsync(user);
-                return Ok(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                Console.Write("Exception : " + ex.Message);
-                return BadRequest(new { success });
-            }
-        }
+        //[HttpPost]
+        //[Authorize]
+        //[Route("DeleteUser")]
+        //public async Task<ActionResult> DeleteUser(UserDeleteRequest request)
+        //{
+        //    bool success = false;
+        //    try
+        //    {
+        //        var user = await _userManager.FindByIdAsync(request.id);
+        //        var result = await _userManager.DeleteAsync(user);
+        //        return Ok(new { success = true });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.Write("Exception : " + ex.Message);
+        //        return BadRequest(new { success });
+        //    }
+        //}
     }
 }

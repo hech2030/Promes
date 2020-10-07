@@ -19,7 +19,6 @@ namespace MyTeam.Controllers
     public class StockController : ControllerBase
     {
         private readonly ILogger<StockController> _logger;
-        private  DbContext _StockContext;
 
         public StockController(ILogger<StockController> logger)
         {
