@@ -14,5 +14,7 @@
     "roleId": 0,
     "roleLabel":"Admin"
     }
-4.test login logout
+5.npm install --save @progress/kendo-angular-grid @progress/kendo-angular-dropdowns @progress/kendo-angular-inputs @progress/kendo-angular-dateinputs @progress/kendo-data-query @progress/kendo-angular-intl @progress/kendo-angular-l10n @progress/kendo-drawing @progress/kendo-angular-excel-export @progress/kendo-angular-buttons @progress/kendo-angular-dialog @progress/kendo-angular-gauges @progress/kendo-angular-charts @angular/animations
+6.npm install --save @progress/kendo-theme-default
+7.test login logout
 
