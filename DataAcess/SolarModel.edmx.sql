@@ -21,7 +21,21 @@ GO
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
-
+IF OBJECT_ID(N'[dbo].[ENTREE]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ENTREE];
+GO
+IF OBJECT_ID(N'[dbo].[SORTIE]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[SORTIE];
+GO
+IF OBJECT_ID(N'[dbo].[LIGNE_COMMANDE]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LIGNE_COMMANDE];
+GO
+IF OBJECT_ID(N'[dbo].[COMMANDE]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[COMMANDE];
+GO
+IF OBJECT_ID(N'[dbo].[RECEPTION]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RECEPTION];
+GO
 IF OBJECT_ID(N'[dbo].[__EFMigrationsHistory]', 'U') IS NOT NULL
     DROP TABLE [dbo].[__EFMigrationsHistory];
 GO
@@ -31,83 +45,26 @@ GO
 IF OBJECT_ID(N'[dbo].[CATEGORIE_ART]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CATEGORIE_ART];
 GO
-IF OBJECT_ID(N'[dbo].[COMMANDE]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[COMMANDE];
-GO
-IF OBJECT_ID(N'[dbo].[ENTREE]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ENTREE];
-GO
 IF OBJECT_ID(N'[dbo].[FOURNISSEUR]', 'U') IS NOT NULL
     DROP TABLE [dbo].[FOURNISSEUR];
-GO
-IF OBJECT_ID(N'[dbo].[LIGNE_COMMANDE]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LIGNE_COMMANDE];
 GO
 IF OBJECT_ID(N'[dbo].[MAGASIN]', 'U') IS NOT NULL
     DROP TABLE [dbo].[MAGASIN];
 GO
-IF OBJECT_ID(N'[dbo].[RECEPTION]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[RECEPTION];
-GO
-IF OBJECT_ID(N'[dbo].[SORTIE]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SORTIE];
-GO
-IF OBJECT_ID(N'[dbo].[STOCK]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[STOCK];
-GO
-IF OBJECT_ID(N'[dbo].[user]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[user];
-GO
+
 
 -- --------------------------------------------------
 -- Creating all tables
 -- --------------------------------------------------
 
--- Creating table 'user'
-CREATE TABLE [dbo].[user] (
-    [Id] nvarchar(450)  NOT NULL,
-    [UserName] nvarchar(max)  NULL,
-    [NormalizedUserName] nvarchar(max)  NULL,
-    [Email] nvarchar(max)  NULL,
-    [NormalizedEmail] nvarchar(max)  NULL,
-    [EmailConfirmed] bit  NOT NULL,
-    [PasswordHash] nvarchar(max)  NULL,
-    [SecurityStamp] nvarchar(max)  NULL,
-    [ConcurrencyStamp] nvarchar(max)  NULL,
-    [PhoneNumber] nvarchar(max)  NULL,
-    [PhoneNumberConfirmed] bit  NOT NULL,
-    [TwoFactorEnabled] bit  NOT NULL,
-    [LockoutEnd] datetimeoffset  NULL,
-    [LockoutEnabled] bit  NOT NULL,
-    [AccessFailedCount] int  NOT NULL,
-    [role] int  NOT NULL,
-    [roleLabel] varchar(50)  NULL
-);
-GO
 
--- Creating table 'STOCK'
-CREATE TABLE [dbo].[STOCK] (
-    [Id] nvarchar(450)  NOT NULL,
-    [designation] nvarchar(max)  NULL,
-    [marque] nvarchar(max)  NULL,
-    [type] nvarchar(max)  NULL,
-    [quantite] nvarchar(max)  NULL,
-    [codeFournisseur] nvarchar(max)  NULL,
-    [fournisseur] nvarchar(max)  NULL,
-    [prixAchat] nvarchar(max)  NULL
-);
-GO
 
--- Creating table 'C__EFMigrationsHistory'
-CREATE TABLE [dbo].[C__EFMigrationsHistory] (
-    [MigrationId] nvarchar(150)  NOT NULL,
-    [ProductVersion] nvarchar(32)  NOT NULL
-);
-GO
+
+
 
 -- Creating table 'ARTICLE'
 CREATE TABLE [dbo].[ARTICLE] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1) NOT NULL,
     [designation] nvarchar(max)  NULL,
     [unit] nvarchar(max)  NULL,
     [quantite] bigint  NULL,
@@ -122,7 +79,7 @@ GO
 
 -- Creating table 'CATEGORIE_ART'
 CREATE TABLE [dbo].[CATEGORIE_ART] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [nomCate] nvarchar(max)  NULL,
     [description] nvarchar(max)  NULL
 );
@@ -130,7 +87,7 @@ GO
 
 -- Creating table 'COMMANDE'
 CREATE TABLE [dbo].[COMMANDE] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [numCommande] bigint  NULL,
     [dateCOMMANDE] datetime  NULL,
     [etat] nvarchar(max)  NULL,
@@ -141,7 +98,7 @@ GO
 
 -- Creating table 'ENTREE'
 CREATE TABLE [dbo].[ENTREE] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [numEntree] bigint  NULL,
     [quantite] bigint  NULL,
     [dateEntree] datetime  NULL,
@@ -152,7 +109,7 @@ GO
 
 -- Creating table 'FOURNISSEUR'
 CREATE TABLE [dbo].[FOURNISSEUR] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [numF] bigint  NOT NULL,
     [NomF] nvarchar(max)  NULL,
     [adresse] nvarchar(max)  NULL,
@@ -167,7 +124,7 @@ GO
 
 -- Creating table 'LIGNE_COMMANDE'
 CREATE TABLE [dbo].[LIGNE_COMMANDE] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [index] bigint  NULL,
     [quantite] bigint  NULL,
     [prix] bigint  NULL,
@@ -179,14 +136,14 @@ GO
 
 -- Creating table 'MAGASIN'
 CREATE TABLE [dbo].[MAGASIN] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [nomMagasin] nvarchar(max)  NULL
 );
 GO
 
 -- Creating table 'RECEPTION'
 CREATE TABLE [dbo].[RECEPTION] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [numReception] bigint  NULL,
     [dateReception] datetime  NULL,
     [quantiteLivree] bigint  NULL
@@ -195,7 +152,7 @@ GO
 
 -- Creating table 'SORTIE'
 CREATE TABLE [dbo].[SORTIE] (
-    [Id] bigint  NOT NULL,
+    [Id] bigint IDENTITY(1,1)  NOT NULL,
     [numSortie] bigint  NULL,
     [quantite] bigint  NULL,
     [dateSortie] datetime  NULL,
@@ -208,23 +165,8 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [Id] in table 'user'
-ALTER TABLE [dbo].[user]
-ADD CONSTRAINT [PK_user]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
 
--- Creating primary key on [Id] in table 'STOCK'
-ALTER TABLE [dbo].[STOCK]
-ADD CONSTRAINT [PK_STOCK]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
 
--- Creating primary key on [MigrationId] in table 'C__EFMigrationsHistory'
-ALTER TABLE [dbo].[C__EFMigrationsHistory]
-ADD CONSTRAINT [PK_C__EFMigrationsHistory]
-    PRIMARY KEY CLUSTERED ([MigrationId] ASC);
-GO
 
 -- Creating primary key on [Id] in table 'ARTICLE'
 ALTER TABLE [dbo].[ARTICLE]
@@ -418,7 +360,3 @@ CREATE INDEX [IX_FK_MAGASINARTICLE]
 ON [dbo].[ARTICLE]
     ([MAGASINId]);
 GO
-
--- --------------------------------------------------
--- Script has ended
--- --------------------------------------------------
