@@ -27,6 +27,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import 'hammerjs';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-details.component';
+import { ArticleComponent } from './bo/Article/article/article.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-detail
     HomeComponent,
     AdminUsersComponent,
     StockComponent,
-    UsersDetailsComponent
+    UsersDetailsComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,6 +53,7 @@ import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-detail
       { path: 'Home', component: HomeComponent, canActivate: [AuthGuard] },
       { path: 'Users', component: AdminUsersComponent, canActivate: [RoleGuard]},
       { path: 'Stock', component: StockComponent, canActivate: [AuthGuard] },
+      { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] },
       { path: 'Users/UsersDetails/:id', component: UsersDetailsComponent, canActivate: [RoleGuard] },
     ]),
     //InputsModule,
