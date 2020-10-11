@@ -58,21 +58,25 @@
                       [resizable]="true"
                       [height]="480"
                       [columnMenu]="{ filter: true }">
-            <kendo-grid-column field="email">
-              <ng-template kendoGridCellTemplate let-dataItem>
-                <a [routerLink]="['/Users/UsersDetails',dataItem.id]">
-                  {{ dataItem.email }}
-                </a>
-              </ng-template>
-            </kendo-grid-column>
+            <kendo-grid-column title="Full Name" field="fullName"></kendo-grid-column>
             <kendo-grid-column title="User Name" field="userName"></kendo-grid-column>
+            <kendo-grid-column field="email">
+              <!--<ng-template kendoGridCellTemplate let-dataItem>
+      <a [routerLink]="['/Users/UsersDetails',dataItem.id]">
+        {{ dataItem.email }}
+      </a>
+    </ng-template>-->
+            </kendo-grid-column>
             <kendo-grid-column title="Role" field="roleLabel"></kendo-grid-column>
             <kendo-grid-column title="Phone number" field="phoneNumber"></kendo-grid-column>
             <kendo-grid-column title="Action">
               <ng-template kendoGridCellTemplate let-dataItem>
-                <button class="close rounded-circle col-md-12" kendoButton (click)="DeleteUser(dataItem.id)">
+                <button class="close rounded-circle col-md-6" kendoButton (click)="DeleteUser(dataItem.id)">
                   <span aria-hidden="true">&times;</span>
                   <!--<i class="fa fa-window-close"></i>-->
+                </button>
+                <button class="close rounded-circle col-md-6" kendoButton (click)="UpdateUser(dataItem.id)">
+                  <i class="fa fa-eye"></i>
                 </button>
               </ng-template>
             </kendo-grid-column>

@@ -45,7 +45,8 @@ import { ArticleComponent } from './bo/Article/article/article.component'
     AdminUsersComponent,
     StockComponent,
     UsersDetailsComponent,
-    ProfileComponent
+    ProfileComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -59,7 +60,7 @@ import { ArticleComponent } from './bo/Article/article/article.component'
       { path: 'Stock', component: StockComponent, canActivate: [AuthGuard] },
       { path: 'Users/UsersDetails/:id', component: UsersDetailsComponent, canActivate: [RoleGuard] },
       { path: 'User/MyProfile', component: ProfileComponent, canActivate: [AuthGuard] },
-      { path: 'Article', component: ProfileComponent, canActivate: [AuthGuard] }
+      { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] }
     ]),
     //InputsModule,
     BrowserAnimationsModule,

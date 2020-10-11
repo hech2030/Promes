@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import * as $ from 'jquery';
 import '@progress/kendo-ui';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './users.component.html',
@@ -37,7 +38,7 @@ export class AdminUsersComponent implements OnInit {
 
   public gridData: User[];
 
-  constructor(private userService: UserService, private tools: MyToolsService) { }
+  constructor(private userService: UserService, private tools: MyToolsService, private router: Router) { }
 
   ngOnInit() {
     this.Isloading = true;
@@ -136,6 +137,9 @@ export class AdminUsersComponent implements OnInit {
         );
       }
     }
+  }
+  UpdateUser(id) {
+    this.router.navigate(['Users/UsersDetails/' + id]);
   }
   resetModel() {
     this.userModel.email = '';

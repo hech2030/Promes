@@ -41,7 +41,9 @@ export class UsersDetailsComponent implements OnInit {
         $("#dropdownlist").data("kendoDropDownList").value(this.user.role);
       });
   }
-
+  Quit() {
+    this.router.navigate(['/Users']);
+  }
   Update() {
     if (!this.validateEmail(this.user.email)) {
       Swal.fire('Oops...', "Email Adress is not in correct format", 'error');
@@ -61,7 +63,7 @@ export class UsersDetailsComponent implements OnInit {
       this.userService.register(this.user).subscribe(
         (res: any) => {
           if (res.succeeded) {
-            this.tools.ShowSuccessNotification("Utilsateur", "Utilisateur modifié avec succèes", '10000');
+            this.tools.ShowSuccessNotification("Utilsateur", "La modification a été effectuée avec succès", '10000');
             this.router.navigate(['/Users']);
           }
           else {

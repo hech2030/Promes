@@ -5,6 +5,7 @@ import { User } from '../Models/bo/user.model';
 import { catchError, map } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Local } from 'protractor/built/driverProviders';
 
 
 
@@ -69,7 +70,12 @@ export class UserService {
       map((data: User[]) => {
         return data;
       }), catchError(error => {
-        return throwError('Something went wrong!');
+        if (error.status == 401) {
+          this.logout();
+        }
+        else {
+          return throwError('Something went wrong!');
+        }
       })
     )
   }
@@ -135,17 +141,27 @@ export class UserService {
       map((data: User[]) => {
         return data;
       }), catchError(error => {
-        return throwError('Something went wrong!');
+        if (error.status == 401) {
+          this.logout();
+        }
+        else {
+          return throwError('Something went wrong!');
+        }
       })
     )
   }
   DeleteUser(id) {
     var host = this.BaseURI + '/fw/Users/DeleteUser';
-    return this.http.post(host, {id : id}).pipe(
+    return this.http.post(host, { id: id }).pipe(
       map((data: boolean) => {
         return data;
       }), catchError(error => {
-        return throwError('Something went wrong!');
+        if (error.status == 401) {
+          this.logout();
+        }
+        else {
+          return throwError('Something went wrong!');
+        }
       })
     )
   }
