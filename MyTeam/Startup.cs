@@ -37,16 +37,16 @@ namespace MyTeam
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddDbContext<UserContext>(options=>
-                options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
-            );
+            //services.AddDbContext<UserContext>(options=>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
+            //);
             services.AddDbContext<StockContext>(options=>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             );
             services.AddDbContext<SolarThermalEntities>(options=>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             );
-            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<UserContext>();
+            services.AddDefaultIdentity<user>().AddEntityFrameworkStores<SolarThermalEntities>();
 
 
             services.Configure<IdentityOptions>(options =>

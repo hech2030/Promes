@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="designation" Type="nvarchar(max)" />
           <Property Name="unit" Type="nvarchar(max)" />
           <Property Name="quantite" Type="bigint" />
@@ -31,7 +31,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nomCate" Type="nvarchar(max)" />
           <Property Name="description" Type="nvarchar(max)" />
         </EntityType>
@@ -39,7 +39,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numCommande" Type="bigint" />
           <Property Name="dateCOMMANDE" Type="datetime" />
           <Property Name="etat" Type="nvarchar(max)" />
@@ -50,7 +50,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numEntree" Type="bigint" />
           <Property Name="quantite" Type="bigint" />
           <Property Name="dateEntree" Type="datetime" />
@@ -61,7 +61,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numF" Type="bigint" Nullable="false" />
           <Property Name="NomF" Type="nvarchar(max)" />
           <Property Name="adresse" Type="nvarchar(max)" />
@@ -76,7 +76,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="index" Type="bigint" />
           <Property Name="quantite" Type="bigint" />
           <Property Name="prix" Type="bigint" />
@@ -88,14 +88,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nomMagasin" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="RECEPTION">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numReception" Type="bigint" />
           <Property Name="dateReception" Type="datetime" />
           <Property Name="quantiteLivree" Type="bigint" />
@@ -104,7 +104,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numSortie" Type="bigint" />
           <Property Name="quantite" Type="bigint" />
           <Property Name="dateSortie" Type="datetime" />
@@ -145,6 +145,8 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="role" Type="int" Nullable="false" />
           <Property Name="roleLabel" Type="varchar" MaxLength="50" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" />
+          <Property Name="Image" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_ARTICLECATEGORIE_ART">
           <End Role="CATEGORIE_ART" Type="Self.CATEGORIE_ART" Multiplicity="1" />
@@ -329,6 +331,8 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="role" Type="Int32" Nullable="false" />
           <Property Name="roleLabel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="SolarThermalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="user" EntityType="Self.user" />
@@ -634,7 +638,9 @@
     <EntitySetMapping Name="user">
       <EntityTypeMapping TypeName="IsTypeOf(SolarThermalModel.user)">
         <MappingFragment StoreEntitySet="user">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="NormalizedUserName" ColumnName="NormalizedUserName" />
           <ScalarProperty Name="Email" ColumnName="Email" />

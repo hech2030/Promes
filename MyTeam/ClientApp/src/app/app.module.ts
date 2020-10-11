@@ -28,7 +28,6 @@ import 'hammerjs';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-details.component';
 import { ProfileComponent } from './bo/MainUser/profile/profile.component';
-import { UploadModule } from '@progress/kendo-angular-upload';
 
 import { ArticleComponent } from './bo/Article/article/article.component'
 
@@ -67,7 +66,7 @@ import { ArticleComponent } from './bo/Article/article/article.component'
     GridModule,
     ChartsModule,
     InputsModule,
-    PDFModule, ExcelModule, DropDownsModule, UploadModule
+    PDFModule, ExcelModule, DropDownsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
