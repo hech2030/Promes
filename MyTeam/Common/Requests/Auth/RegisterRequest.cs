@@ -9,5 +9,9 @@
         public string email { get; set; }
         public int role { get; set; }
         public string roleLabel { get; set; }
+        public string image { get; set; }
+        public string currentPassword { get; set; }
+        public string newPassword { get; set; }
+        public string phoneNumber { get; set; }
     }
 }

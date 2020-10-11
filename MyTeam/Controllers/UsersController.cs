@@ -34,20 +34,24 @@ namespace MyTeam.Controllers
             if (request.id != null)
             {
                 User = await _userManager.FindByIdAsync(request.id);
+                if (request.newPassword != null)
+                {
+                    var test = await _userManager.ChangePasswordAsync(User, request.currentPassword, request.newPassword);
+                    if(test.Succeeded== false)
+                    {
+                        return BadRequest(new { Message = test.Errors.FirstOrDefault().Description});
+                    }
+                }
                 User.UserName = request.username;
                 User.Email = request.email;
                 User.role = request.role;
                 User.roleLabel = request.roleLabel;
-                User.NormalizedEmail = request.fullName;
-                //User = new User
-                //{
-                //    Id = request.id != null ? request.id : null,
-                //    UserName = request.username,
-                //    Email = request.email,
-                //    NormalizedUserName = request.fullName,
-                //    role = request.role,
-                //    roleLabel = request.roleLabel
-                //};
+                User.FullName = request.fullName;
+                User.PhoneNumber = request.phoneNumber;
+                if (request.image!= null)
+                {
+                    User.Image = request.image;
+                }
             }
             else
             {
@@ -55,7 +59,7 @@ namespace MyTeam.Controllers
                 {
                     UserName = request.username,
                     Email = request.email,
-                    NormalizedUserName = request.fullName,
+                    FullName = request.fullName,
                     role = request.role,
                     roleLabel = request.roleLabel,
                 };
@@ -102,7 +106,7 @@ namespace MyTeam.Controllers
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                     var token = tokenHandler.WriteToken(securityToken);
-                    return Ok(new { token, user.NormalizedUserName, user.roleLabel, user.role });
+                    return Ok(new { token, user.UserName, user.roleLabel, user.role, user.Image });
                 }
                 else
                 {
@@ -124,13 +128,17 @@ namespace MyTeam.Controllers
             try
             {
                 var user = _userManager.Users;
+                if(Request.FullUserName!=null)
+                {
+                    user = user.Where(x => x.UserName == Request.FullUserName);
+                }
                 if (Request.id != null)
                 {
                     user = user.Where(x => x.Id == Request.id);
                 }
                 if (Request.UserName != null)
                 {
-                    user = user.Where(x => x.NormalizedUserName.Contains(Request.UserName));
+                    user = user.Where(x => x.FullName.Contains(Request.UserName));
                 }
                 if (Request.UserRole > 0)
                 {

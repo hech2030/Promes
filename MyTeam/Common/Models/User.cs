@@ -12,5 +12,10 @@ namespace MyTeam.Common.Models
         [Column(TypeName = "VARCHAR(50)")]
         public string roleLabel { get; set; }
 
+        [Column(TypeName = "VARCHAR(100)")]
+        public string FullName { get; set; }
+
+        public string Image { get; set; }
+
     }
 }
