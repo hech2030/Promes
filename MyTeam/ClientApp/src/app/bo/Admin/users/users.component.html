@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Full Name</label>
+                <label class="col-sm-3 col-form-label">Nom Complet</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" id="FulName" placeholder="Enter full name" name="fullName" [(ngModel)]="SearchCriteria.username">
                 </div>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">User Role</label>
+                <label class="col-sm-3 col-form-label">Role</label>
                 <div class="col-sm-9">
                   <kendo-dropdownlist [data]="Roles"
                                       [textField]="'Label'"
@@ -58,9 +58,9 @@
                       [resizable]="true"
                       [height]="480"
                       [columnMenu]="{ filter: true }">
-            <kendo-grid-column title="Full Name" field="fullName"></kendo-grid-column>
-            <kendo-grid-column title="User Name" field="userName"></kendo-grid-column>
-            <kendo-grid-column field="email">
+            <kendo-grid-column title="Nom Complet" field="fullName"></kendo-grid-column>
+            <kendo-grid-column title="Nom Utilisateur" field="userName"></kendo-grid-column>
+            <kendo-grid-column field="email" title="Email">
               <!--<ng-template kendoGridCellTemplate let-dataItem>
       <a [routerLink]="['/Users/UsersDetails',dataItem.id]">
         {{ dataItem.email }}
@@ -68,7 +68,7 @@
     </ng-template>-->
             </kendo-grid-column>
             <kendo-grid-column title="Role" field="roleLabel"></kendo-grid-column>
-            <kendo-grid-column title="Phone number" field="phoneNumber"></kendo-grid-column>
+            <kendo-grid-column title="Numéro de téléphone" field="phoneNumber"></kendo-grid-column>
             <kendo-grid-column title="Action">
               <ng-template kendoGridCellTemplate let-dataItem>
                 <button class="close rounded-circle col-md-6" kendoButton (click)="DeleteUser(dataItem.id)">
@@ -80,6 +80,27 @@
                 </button>
               </ng-template>
             </kendo-grid-column>
+            <kendo-grid-messages filterContainsOperator="Contient"
+                                 filterEndsWithOperator="Termine par"
+                                 filterEqOperator="égale"
+                                 filterNotEqOperator="Différent de"
+                                 filterNotContainsOperator="Ne contient pas"
+                                 filterStartsWithOperator="Commence par"
+                                 filterIsNullOperator="Est Null"
+                                 filterIsNotNullOperator="N'est pas NULL"
+                                 filterIsEmptyOperator="Est vide"
+                                 filterIsNotEmptyOperator="N'est pas Vide"
+                                 noRecords="Aucun élément a afficher"
+                                 filter="Filtrer"
+                                 columns="Colonnes"
+                                 columnsApply="Confirmer"
+                                 columnsReset="Supprimer"
+                                 sortAscending="Tri ascendant"
+                                 sortDescending="Tri descendant"
+                                 pagerOf="de"
+                                 groupPanelEmpty="Faites glisser les colonnes ici pour grouper"
+                                 >
+            </kendo-grid-messages>
           </kendo-grid>
           <div *ngIf="Isloading" class="k-i-loading"></div>
         </div>
@@ -104,27 +125,27 @@
             <div class="card-body">
               <form class="forms-sample" (ngSubmit)="AddUser(userModel)" validate>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
+                  <label for="exampleInputEmail1">Adresse Email</label>
                   <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" [(ngModel)]="userModel.email" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">User Name</label>
+                  <label for="exampleInputEmail1">Nom de l'utilisateur</label>
                   <input type="email" class="form-control" id="username" placeholder="Enter User Name" name="username" [(ngModel)]="userModel.username" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">full Name</label>
+                  <label for="exampleInputEmail1">Nom Complet</label>
                   <input type="email" class="form-control" id="fullName" placeholder="Enter full Name" name="fullName" [(ngModel)]="userModel.fullName" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
+                  <label for="exampleInputPassword1">Mot de passe</label>
                   <input type="password" class="form-control" id="Password" placeholder="Password" name="Password" [(ngModel)]="userModel.Password" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Repeat Password</label>
+                  <label for="exampleInputPassword1">Repeter mot de passe</label>
                   <input type="password" class="form-control" id="RepeatedPassword" placeholder="Password" name="RepeatedPassword" [(ngModel)]="userModel.RepeatedPassword" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleFormControlSelect3">Select Role</label>
+                  <label for="exampleFormControlSelect3">Role</label>
                   <select class="form-control form-control-sm" id="role" [(ngModel)]="userModel.roleLabel" name="role" required>
                     <option>Gestionnaire</option>
                     <option>Superviseur</option>
