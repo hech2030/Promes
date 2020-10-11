@@ -17,12 +17,14 @@ export class sideMenuComponent implements OnInit {
   userName$: Observable<string>;
   userRole$: Observable<string>;
   RoleId$: Observable<number>;
+  appImage$: Observable<string>;
 
   ngOnInit(): void {
     //this.loggedIn$ = this.service.isLoggedIn;
     this.userName$ = this.service.getUserName;
     this.userRole$ = this.service.getuserRole;
     this.RoleId$ = this.service.getuserRoleId;
+    this.appImage$ = this.service.GetAppImage;
   }
   GetUsers() {
     this.router.navigate(['/Users']);
@@ -36,5 +38,8 @@ export class sideMenuComponent implements OnInit {
 
   GetHome() {
     this.router.navigate(['/Home']);
+  }
+  EditProfile() {
+    this.router.navigate(['/User/MyProfile']);
   }
 }

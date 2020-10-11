@@ -2,8 +2,8 @@ export class User {
   constructor() {
     this.id = '';
   }
-  id: string ='';
-  username: string;
+  id: string = '';
+  fullName: string;
   phoneNumber: string;
   accessFailedCount: number;
   email: string;
@@ -13,4 +13,7 @@ export class User {
   roleLabel: string;
   role: number;
   userName: string;
+  image: string | ArrayBuffer;
+  currentPassword: string;
+  newPassword: string;
 }

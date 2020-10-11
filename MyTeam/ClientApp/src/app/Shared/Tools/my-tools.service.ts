@@ -21,4 +21,8 @@ export class MyToolsService {
     })
   }
 
+  base64ArrayBuffer(arrayBuffer) {
+    var base64=''
+  }
+
 }

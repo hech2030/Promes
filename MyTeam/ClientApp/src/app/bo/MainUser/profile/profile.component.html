@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Mon Profil</h4>
+        <form class="form-sample" (ngSubmit)="UpdateProfile()">
+          <p class="card-description">Information Personnel </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nom et Prénom</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="profile.fullName" name="fullname" id="fullname" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nom Utilisateur</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="profile.userName" name="username" id="username" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">N. téléphone</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" [(ngModel)]="profile.phoneNumber" name="phoneNumber" id="phoneNumber" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Adresse Email</label>
+                <div class="col-sm-9">
+                  <input type="email" class="form-control" [(ngModel)]="profile.email" name="emailAdresse" id="emailAd" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Image</label>
+                <!--<input id="ImageToUpload" type="file" name="Doc" accept=".jpeg" [(ngModel)]="myFiles" (change)="changeListener($event)" />-->
+                <input type="file" name="img" id="FileUploader" class="file-upload-default" accept=".jpg" (change)="changeListener($event)">
+                <div class="input-group col-sm-9">
+                  <input type="text" class="form-control file-upload-info" disabled [(ngModel)]="FileName" placeholder="{{FileName}}" name="FileName">
+                  <span class="input-group-append">
+                    <button class="file-upload-browse btn btn-info" type="button" id="ImageToUpload" (click)="UploadImage()">Télécharger</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Changer le mot de passe ?</label>
+                <div class="col-sm-4">
+                  <div class="form-radio">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="true" [(ngModel)]="PasswordOption"> Oui
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-5">
+                  <div class="form-radio">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="false" [(ngModel)]="PasswordOption" checked> Non
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="PasswordOption == 'true'">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Ancien Mot de passe</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" [(ngModel)]="profile.currentPassword" name="currentPassword" id="currentPassword" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nouveau mot de passe</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" [(ngModel)]="profile.newPassword" name="newPassword" id="newPassword" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-success">Sauvegarder</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

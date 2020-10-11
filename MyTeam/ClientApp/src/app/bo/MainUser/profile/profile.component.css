@@ -1,0 +1,7 @@
+.k-action-buttons ng-star-inserted{
+    visibility:hidden;
+}
+
+.k-clear-selected, .k-upload-selected {
+  display: none !important;
+}

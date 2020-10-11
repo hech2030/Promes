@@ -20,6 +20,7 @@ export class UserService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private userName = new BehaviorSubject<string>('');
   private userRole = new BehaviorSubject<string>('');
+  private appImage = new BehaviorSubject<string>('');
   private RoleId = new BehaviorSubject<number>(-1);
 
   get isLoggedIn() {
@@ -47,19 +48,45 @@ export class UserService {
     }
     return this.RoleId.asObservable();
   }
+  get GetAppImage() {
+    if (sessionStorage.getItem('resImage') != 'null') {
+      this.appImage.next(sessionStorage.getItem('resImage'));
+    }
+    else {
+      this.appImage.next('../../assets/images/faces/face8.jpg');
+    }
+    return this.appImage.asObservable();
+  }
 
+  updateAppImage(ImageSource) {
+    sessionStorage.setItem('resImage', ImageSource);
+    this.appImage.next(ImageSource);
+  }
+
+  GetProfileUser(UserName) {
+    var host = this.BaseURI + '/fw/Users/FindUser';
+    return this.http.post(host, { 'FullUserName': UserName }).pipe(
+      map((data: User[]) => {
+        return data;
+      }), catchError(error => {
+        return throwError('Something went wrong!');
+      })
+    )
+  }
   login(formData) {
     var host = this.BaseURI + '/fw/Users/login';
     return this.http.post(host, formData)
       .subscribe(
         (res: any) => {
           localStorage.setItem('token', res.token);
-          localStorage.setItem('UserName', res.normalizedUserName);
+          localStorage.setItem('UserName', res.userName);
           localStorage.setItem('Role', res.roleLabel);
-          sessionStorage.setItem('RoleId', res.role)
+          sessionStorage.setItem('RoleId', res.role);
+          sessionStorage.setItem('resImage', res.image);
           this.userName.next(res.normalizedUserName);
           this.userRole.next(res.roleLabel);
           this.RoleId.next(res.role);
+          this.appImage.next(res.image);
           var element = document.getElementById("MainClass");
           element.classList.add("container-fluid");
           element.classList.add("page-body-wrapper");

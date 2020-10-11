@@ -27,7 +27,11 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import 'hammerjs';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-details.component';
-import { ArticleComponent } from './bo/Article/article/article.component';
+import { ProfileComponent } from './bo/MainUser/profile/profile.component';
+import { UploadModule } from '@progress/kendo-angular-upload';
+
+import { ArticleComponent } from './bo/Article/article/article.component'
+
 
 
 @NgModule({
@@ -41,7 +45,7 @@ import { ArticleComponent } from './bo/Article/article/article.component';
     AdminUsersComponent,
     StockComponent,
     UsersDetailsComponent,
-    ArticleComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -53,15 +57,16 @@ import { ArticleComponent } from './bo/Article/article/article.component';
       { path: 'Home', component: HomeComponent, canActivate: [AuthGuard] },
       { path: 'Users', component: AdminUsersComponent, canActivate: [RoleGuard]},
       { path: 'Stock', component: StockComponent, canActivate: [AuthGuard] },
-      { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] },
       { path: 'Users/UsersDetails/:id', component: UsersDetailsComponent, canActivate: [RoleGuard] },
+      { path: 'User/MyProfile', component: ProfileComponent, canActivate: [AuthGuard] },
+      { path: 'Article', component: ProfileComponent, canActivate: [AuthGuard] }
     ]),
     //InputsModule,
     BrowserAnimationsModule,
     GridModule,
     ChartsModule,
     InputsModule,
-    PDFModule, ExcelModule, DropDownsModule
+    PDFModule, ExcelModule, DropDownsModule, UploadModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
