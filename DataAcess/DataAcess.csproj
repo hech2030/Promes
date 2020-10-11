@@ -171,11 +171,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SolarModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="SolarModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SolarModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SolarModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
