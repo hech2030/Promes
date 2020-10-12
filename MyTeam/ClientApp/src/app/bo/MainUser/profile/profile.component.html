@@ -28,7 +28,7 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">N. téléphone</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control" [(ngModel)]="profile.phoneNumber" name="phoneNumber" id="phoneNumber" />
+                  <input type="number" min="8" max="20" class="form-control" [(ngModel)]="profile.phoneNumber" name="phoneNumber" id="phoneNumber" />
                 </div>
               </div>
             </div>

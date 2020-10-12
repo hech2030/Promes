@@ -59,6 +59,10 @@ export class UserService {
     return this.appImage.asObservable();
   }
 
+  updateUserName(userName) {
+    localStorage.setItem('UserName', userName);
+    this.userName.next(userName);
+  }
   updateAppImage(ImageSource) {
     sessionStorage.setItem('resImage', ImageSource);
     this.appImage.next(ImageSource);

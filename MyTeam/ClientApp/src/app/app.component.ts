@@ -12,20 +12,20 @@ export class AppComponent  {
   constructor(private service: UserService) {}
 
   ngOnInit(): void {
-    window.addEventListener("beforeunload", function (e) {
-      if (localStorage.getItem('UserName')) {
-        localStorage.clear();
-      }
-    });
+    //window.addEventListener("beforeunload", function (e) {
+    //  if (localStorage.getItem('UserName')) {
+    //    localStorage.clear();
+    //  }
+    //});
     this.loggedIn$ = this.service.isLoggedIn;
     var mainPanel = document.getElementById("mainPanel");
     if (!mainPanel.classList.contains("main-panel")) {
       mainPanel.classList.add("main-panel");
     }
   }
-  @HostListener("window:onbeforeunload", ["$event"])
-  clearLocalStorage(event) {
-    localStorage.clear();
-    console.log('####Destroy local storage####');
-  }
+  //@HostListener("window:onbeforeunload", ["$event"])
+  //clearLocalStorage(event) {
+  //  localStorage.clear();
+  //  console.log('####Destroy local storage####');
+  //}
 }

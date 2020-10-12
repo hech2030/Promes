@@ -23,11 +23,12 @@ export class ProfileComponent implements OnInit {
       this.profile.currentPassword = null;
       this.profile.newPassword = null;
     }
-    console.log(this.profile);
+    this.profile.phoneNumber = this.profile.phoneNumber.toString();
     this.userService.register(this.profile).subscribe(
       (res: any) => {
         if (res.succeeded) {
           this.userService.updateAppImage(this.profile.image);
+          this.userService.updateUserName(this.profile.userName);
           this.tools.ShowSuccessNotification("User", "Utilisateur mis à jour", '10000');
         }
         else {
