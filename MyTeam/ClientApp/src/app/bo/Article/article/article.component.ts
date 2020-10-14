@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../../../Models/bo/Stock/article';
-import { ArticleService } from '../../../Shared/Stock/article.service';
+import { Article } from '../../../Models/bo/Stock/Article/article';
+import { ArticleService } from '../../../Shared/Stock/Article/article.service';
 
 @Component({
   templateUrl: './article.component.html',
