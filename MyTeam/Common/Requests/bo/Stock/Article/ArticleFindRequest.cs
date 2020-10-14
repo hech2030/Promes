@@ -1,8 +1,8 @@
 ﻿namespace MyTeam.Common.Requests.bo.Users
 {
-    public class ArticleRequest
+    public class ArticleFindRequest
     {
-        public string id { get; set; }
+        public long id { get; set; }
     }
 }
 

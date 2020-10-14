@@ -1,4 +1,4 @@
-import { Commande } from "./commande";
+import { Commande } from ".././Commande/commande";
 
 export class Reception {
   constructor() {

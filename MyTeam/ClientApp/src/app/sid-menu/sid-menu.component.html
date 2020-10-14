@@ -15,10 +15,21 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="javascript:void(0)" (click)="GetArticle()">
-      <i class="menu-icon typcn typcn-user-outline"></i>
-      <span class="menu-title">Article</span>
+    <a class="nav-link" data-toggle="collapse" data-target="#ui-Stock" aria-expanded="false" aria-controls="ui-basic">
+      <i class="menu-icon typcn typcn-coffee"></i>
+      <span class="menu-title">Stock</span>
+      <i class="menu-arrow"></i>
     </a>
+    <div class="collapse" id="ui-Stock">
+      <ul class="nav flex-column sub-menu">
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)" (click)="GetArticle()">
+            <i class="menu-icon typcn typcn-user-outline"></i>
+            <span class="menu-title">Article</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </li>
 
   <li class="nav-item" *ngIf="(RoleId$| async)== 3">

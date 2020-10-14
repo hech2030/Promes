@@ -1,5 +1,5 @@
-import { Article } from "./article";
-import { Commande } from "./commande";
+import { Article } from ".././Article/article";
+import { Commande } from ".././Commande/commande";
 
 export class Fournisseur {
   constructor() {

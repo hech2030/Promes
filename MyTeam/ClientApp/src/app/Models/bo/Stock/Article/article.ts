@@ -1,9 +1,9 @@
-import { CategorieArt } from "./categorie-art";
-import { Entree } from "./entree";
-import { Sortie } from "./sortie";
-import { LigneCommande } from "./ligne-commande";
-import { Fournisseur } from "./fournisseur";
-import { Magasin } from "./magasin";
+import { CategorieArt } from ".././Categorie-Art/categorie-art";
+import { Entree } from ".././Entree/entree";
+import { Sortie } from ".././Sortie/sortie";
+import { LigneCommande } from ".././Ligne-Commande/ligne-commande";
+import { Fournisseur } from ".././Fournisseur/fournisseur";
+import { Magasin } from ".././Magasin/magasin";
 
 export class Article {
   constructor() {

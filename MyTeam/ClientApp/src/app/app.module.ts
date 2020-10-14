@@ -28,8 +28,9 @@ import 'hammerjs';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-details.component';
 import { ProfileComponent } from './bo/MainUser/profile/profile.component';
+import { ArticleComponent } from './bo/Stock/Article/article.component';
+import { ArticleDetailsComponent } from './bo/Stock/Article/articleDetails/article-details.component';
 
-import { ArticleComponent } from './bo/Article/article/article.component'
 
 
 
@@ -45,7 +46,8 @@ import { ArticleComponent } from './bo/Article/article/article.component'
     StockComponent,
     UsersDetailsComponent,
     ProfileComponent,
-    ArticleComponent
+    ArticleComponent,
+    ArticleDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -59,7 +61,8 @@ import { ArticleComponent } from './bo/Article/article/article.component'
       { path: 'Stock', component: StockComponent, canActivate: [AuthGuard] },
       { path: 'Users/UsersDetails/:id', component: UsersDetailsComponent, canActivate: [RoleGuard] },
       { path: 'User/MyProfile', component: ProfileComponent, canActivate: [AuthGuard] },
-      { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] }
+      { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] },
+      { path: 'Article/articleDetails/:id', component: ArticleDetailsComponent, canActivate: [RoleGuard] }
     ]),
     //InputsModule,
     BrowserAnimationsModule,

@@ -1,4 +1,4 @@
-import { LigneCommande } from "./ligne-commande";
+import { LigneCommande } from ".././Ligne-Commande/ligne-commande";
 
 export class Commande {
   constructor() {

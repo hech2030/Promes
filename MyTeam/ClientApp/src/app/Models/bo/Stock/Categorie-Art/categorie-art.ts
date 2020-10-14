@@ -1,4 +1,4 @@
-import { Article } from "./article";
+import { Article } from ".././Article/article";
 
 export class CategorieArt {
   constructor() {
