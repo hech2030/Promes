@@ -4,6 +4,7 @@ import { User } from '../../../Models/bo/user.model';
 import { UserService } from '../../../Shared/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +24,9 @@ export class ProfileComponent implements OnInit {
       this.profile.currentPassword = null;
       this.profile.newPassword = null;
     }
-    this.profile.phoneNumber = this.profile.phoneNumber.toString();
+    if (this.profile.phoneNumber != null) {
+      this.profile.phoneNumber = this.profile.phoneNumber.toString();
+    }
     this.userService.register(this.profile).subscribe(
       (res: any) => {
         if (res.succeeded) {
@@ -67,13 +70,18 @@ export class ProfileComponent implements OnInit {
     const reader = new FileReader();
     if (inputValue.files && inputValue.files.length) {
       var image: File = inputValue.files[0];
-      this.FileName = image.name;
+      if (image.size < 1000000) {
+        this.FileName = image.name;
 
-      reader.readAsDataURL(image);
+        reader.readAsDataURL(image);
 
-      reader.onload = () => {
-        this.profile.image = reader.result;
-      };
+        reader.onload = () => {
+          this.profile.image = reader.result;
+        };
+      }
+      else {
+        Swal.fire('Oops...', "La taille maximale d'image est 1MB", 'error');
+      }
     }
   }
 }

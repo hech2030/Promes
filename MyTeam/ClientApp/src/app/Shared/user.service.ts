@@ -110,10 +110,10 @@ export class UserService {
         },
         err => {
           if (err.status == 400) {
-            Swal.fire('Oops...', "user name or password are incorrect", 'error')
+            Swal.fire('Oops...', "Nom utilisateur ou mot de passe est incorrecte", 'error')
           }
           else {
-            Swal.fire('Oops...', 'Something wrong with the serveur, please contact your administrator', 'error')
+            Swal.fire('Oops...', 'Quelque chose ne va pas... Veuillez contacter l\'administrateur', 'error')
             console.log(err);
           }
         }

@@ -97,11 +97,11 @@ export class AdminUsersComponent implements OnInit {
 
   AddUser(Userform: NgForm) {
     if (this.userModel.Password != this.userModel.RepeatedPassword) {
-      Swal.fire('Oops...', "Passwords don't match", 'error');
+      Swal.fire('Oops...', "Les mot de passes ne sont pas identiques", 'error');
     }
     else {
       if (!this.validateEmail(this.userModel.email)) {
-        Swal.fire('Oops...', "Email Adress is not in correct format", 'error');
+        Swal.fire('Oops...', "Le format de l\'adresse email n\'est pas valide", 'error');
       } else {
         switch (this.userModel.roleLabel) {
           case "Admin":
@@ -120,7 +120,7 @@ export class AdminUsersComponent implements OnInit {
               this.ngOnInit();
               this.resetModel();
               $("[data-dismiss=modal]").trigger({ type: "click" });
-              this.tools.ShowSuccessNotification("User", "User Added Successfully", '10000');
+              this.tools.ShowSuccessNotification("User", "Utilisateur ajouté avec succeés", '10000');
             }
             else {
               Swal.fire('Oops...', res.errors[0].description, 'error');
@@ -128,7 +128,7 @@ export class AdminUsersComponent implements OnInit {
           },
           err => {
             if (err.status == 400) {
-              this.tools.ShowErrorNotification("User", "Something went wrong", '10000');
+              this.tools.ShowErrorNotification("User", "Quelque chose ne va pas... veillez contacter l\'administrateur", '10000');
             }
             else {
               return console.log(err);
