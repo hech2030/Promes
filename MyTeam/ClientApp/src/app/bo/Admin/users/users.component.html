@@ -3,7 +3,7 @@
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Context</h4>
+        <h4 class="card-title">Filtre</h4>
         <form class="form-sample" (ngSubmit)="ngOnInit()">
           <p class="card-description"></p>
           <div class="row">
@@ -11,13 +11,13 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Nom Complet</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="FulName" placeholder="Enter full name" name="fullName" [(ngModel)]="SearchCriteria.username">
+                  <input type="text" class="form-control" id="FulName" placeholder="Chercher ici" name="fullName" [(ngModel)]="SearchCriteria.username">
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Role</label>
+                <label class="col-sm-3 col-form-label">Rôle</label>
                 <div class="col-sm-9">
                   <kendo-dropdownlist [data]="Roles"
                                       [textField]="'Label'"
@@ -29,8 +29,8 @@
             </div>
           </div>
           <div class="col-md-12 text-right">
-              <button class="btn btn-light  mr-5" (click)="InitSearchCriteria()">Reset</button>
-              <button type="submit" class="btn btn-success">Search</button>
+            <button class="btn btn-light  mr-5" (click)="InitSearchCriteria()">Réinitialiser</button>
+              <button type="submit" class="btn btn-success">Chercher</button>
           </div>
         </form>
       </div>
@@ -42,8 +42,8 @@
       <div class="col-md-12 col-sm-12">
         <br />
 
-        <button type="button" class="btn btn-dark btn-fw float-right" data-toggle="modal" data-target="#userModal">Add user</button>
-        <h4 class="card-title">Users Table</h4>
+        <button type="button" class="btn btn-dark btn-fw float-right" data-toggle="modal" data-target="#userModal">Ajouter</button>
+        <h4 class="card-title">Liste des utilisateurs</h4>
       </div>
       <div class="card-body">
         <div class="grid-wrapper">
@@ -58,8 +58,8 @@
                       [resizable]="true"
                       [height]="480"
                       [columnMenu]="{ filter: true }">
-            <kendo-grid-column title="Nom Complet" field="fullName"></kendo-grid-column>
-            <kendo-grid-column title="Nom Utilisateur" field="userName"></kendo-grid-column>
+            <kendo-grid-column title="Nom complet" field="fullName"></kendo-grid-column>
+            <kendo-grid-column title="Nom d'utilisateur" field="userName"></kendo-grid-column>
             <kendo-grid-column field="email" title="Email">
               <!--<ng-template kendoGridCellTemplate let-dataItem>
       <a [routerLink]="['/Users/UsersDetails',dataItem.id]">
@@ -67,9 +67,9 @@
       </a>
     </ng-template>-->
             </kendo-grid-column>
-            <kendo-grid-column title="Role" field="roleLabel"></kendo-grid-column>
-            <kendo-grid-column title="Numéro de téléphone" field="phoneNumber"></kendo-grid-column>
-            <kendo-grid-column title="Action">
+            <kendo-grid-column title="Rôle" field="roleLabel"></kendo-grid-column>
+            <kendo-grid-column title="Téléphone" field="phoneNumber"></kendo-grid-column>
+            <kendo-grid-column title="Modifier">
               <ng-template kendoGridCellTemplate let-dataItem>
                 <button class="close rounded-circle col-md-6" kendoButton (click)="DeleteUser(dataItem.id)">
                   <span aria-hidden="true">&times;</span>
@@ -98,7 +98,7 @@
                                  sortAscending="Tri ascendant"
                                  sortDescending="Tri descendant"
                                  pagerOf="de"
-                                 groupPanelEmpty="Faites glisser les colonnes ici pour grouper"
+                                 groupPanelEmpty="Glisser les colonnes ici pour grouper"
                                  >
             </kendo-grid-messages>
           </kendo-grid>
@@ -114,7 +114,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="userModalLabel">User</h5>
+        <h5 class="modal-title" id="userModalLabel">Nouveau Utilisateur</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -125,27 +125,27 @@
             <div class="card-body">
               <form class="forms-sample" (ngSubmit)="AddUser(userModel)" validate>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Adresse Email</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" [(ngModel)]="userModel.email" required>
+                  <label for="exampleInputEmail1">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="Entrer l'adresse email" name="email" [(ngModel)]="userModel.email" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nom de l'utilisateur</label>
-                  <input type="email" class="form-control" id="username" placeholder="Enter User Name" name="username" [(ngModel)]="userModel.username" required>
+                  <input type="email" class="form-control" id="username" placeholder="Entrer le nom d'utilisateur" name="username" [(ngModel)]="userModel.username" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Nom Complet</label>
-                  <input type="email" class="form-control" id="fullName" placeholder="Enter full Name" name="fullName" [(ngModel)]="userModel.fullName" required>
+                  <label for="exampleInputEmail1">Nom complet</label>
+                  <input type="email" class="form-control" id="fullName" placeholder="Entrer le nom complet" name="fullName" [(ngModel)]="userModel.fullName" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Mot de passe</label>
-                  <input type="password" class="form-control" id="Password" placeholder="Password" name="Password" [(ngModel)]="userModel.Password" required>
+                  <input type="password" class="form-control" id="Password" placeholder="Entrer le mot de passe" name="Password" [(ngModel)]="userModel.Password" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Repeter mot de passe</label>
-                  <input type="password" class="form-control" id="RepeatedPassword" placeholder="Password" name="RepeatedPassword" [(ngModel)]="userModel.RepeatedPassword" required>
+                  <label for="exampleInputPassword1">Répéter le mot de passe</label>
+                  <input type="password" class="form-control" id="RepeatedPassword" placeholder="Répéter le mot de passe" name="RepeatedPassword" [(ngModel)]="userModel.RepeatedPassword" required>
                 </div>
                 <div class="form-group">
-                  <label for="exampleFormControlSelect3">Role</label>
+                  <label for="exampleFormControlSelect3">Rôle</label>
                   <select class="form-control form-control-sm" id="role" [(ngModel)]="userModel.roleLabel" name="role" required>
                     <option>Gestionnaire</option>
                     <option>Superviseur</option>
@@ -153,8 +153,8 @@
                   </select>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Quitter</button>
+                  <button type="submit" class="btn btn-primary">Sauvegarder</button>
                 </div>
               </form>
             </div>

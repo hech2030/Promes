@@ -3,15 +3,15 @@
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Context</h4>
+        <h4 class="card-title">Filtre</h4>
         <form class="form-sample" (ngSubmit)="ngOnInit()">
           <p class="card-description"></p>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Designation</label>
+                <label class="col-sm-3 col-form-label">Désignation</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="designation" placeholder="Enter designation" name="designation" [(ngModel)]="SearchCriteria.designation">
+                  <input type="text" class="form-control" id="designation" placeholder="Chercher ici" name="designation" [(ngModel)]="SearchCriteria.designation">
                 </div>
               </div>
             </div>
@@ -29,8 +29,8 @@
             </div>
           </div>
           <div class="col-md-12 text-right">
-            <button class="btn btn-light  mr-5" (click)="InitSearchCriteria()">Reset</button>
-            <button type="submit" class="btn btn-success">Search</button>
+            <button class="btn btn-light  mr-5" (click)="InitSearchCriteria()">Réinitialiser</button>
+            <button type="submit" class="btn btn-success">Chercher</button>
           </div>
         </form>
       </div>
@@ -42,8 +42,8 @@
       <div class="col-md-12 col-sm-12">
         <br />
 
-        <button type="button" class="btn btn-dark btn-fw float-right" data-toggle="modal" data-target="#articleModal">Add ARTICLE</button>
-        <h4 class="card-title">Article Table</h4>
+        <button type="button" class="btn btn-dark btn-fw float-right" data-toggle="modal" data-target="#articleModal">Ajouter</button>
+        <h4 class="card-title">Liste des articles</h4>
       </div>
       <div class="card-body">
         <div class="grid-wrapper">
@@ -96,7 +96,7 @@
                                  sortAscending="Tri ascendant"
                                  sortDescending="Tri descendant"
                                  pagerOf="de"
-                                 groupPanelEmpty="Faites glisser les colonnes ici pour grouper">
+                                 groupPanelEmpty="Glisser les colonnes ici pour grouper">
             </kendo-grid-messages>
           </kendo-grid>
           <div *ngIf="Isloading" class="k-i-loading"></div>
