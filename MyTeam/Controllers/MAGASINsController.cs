@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAcess;
 using Microsoft.AspNetCore.Mvc;
-
+using MyTeam.Common.Requests.bo.Users;
 
 namespace MyTeam.Controllers
 {
@@ -18,11 +19,24 @@ namespace MyTeam.Controllers
             ArtDetails = MAGASINContext;
         }
 
-        [HttpGet]
-        public IEnumerable<MAGASIN> Get()
+        [HttpPost]
+        [Route("FindMAGASIN")]
+        public IEnumerable<MAGASIN> findMAGASIN(MAGASINFindRequest request)
         {
-            var data = ArtDetails.MAGASIN.ToList();
-            return data;
+            IEnumerable<MAGASIN> data;
+            if (request.id > 0)
+            {
+                 data = (from a in ArtDetails.MAGASIN
+                                .Include("ARTICLE")
+                               select a).Where(a => a.Id == request.id);
+            }
+            else
+            {
+                 data = (from a in ArtDetails.MAGASIN
+                                .Include("ARTICLE")
+                            select a);
+            }
+            return data.ToList();
         }
 
         [HttpPost]

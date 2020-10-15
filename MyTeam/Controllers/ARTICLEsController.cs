@@ -26,11 +26,11 @@ namespace MyTeam.Controllers
             IEnumerable<ARTICLE> data;
             if (request.id > 0)
             {
-                 data = (from a in ArtDetails.ARTICLE
+                data = (from a in ArtDetails.ARTICLE
                                 .Include("CATEGORIE_ART")
                                 .Include("FOURNISSEUR")
                                 .Include("MAGASIN")
-                               select a).Where(a => a.Id == request.id);
+                               select a).Where(a => a.Id == request.id).ToList();
             }
             else
             {

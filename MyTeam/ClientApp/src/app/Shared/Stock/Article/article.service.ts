@@ -23,6 +23,11 @@ export class ArticleService {
       })
     )
   }
+  addArticle(form) {
+    var host = this.BaseURI + '/ARTICLEs';
+    return this.http.post(host, form);    
+  }
+
   DeleteArticle(id) {
     var host = this.BaseURI + '/ARTICLEs/' + id;
     return this.http.delete(host).pipe(

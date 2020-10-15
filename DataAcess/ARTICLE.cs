@@ -17,6 +17,9 @@ namespace DataAcess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ARTICLE()
         {
+            this.CATEGORIE_ART = new CATEGORIE_ART();
+            this.FOURNISSEUR = new FOURNISSEUR();
+            this.MAGASIN = new MAGASIN();
             this.ENTREE = new HashSet<ENTREE>();
             this.SORTIE = new HashSet<SORTIE>();
             this.LIGNE_COMMANDE = new HashSet<LIGNE_COMMANDE>();

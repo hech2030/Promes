@@ -4,8 +4,10 @@ import { ArticleService } from '../../../Shared/Stock/Article/article.service';
 import { MagasinService } from '../../../Shared/Stock/Magasin/magasin.service';
 import { Magasin } from '../../../Models/bo/Stock/Magasin/magasin';
 import Swal from 'sweetalert2';
+import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
+import { NgForm } from '@angular/forms';
 
 
 
@@ -16,7 +18,7 @@ import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
 })
 export class ArticleComponent implements OnInit {
   root = "Article/articleDetails/";
-  userModel = {
+  articleModel = {
     designation: '',
     unit: '',
     quantite: -1,
@@ -104,44 +106,50 @@ export class ArticleComponent implements OnInit {
       }
     })
   }
-  //AddArticle(Userform: NgForm) {
-  //  if (!this.validateEmail(this.userModel.email)) {
-  //    Swal.fire('Oops...', "Email Adress is not in correct format", 'error');
-  //  } else {
-  //    switch (this.userModel.roleLabel) {
-  //      case "Admin":
-  //        this.userModel.role = 3;
-  //        break
-  //      case "Gestionnaire":
-  //        this.userModel.role = 1;
-  //        break;
-  //      case "Superviseur":
-  //        this.userModel.role = 2;
-  //        break;
-  //    }
-  //    this.userService.register(this.userModel).subscribe(
-  //      (res: any) => {
-  //        if (res.succeeded) {
-  //          this.ngOnInit();
-  //          this.resetModel();
-  //          $("[data-dismiss=modal]").trigger({ type: "click" });
-  //          this.tools.ShowSuccessNotification("User", "User Added Successfully", '10000');
-  //        }
-  //        else {
-  //          Swal.fire('Oops...', res.errors[0].description, 'error');
-  //        }
-  //      },
-  //      err => {
-  //        if (err.status == 400) {
-  //          this.tools.ShowErrorNotification("User", "Something went wrong", '10000');
-  //        }
-  //        else {
-  //          return console.log(err);
-  //        }
-  //      }
-  //    );
-  //  }
-  //}
+  AddArticle(Userform: NgForm) {    
+  this.articleService.addArticle(this.articleModel).subscribe(
+      (res: any) => {
+        if (res.succeeded) {
+          this.ngOnInit();
+          this.resetModel();
+          $("[data-dismiss=modal]").trigger({ type: "click" });
+          this.tools.ShowSuccessNotification("User", "User Added Successfully", '10000');
+        }
+        else {
+          Swal.fire('Oops...', res.errors[0].description, 'error');
+        }
+      },
+      err => {
+        if (err.status == 400) {
+          this.tools.ShowErrorNotification("User", "Something went wrong", '10000');
+        }
+        else {
+          return console.log(err);
+        }
+      }
+    );
+  }
+
+  resetModel(){
+    this.articleModel =
+    {
+        designation: '',
+        unit: '',
+        quantite: -1,
+        prix: -1,
+        newAttr: -1,
+        emplacement: '',
+        CATEGORIE_ARTId: -1,
+        FOURNISSEURId: -1,
+        MAGASINId: -1,
+        CATEGORIE_ART: null,
+        ENTREE: null,
+        SORTIE: null,
+        LIGNE_COMMANDE: null,
+        FOURNISSEUR: null,
+        MAGASIN: null
+    };
+  }
   UpdateArticle(id) {
     this.router.navigate([this.root + id]);
   }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAcess;
 using Microsoft.AspNetCore.Mvc;
-
+using MyTeam.Common.Requests.bo.Users;
 
 namespace MyTeam.Controllers
 {
@@ -18,11 +19,26 @@ namespace MyTeam.Controllers
             ArtDetails = FOURNISSEURContext;
         }
 
-        [HttpGet]
-        public IEnumerable<FOURNISSEUR> Get()
+        [HttpPost]
+        [Route("FindFOURNISSEUR")]
+        public IEnumerable<FOURNISSEUR> findFOURNISSEUR(FOURNISSEURFindRequest request)
         {
-            var data = ArtDetails.FOURNISSEUR.ToList();
-            return data;
+            IEnumerable<FOURNISSEUR> data;
+            if (request.id > 0)
+            {
+                 data = (from a in ArtDetails.FOURNISSEUR
+                                .Include("ARTICLE")
+                                .Include("COMMANDE")
+                               select a).Where(a => a.Id == request.id);
+            }
+            else
+            {
+                 data = (from a in ArtDetails.FOURNISSEUR
+                                .Include("ARTICLE")
+                                .Include("COMMANDE")
+                            select a);
+            }
+            return data.ToList();
         }
 
         [HttpPost]
