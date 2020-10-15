@@ -21,7 +21,7 @@ namespace MyTeam.Controllers
 
         [HttpPost]
         [Route("FindFOURNISSEUR")]
-        public IEnumerable<FOURNISSEUR> findFOURNISSEUR(FOURNISSEURFindRequest request)
+        public IActionResult findFOURNISSEUR(FOURNISSEURFindRequest request)
         {
             IEnumerable<FOURNISSEUR> data;
             if (request.id > 0)
@@ -38,7 +38,7 @@ namespace MyTeam.Controllers
                                 .Include("COMMANDE")
                             select a);
             }
-            return data.ToList();
+            return Ok(new { result = data.ToList() });
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.FOURNISSEUR.Add(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
         [HttpPut("{id}")]
@@ -54,18 +54,26 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.FOURNISSEUR.Update(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.FOURNISSEUR.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.FOURNISSEUR.Remove(data);
-            ArtDetails.SaveChanges();
-            return Ok();
-
+            bool success = false;
+            try
+            {
+                var data = ArtDetails.FOURNISSEUR.Where(a => a.Id == id).FirstOrDefault();
+                ArtDetails.FOURNISSEUR.Remove(data);
+                ArtDetails.SaveChanges();
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { success });
+            }
         }
     }
 }

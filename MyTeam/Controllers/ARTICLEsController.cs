@@ -21,7 +21,7 @@ namespace MyTeam.Controllers
 
         [HttpPost]
         [Route("FindArticle")]
-        public IEnumerable<ARTICLE> findArticle(ArticleFindRequest request)
+        public IActionResult findArticle(ArticleFindRequest request)
         {
             IEnumerable<ARTICLE> data;
             if (request.id > 0)
@@ -30,17 +30,17 @@ namespace MyTeam.Controllers
                                 .Include("CATEGORIE_ART")
                                 .Include("FOURNISSEUR")
                                 .Include("MAGASIN")
-                               select a).Where(a => a.Id == request.id).ToList();
+                        select a).Where(a => a.Id == request.id).ToList();
             }
             else
             {
-                 data = (from a in ArtDetails.ARTICLE
-                                .Include("CATEGORIE_ART")
-                                .Include("FOURNISSEUR")
-                                .Include("MAGASIN")
-                            select a);
+                data = (from a in ArtDetails.ARTICLE
+                               .Include("CATEGORIE_ART")
+                               .Include("FOURNISSEUR")
+                               .Include("MAGASIN")
+                        select a);
             }
-            return data.ToList();
+            return Ok(new { result = data.ToList() });
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.ARTICLE.Add(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
         [HttpPut("{id}")]
@@ -56,18 +56,26 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.ARTICLE.Update(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.ARTICLE.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.ARTICLE.Remove(data);
-            ArtDetails.SaveChanges();
-            return Ok();
-
+            bool success = false;
+            try
+            {
+                var data = ArtDetails.ARTICLE.Where(a => a.Id == id).FirstOrDefault();
+                ArtDetails.ARTICLE.Remove(data);
+                ArtDetails.SaveChanges();
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { success });
+            }
         }
     }
 }

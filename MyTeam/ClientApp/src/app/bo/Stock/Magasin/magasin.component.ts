@@ -16,8 +16,8 @@ export class MagasinComponent implements OnInit {
   ngOnInit() {
     this.magasinService.GetMagasin(null)
       .subscribe((data: any) => {
-        console.log(data);
-        this.products = data;
+        console.log(data.result);
+        this.products = data.result;
       });
   }
 

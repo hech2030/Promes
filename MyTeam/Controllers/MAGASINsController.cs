@@ -21,7 +21,7 @@ namespace MyTeam.Controllers
 
         [HttpPost]
         [Route("FindMAGASIN")]
-        public IEnumerable<MAGASIN> findMAGASIN(MAGASINFindRequest request)
+        public IActionResult findMAGASIN(MAGASINFindRequest request)
         {
             IEnumerable<MAGASIN> data;
             if (request.id > 0)
@@ -36,7 +36,7 @@ namespace MyTeam.Controllers
                                 .Include("ARTICLE")
                             select a);
             }
-            return data.ToList();
+            return Ok(new { result = data.ToList() });
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.MAGASIN.Add(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
         [HttpPut("{id}")]
@@ -52,18 +52,26 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.MAGASIN.Update(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.MAGASIN.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.MAGASIN.Remove(data);
-            ArtDetails.SaveChanges();
-            return Ok();
-
+            bool success = false;
+            try
+            {
+                var data = ArtDetails.MAGASIN.Where(a => a.Id == id).FirstOrDefault();
+                ArtDetails.MAGASIN.Remove(data);
+                ArtDetails.SaveChanges();
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { success });
+            }
         }
     }
 }

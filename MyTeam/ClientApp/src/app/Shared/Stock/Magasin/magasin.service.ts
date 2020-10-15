@@ -13,8 +13,8 @@ export class MagasinService {
   readonly BaseURI = 'https://localhost:44384/api';//TODO: add this value in config file 
   constructor(private http: HttpClient, private router: Router) { }
   GetMagasin(form) {
-    var host = this.BaseURI + '/Magasins';
-    return this.http.get<any[]>(host, {}).pipe(
+    var host = this.BaseURI + '/Magasins/FindMAGASIN';
+    return this.http.post(host, form).pipe(
       map((data: Magasin[]) => {
         return data;
       }), catchError(error => {

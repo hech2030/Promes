@@ -21,7 +21,7 @@ namespace MyTeam.Controllers
 
         [HttpPost]
         [Route("FindCATEGORIE_ART")]
-        public IEnumerable<CATEGORIE_ART> findCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
+        public IActionResult findCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
         {
             IEnumerable<CATEGORIE_ART> data;
             if (request.id > 0)
@@ -36,7 +36,7 @@ namespace MyTeam.Controllers
                                 .Include("ARTICLE")
                             select a);
             }
-            return data.ToList();
+            return Ok(new { result = data.ToList() });
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.CATEGORIE_ART.Add(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
         [HttpPut("{id}")]
@@ -52,18 +52,26 @@ namespace MyTeam.Controllers
         {
             var data = ArtDetails.CATEGORIE_ART.Update(obj);
             ArtDetails.SaveChanges();
-            return Ok();
+            return Ok(new { success = true });
         }
 
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.CATEGORIE_ART.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.CATEGORIE_ART.Remove(data);
-            ArtDetails.SaveChanges();
-            return Ok();
-
+            bool success = false;
+            try
+            {
+                var data = ArtDetails.CATEGORIE_ART.Where(a => a.Id == id).FirstOrDefault();
+                ArtDetails.CATEGORIE_ART.Remove(data);
+                ArtDetails.SaveChanges();
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { success });
+            }
         }
     }
 }

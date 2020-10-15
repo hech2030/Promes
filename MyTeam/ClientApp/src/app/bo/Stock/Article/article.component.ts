@@ -52,16 +52,16 @@ export class ArticleComponent implements OnInit {
     if (this.SelectedMagasin != undefined && this.SelectedMagasin != null) {
       this.SearchCriteria.MAGASINId = this.SelectedMagasin.id;
     }
-    this.magasinService.GetMagasin(null)
+    this.magasinService.GetMagasin({})
       .subscribe((data: any) => {
-        console.log(data);
-        this.Magasins = data;
+        console.log(data.result);
+        this.Magasins = data.result;
       });
     this.articleService.GetArticle(this.SearchCriteria)
       .subscribe((data: any) => {
-        console.log(data);
-        this.artciles = data;
-        this.artcilesData = data;
+        console.log(data.result);
+        this.artciles = data.result;
+        this.artcilesData = data.result;
         this.Isloading = false;
       });
   }
@@ -106,14 +106,14 @@ export class ArticleComponent implements OnInit {
       }
     })
   }
-  AddArticle(Userform: NgForm) {    
+  AddArticle(Articleform: NgForm) {    
   this.articleService.addArticle(this.articleModel).subscribe(
       (res: any) => {
-        if (res.succeeded) {
+      if (res.success) {
           this.ngOnInit();
           this.resetModel();
           $("[data-dismiss=modal]").trigger({ type: "click" });
-          this.tools.ShowSuccessNotification("User", "User Added Successfully", '10000');
+          this.tools.ShowSuccessNotification("Article", "Article Added Successfully", '10000');
         }
         else {
           Swal.fire('Oops...', res.errors[0].description, 'error');
@@ -121,7 +121,7 @@ export class ArticleComponent implements OnInit {
       },
       err => {
         if (err.status == 400) {
-          this.tools.ShowErrorNotification("User", "Something went wrong", '10000');
+          this.tools.ShowErrorNotification("Article", "Something went wrong", '10000');
         }
         else {
           return console.log(err);
@@ -131,25 +131,24 @@ export class ArticleComponent implements OnInit {
   }
 
   resetModel(){
-    this.articleModel =
-    {
-        designation: '',
-        unit: '',
-        quantite: -1,
-        prix: -1,
-        newAttr: -1,
-        emplacement: '',
-        CATEGORIE_ARTId: -1,
-        FOURNISSEURId: -1,
-        MAGASINId: -1,
-        CATEGORIE_ART: null,
-        ENTREE: null,
-        SORTIE: null,
-        LIGNE_COMMANDE: null,
-        FOURNISSEUR: null,
-        MAGASIN: null
-    };
+    
+    this.articleModel.designation= '';
+    this.articleModel.unit= '';
+    this.articleModel.quantite= -1;
+    this.articleModel.prix= -1;
+    this.articleModel.newAttr= -1;
+    this.articleModel.emplacement= '';
+    this.articleModel.CATEGORIE_ARTId= -1;
+    this.articleModel.FOURNISSEURId= -1;
+    this.articleModel.MAGASINId= -1;
+    this.articleModel.CATEGORIE_ART= null;
+    this.articleModel.ENTREE= null;
+    this.articleModel.SORTIE= null;
+    this.articleModel.LIGNE_COMMANDE= null;
+    this.articleModel.FOURNISSEUR= null;
+    this.articleModel.MAGASIN= null
   }
+
   UpdateArticle(id) {
     this.router.navigate([this.root + id]);
   }
