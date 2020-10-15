@@ -147,6 +147,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AGENCE.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ARTICLE.cs">
       <DependentUpon>SolarModel.tt</DependentUpon>
     </Compile>
@@ -179,6 +182,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SolarModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SolarModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SolarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SolarModel.Designer.cs">
       <AutoGen>True</AutoGen>

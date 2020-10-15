@@ -1,7 +1,7 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'LIGNE_COMMANDE'))
 BEGIN
 	CREATE TABLE [dbo].[LIGNE_COMMANDE](
-		[Id] bigint  NOT NULL,
+		[Id] bigint IDENTITY(1,1) NOT NULL,
 	    [index] bigint  NULL,
 	    [quantite] bigint  NULL,
 	    [prix] bigint  NULL,

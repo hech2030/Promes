@@ -1,7 +1,7 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'AGENCE'))
 BEGIN
 	CREATE TABLE [dbo].[AGENCE](
-		[Id] bigint  NOT NULL,
+		[Id] bigint IDENTITY(1,1) NOT NULL,
 	    [nom] nvarchar(max) NULL,
 	    [ville] nvarchar(100)  NULL,
 	    [adresse] nvarchar(200)  NULL,

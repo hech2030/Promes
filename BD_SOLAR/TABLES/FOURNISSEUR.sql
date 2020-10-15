@@ -1,7 +1,7 @@
 IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND  TABLE_NAME = 'FOURNISSEUR'))
 BEGIN
 	CREATE TABLE [dbo].[FOURNISSEUR](
-		[Id] bigint  NOT NULL,
+		[Id] bigint IDENTITY(1,1) NOT NULL,
 	    [numF] bigint  NOT NULL,
 	    [NomF] nvarchar(max)  NULL,
 	    [adresse] nvarchar(max)  NULL,

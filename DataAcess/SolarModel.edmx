@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SolarThermalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AGENCE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar(max)" />
+          <Property Name="ville" Type="nvarchar" MaxLength="100" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="200" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="ARTICLE">
           <Key>
             <PropertyRef Name="Id" />
@@ -257,6 +267,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SolarThermalModelStoreContainer">
+          <EntitySet Name="AGENCE" EntityType="Self.AGENCE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ARTICLE" EntityType="Self.ARTICLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIE_ART" EntityType="Self.CATEGORIE_ART" Schema="dbo" store:Type="Tables" />
@@ -383,6 +394,7 @@
             <End Role="MAGASIN" EntitySet="MAGASIN" />
             <End Role="ARTICLE" EntitySet="ARTICLE" />
           </AssociationSet>
+          <EntitySet Name="AGENCE" EntityType="SolarThermalModel.AGENCE" />
         </EntityContainer>
         <EntityType Name="STOCK">
           <Key>
@@ -629,6 +641,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AGENCE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ville" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -790,6 +812,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="AGENCE">
+            <EntityTypeMapping TypeName="SolarThermalModel.AGENCE">
+              <MappingFragment StoreEntitySet="AGENCE">
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
