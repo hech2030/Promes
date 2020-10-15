@@ -13,48 +13,60 @@ import Swal from 'sweetalert2';
   host: { 'class': 'content-wrapper' }
 })
 export class ProfileComponent implements OnInit {
-
+  Isloading: boolean;
   PasswordOption: string;
   FileName: string = 'télécharger une image';
+  PwdConfirm: string = '';
   profile: User = new User();
-  constructor(private userService: UserService, private route: ActivatedRoute, private tools: MyToolsService) {}
+  constructor(private userService: UserService, private route: ActivatedRoute, private tools: MyToolsService) { }
 
   UpdateProfile() {
+    this.Isloading = true;
+    console.log(this.PasswordOption);
+    console.log(this.profile.newPassword);
     if (this.PasswordOption != 'true') {
       this.profile.currentPassword = null;
       this.profile.newPassword = null;
     }
-    if (this.profile.phoneNumber != null) {
-      this.profile.phoneNumber = this.profile.phoneNumber.toString();
+    if (this.PasswordOption == 'true' && this.profile.newPassword != this.PwdConfirm) {
+      Swal.fire('Oops...', "Les mot de passes ne sont pas identiques", 'error');
     }
-    this.userService.register(this.profile).subscribe(
-      (res: any) => {
-        if (res.succeeded) {
-          this.userService.updateAppImage(this.profile.image);
-          this.userService.updateUserName(this.profile.userName);
-          this.tools.ShowSuccessNotification("User", "Utilisateur mis à jour", '10000');
-        }
-        else {
-          this.tools.ShowErrorNotification("User", res.errors[0].description, '10000');
-        }
-      },
-      err => {
-        if (err.status == 400) {
-          this.tools.ShowErrorNotification("User", err.error.message, '10000');
-        }
-        else {
-          return console.log(err);
-        }
+    else {
+      if (this.profile.phoneNumber != null) {
+        this.profile.phoneNumber = this.profile.phoneNumber.toString();
       }
-    );
+      this.userService.register(this.profile).subscribe(
+        (res: any) => {
+          if (res.succeeded) {
+            this.userService.updateAppImage(this.profile.image);
+            this.userService.updateUserName(this.profile.userName);
+            this.tools.ShowSuccessNotification("User", "Utilisateur mis à jour", '10000');
+          }
+          else {
+            this.tools.ShowErrorNotification("User", res.errors[0].description, '10000');
+          }
+        },
+        err => {
+          if (err.status == 400) {
+            this.tools.ShowErrorNotification("User", err.error.message, '10000');
+          }
+          else {
+            return console.log(err);
+          }
+        }
+      );
+    }
+    this.Isloading = false;
   }
 
 
   ngOnInit() {
+    this.Isloading = true;
     this.profile.userName = localStorage.getItem('UserName');
     this.userService.GetProfileUser(this.profile.userName)
       .subscribe((data: any) => {
         this.profile = data.result[0];
+        this.Isloading = false;
       });
 
   }
@@ -67,6 +79,7 @@ export class ProfileComponent implements OnInit {
   }
 
   readThis(inputValue: any): void {
+    this.Isloading = true;
     const reader = new FileReader();
     if (inputValue.files && inputValue.files.length) {
       var image: File = inputValue.files[0];
@@ -83,5 +96,6 @@ export class ProfileComponent implements OnInit {
         Swal.fire('Oops...', "La taille maximale d'image est 1MB", 'error');
       }
     }
+    this.Isloading = false;
   }
 }

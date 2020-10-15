@@ -1,8 +1,10 @@
+
 <div class="row">
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Mon Profil</h4>
+
         <form class="form-sample" (ngSubmit)="UpdateProfile()">
           <p class="card-description">Informations personnelles </p>
           <div class="row">
@@ -75,8 +77,9 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="PasswordOption == 'true'">
-            <div class="col-md-6">
+          <div class="row" *ngIf="PasswordOption">
+            <br /><br />
+            <div class="col-md-4">
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Ancien Mot de passe</label>
                 <div class="col-sm-9">
@@ -84,7 +87,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Nouveau mot de passe</label>
                 <div class="col-sm-9">
@@ -92,12 +95,25 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Confirmer mot de passe</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" [(ngModel)]="PwdConfirm" name="newPasswordConfirm" id="newPasswordConfirm" />
+                </div>
+              </div>
+            </div>
           </div>
           <div class="col-md-12 text-right">
             <button type="submit" class="btn btn-success">Sauvegarder</button>
           </div>
+          <div class="d-flex justify-content-center">
+            <div *ngIf="Isloading" class="k-i-loading"></div>
+          </div>
         </form>
+
       </div>
     </div>
   </div>
 </div>
+
