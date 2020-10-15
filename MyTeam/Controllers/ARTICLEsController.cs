@@ -23,7 +23,7 @@ namespace MyTeam.Controllers
         [Route("FindArticle")]
         public IActionResult findArticle(ArticleFindRequest request)
         {
-            IEnumerable<ARTICLE> data;
+            IEnumerable<ARTICLE> data = new List<ARTICLE>();
             if (request.id > 0)
             {
                 data = (from a in ArtDetails.ARTICLE
@@ -38,9 +38,17 @@ namespace MyTeam.Controllers
                                .Include("CATEGORIE_ART")
                                .Include("FOURNISSEUR")
                                .Include("MAGASIN")
-                        select a);
+                        select a).ToList();
             }
-            return Ok(new { result = data.ToList() });
+            if (request.designation != null)
+            {
+                data = data.Where(x => x.designation == request.designation);
+            }
+            if (request.MAGASINId > 0)
+            {
+                data = data.Where(x => x.MAGASINId == request.MAGASINId);
+            }            
+            return Ok(new { result = data});
         }
 
         [HttpPost]

@@ -58,16 +58,17 @@
                       [resizable]="true"
                       [height]="480"
                       [columnMenu]="{ filter: true }">
-            <kendo-grid-column title="DESIGNATION" field="designation"></kendo-grid-column>
-            <kendo-grid-column title="UNIT" field="unit"></kendo-grid-column>
-            <kendo-grid-column title="PRIX" field="prix"></kendo-grid-column>
-            <kendo-grid-column title="EMPLACEMENT" field="emplacement"></kendo-grid-column>
-            <kendo-grid-column field="CATEGORIE_ART.nomCate" title="CATEGORIE ART">
+            <kendo-grid-column title="Ddesignation" field="designation"></kendo-grid-column>
+            <kendo-grid-column title="Unit" field="unit"></kendo-grid-column>
+            <kendo-grid-column title="Quantité" field="quantite"></kendo-grid-column>
+            <kendo-grid-column title="Prix" field="prix"></kendo-grid-column>
+            <kendo-grid-column title="Emplacement" field="emplacement"></kendo-grid-column>
+            <!--<kendo-grid-column field="CATEGORIE_ART.nomCate" title="CATEGORIE ART">
             </kendo-grid-column>
             <kendo-grid-column field="FOURNISSEUR.numF" title="FOURNISSEUR">
             </kendo-grid-column>
-            <kendo-grid-column field="MAGASIN.nomMagasin" title="MAGASIN">
-            </kendo-grid-column>
+            <kendo-grid-column field="MAGASIN.nomMagasin" title="MAGASIN">-->
+            <!--</kendo-grid-column>-->
             <kendo-grid-column title="Action">
               <ng-template kendoGridCellTemplate let-articleDataItem>
                 <button class="close rounded-circle col-md-6" kendoButton (click)="DeleteArticle(articleDataItem.id)">

@@ -53,10 +53,10 @@ export class ArticleComponent implements OnInit {
       this.SearchCriteria.MAGASINId = this.SelectedMagasin.id;
     }
     this.magasinService.GetMagasin({})
-      .subscribe((data: any) => {
-        console.log(data.result);
-        this.Magasins = data.result;
-      });
+        .subscribe((data: any) => {
+          console.log(data.result);
+          this.Magasins = data.result;
+        });    
     this.articleService.GetArticle(this.SearchCriteria)
       .subscribe((data: any) => {
         console.log(data.result);
