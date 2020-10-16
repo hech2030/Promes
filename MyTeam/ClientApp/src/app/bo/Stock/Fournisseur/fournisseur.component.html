@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Article Table</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>DESIGNATION</th>
+              <th>UNIT</th>
+              <th>QUANTITE</th>
+              <th>PRIX</th>
+              <th>EMPACEMENT</th>
+              <th>CATEGORIE ART Id</th>
+              <th>FOURNISSEUR Id</th>
+              <th>MAGASIN Id</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of products; let i = index">
+              <td> {{item.designation}} </td>
+              <td> {{item.unit}} </td>
+              <td> {{item.quantite}} </td>
+              <td> {{item.prix}} </td>
+              <td> {{item.emplacement}} </td>
+              <td> {{item.CATEGORIE_ARTId}} </td>
+              <td> {{item.FOURNISSEURId}} </td>
+              <td> {{item.MAGASINId}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

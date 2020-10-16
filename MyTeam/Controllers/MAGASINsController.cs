@@ -23,20 +23,22 @@ namespace MyTeam.Controllers
         [Route("FindMAGASIN")]
         public IActionResult findMAGASIN(MAGASINFindRequest request)
         {
-            IEnumerable<MAGASIN> data;
+            IEnumerable<MAGASIN> data = new List<MAGASIN>();
             if (request.id > 0)
             {
-                 data = (from a in ArtDetails.MAGASIN
-                                .Include("ARTICLE")
-                               select a).Where(a => a.Id == request.id);
+                data = (from a in ArtDetails.MAGASIN
+                        select a).Where(a => a.Id == request.id).ToList();
             }
             else
             {
-                 data = (from a in ArtDetails.MAGASIN
-                                .Include("ARTICLE")
-                            select a);
+                data = (from a in ArtDetails.MAGASIN
+                        select a).ToList();
             }
-            return Ok(new { result = data.ToList() });
+            if (request.nomMagasin != null)
+            {
+                data = data.Where(x => x.nomMagasin == request.nomMagasin);
+            }
+            return Ok(new { result = data });
         }
 
         [HttpPost]

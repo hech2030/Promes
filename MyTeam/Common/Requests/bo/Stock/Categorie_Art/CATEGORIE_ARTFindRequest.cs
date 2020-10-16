@@ -3,6 +3,7 @@
     public class CATEGORIE_ARTFindRequest
     {
         public long id { get; set; }
+        public string nomCategorie { get; set; }
     }
 }
 

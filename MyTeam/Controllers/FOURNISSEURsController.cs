@@ -23,22 +23,22 @@ namespace MyTeam.Controllers
         [Route("FindFOURNISSEUR")]
         public IActionResult findFOURNISSEUR(FOURNISSEURFindRequest request)
         {
-            IEnumerable<FOURNISSEUR> data;
+            IEnumerable<FOURNISSEUR> data = new List<FOURNISSEUR>();
             if (request.id > 0)
             {
-                 data = (from a in ArtDetails.FOURNISSEUR
-                                .Include("ARTICLE")
-                                .Include("COMMANDE")
-                               select a).Where(a => a.Id == request.id);
+                data = (from a in ArtDetails.FOURNISSEUR
+                        select a).Where(a => a.Id == request.id).ToList();
             }
             else
             {
-                 data = (from a in ArtDetails.FOURNISSEUR
-                                .Include("ARTICLE")
-                                .Include("COMMANDE")
-                            select a);
+                data = (from a in ArtDetails.FOURNISSEUR
+                        select a).ToList();
             }
-            return Ok(new { result = data.ToList() });
+            if (request.nomFournisseur != null)
+            {
+                data = data.Where(x => x.NomF == request.nomFournisseur);
+            }
+            return Ok(new { result = data });
         }
 
         [HttpPost]

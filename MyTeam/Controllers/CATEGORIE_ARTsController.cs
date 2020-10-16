@@ -23,20 +23,22 @@ namespace MyTeam.Controllers
         [Route("FindCATEGORIE_ART")]
         public IActionResult findCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
         {
-            IEnumerable<CATEGORIE_ART> data;
+            IEnumerable<CATEGORIE_ART> data = new List<CATEGORIE_ART>();
             if (request.id > 0)
             {
-                 data = (from a in ArtDetails.CATEGORIE_ART
-                                .Include("ARTICLE")
-                               select a).Where(a => a.Id == request.id);
+                data = (from a in ArtDetails.CATEGORIE_ART
+                        select a).Where(a => a.Id == request.id).ToList();
             }
             else
             {
-                 data = (from a in ArtDetails.CATEGORIE_ART
-                                .Include("ARTICLE")
-                            select a);
+                data = (from a in ArtDetails.CATEGORIE_ART
+                        select a).ToList();
             }
-            return Ok(new { result = data.ToList() });
+            if (request.nomCategorie != null)
+            {
+                data = data.Where(x => x.nomCate == request.nomCategorie);
+            }
+            return Ok(new { result = data });
         }
 
         [HttpPost]

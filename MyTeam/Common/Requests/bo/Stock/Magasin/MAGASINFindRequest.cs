@@ -3,6 +3,8 @@
     public class MAGASINFindRequest
     {
         public long id { get; set; }
+        public string nomMagasin { get; set; }
+
     }
 }
 
