@@ -46,7 +46,7 @@ export class AgencesComponent implements OnInit {
       },
       err => {
         if (err.status == 400) {
-          this.tools.ShowErrorNotification("Agence", "Quelque chose ne va pas... veillez contacter l\'administrateur", '10000');
+          this.tools.ShowErrorNotification("Agence", "Quelque chose ne va pas... veuillez contacter l\'administrateur", '10000');
         }
         else {
           return console.log(err);
