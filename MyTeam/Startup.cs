@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MyTeam.Common.Models;
 using MyTeam.Common.Models.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyTeam
 {
@@ -37,16 +38,20 @@ namespace MyTeam
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            //services.AddDbContext<UserContext>(options=>
+            services.AddDbContext<UserContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
+            );
+
+ 
+            //services.AddDbContext<StockContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             //);
-            //services.AddDbContext<StockContext>(options=>
+
+            //services.AddDbContext<SolarThermalEntities>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             //);
-            //services.AddDbContext<SolarThermalEntities>(options=>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
-            //);
-            //services.AddDefaultIdentity<user>().AddEntityFrameworkStores<SolarThermalEntities>();
+
+            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<UserContext>();
 
 
             services.Configure<IdentityOptions>(options =>

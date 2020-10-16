@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using MyTeam.Common.Requests.Auth;
 using MyTeam.Common.Requests.bo.Users;
 using DataAcess.Models;
+using MyTeam.Common.Models;
 
 namespace MyTeam.Controllers
 {
@@ -18,10 +19,10 @@ namespace MyTeam.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private UserManager<user> _userManager;
-        private SignInManager<user> _signInManager;
+        private UserManager<User> _userManager;
+        private SignInManager<User> _signInManager;
 
-        public UsersController(SignInManager<user> SignInManager, UserManager<user> userManager)
+        public UsersController(SignInManager<User> SignInManager, UserManager<User> userManager)
         {
             _signInManager = SignInManager;
             _userManager = userManager;
@@ -30,7 +31,7 @@ namespace MyTeam.Controllers
         [Route("Register")]
         public async Task<ActionResult> PostApplicationUser(RegisterRequest request)
         {
-            user User = null;
+            User User = null;
             if (request.id != null)
             {
                 User = await _userManager.FindByIdAsync(request.id);
@@ -55,7 +56,7 @@ namespace MyTeam.Controllers
             }
             else
             {
-                User = new user
+                User = new User
                 {
                     UserName = request.username,
                     Email = request.email,
