@@ -30,6 +30,7 @@ import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-detail
 import { ProfileComponent } from './bo/MainUser/profile/profile.component';
 import { ArticleComponent } from './bo/Stock/Article/article.component';
 import { ArticleDetailsComponent } from './bo/Stock/Article/articleDetails/article-details.component';
+import { AgencesComponent } from './bo/Admin/Agences/agences.component'
 
 
 
@@ -47,7 +48,7 @@ import { ArticleDetailsComponent } from './bo/Stock/Article/articleDetails/artic
     UsersDetailsComponent,
     ProfileComponent,
     ArticleComponent,
-    ArticleDetailsComponent
+    ArticleDetailsComponent, AgencesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,7 +63,8 @@ import { ArticleDetailsComponent } from './bo/Stock/Article/articleDetails/artic
       { path: 'Users/UsersDetails/:id', component: UsersDetailsComponent, canActivate: [RoleGuard] },
       { path: 'User/MyProfile', component: ProfileComponent, canActivate: [AuthGuard] },
       { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] },
-      { path: 'Article/articleDetails/:id', component: ArticleDetailsComponent, canActivate: [RoleGuard] }
+      { path: 'Article/articleDetails/:id', component: ArticleDetailsComponent, canActivate: [AuthGuard] },
+      { path: 'Agence', component: AgencesComponent, canActivate: [AuthGuard] }
     ]),
     //InputsModule,
     BrowserAnimationsModule,

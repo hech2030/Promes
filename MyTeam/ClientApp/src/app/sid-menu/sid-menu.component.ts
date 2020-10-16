@@ -42,4 +42,7 @@ export class sideMenuComponent implements OnInit {
   EditProfile() {
     this.router.navigate(['/User/MyProfile']);
   }
+  GetAgences() {
+    this.router.navigate(['/Agence']);
+  }
 }
