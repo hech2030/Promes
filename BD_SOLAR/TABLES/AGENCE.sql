@@ -13,3 +13,5 @@ BEGIN
 	) ON [PRIMARY]
 END
 GO
+
+select * from [dbo].[AGENCE]
