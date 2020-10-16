@@ -39,6 +39,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration.ConfigurationManager">
+      <HintPath>..\MyTeam\Libs\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -51,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\AgenceDataBaseBusinessProvider.cs" />
     <Compile Include="Business\ReceptionDatabaseBusinessProvider.cs" />
     <Compile Include="Business\EntreeDatabaseBusinessProvider.cs" />
     <Compile Include="Business\MagasinDatabaseBusinessProvider.cs" />
