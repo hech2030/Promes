@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,32 +13,28 @@ namespace MyTeam.Controllers
     [ApiController]
     public class COMMANDEsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public COMMANDEsController(SolarThermalEntities COMMANDEContext)
+        public COMMANDEsController()
         {
-            ArtDetails = COMMANDEContext;
         }
 
         [HttpGet]
         public IEnumerable<COMMANDE> Get()
         {
-            var data = ArtDetails.COMMANDE.ToList();
+            var data = CommandeDatabaseBusinessProvider.Instance.Get();
             return data;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] COMMANDE obj)
         {
-            var data = ArtDetails.COMMANDE.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = CommandeDatabaseBusinessProvider.Instance.Add(obj);
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] COMMANDE obj)
         {
-            var data = ArtDetails.COMMANDE.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = CommandeDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok();
         }
 
@@ -45,9 +42,7 @@ namespace MyTeam.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.COMMANDE.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.COMMANDE.Remove(data);
-            ArtDetails.SaveChanges();
+            CommandeDatabaseBusinessProvider.Instance.Remove(id);
             return Ok();
 
         }

@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAcess
+namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class SORTIE
+    public partial class MAGASIN
     {
-        public long Id { get; set; }
-        public Nullable<long> numSortie { get; set; }
-        public Nullable<long> quantite { get; set; }
-        public Nullable<System.DateTime> dateSortie { get; set; }
-        public Nullable<long> prixDSortie { get; set; }
-        public long ARTICLEId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MAGASIN()
+        {
+            this.ARTICLE = new HashSet<ARTICLE>();
+        }
     
-        public virtual ARTICLE ARTICLE { get; set; }
+        public long Id { get; set; }
+        public string nomMagasin { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ARTICLE> ARTICLE { get; set; }
     }
 }

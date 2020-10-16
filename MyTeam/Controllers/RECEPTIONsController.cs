@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,32 +13,28 @@ namespace MyTeam.Controllers
     [ApiController]
     public class RECEPTIONsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public RECEPTIONsController(SolarThermalEntities RECEPTIONContext)
+        public RECEPTIONsController()
         {
-            ArtDetails = RECEPTIONContext;
         }
 
         [HttpGet]
         public IEnumerable<RECEPTION> Get()
         {
-            var data = ArtDetails.RECEPTION.ToList();
+            var data = ReceptionDatabaseBusinessProvider.Instance.Get();
             return data;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] RECEPTION obj)
         {
-            var data = ArtDetails.RECEPTION.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = ReceptionDatabaseBusinessProvider.Instance.Add(obj);
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] RECEPTION obj)
         {
-            var data = ArtDetails.RECEPTION.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = ReceptionDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok();
         }
 
@@ -45,9 +42,7 @@ namespace MyTeam.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.RECEPTION.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.RECEPTION.Remove(data);
-            ArtDetails.SaveChanges();
+            ReceptionDatabaseBusinessProvider.Instance.Remove(id);
             return Ok();
 
         }

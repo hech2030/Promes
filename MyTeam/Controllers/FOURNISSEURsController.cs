@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 using MyTeam.Common.Requests.bo.Users;
 
@@ -13,27 +14,16 @@ namespace MyTeam.Controllers
     [ApiController]
     public class FOURNISSEURsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public FOURNISSEURsController(SolarThermalEntities FOURNISSEURContext)
+        public FOURNISSEURsController()
         {
-            ArtDetails = FOURNISSEURContext;
         }
 
         [HttpPost]
         [Route("FindFOURNISSEUR")]
-        public IActionResult findFOURNISSEUR(FOURNISSEURFindRequest request)
+        public IActionResult FindFOURNISSEUR(FOURNISSEURFindRequest request)
         {
             IEnumerable<FOURNISSEUR> data = new List<FOURNISSEUR>();
-            if (request.id > 0)
-            {
-                data = (from a in ArtDetails.FOURNISSEUR
-                        select a).Where(a => a.Id == request.id).ToList();
-            }
-            else
-            {
-                data = (from a in ArtDetails.FOURNISSEUR
-                        select a).ToList();
-            }
+            data = FournisseurDatabaseBusinessProvider.Instance.Find(request.id);
             if (request.nomFournisseur != null)
             {
                 data = data.Where(x => x.NomF == request.nomFournisseur);
@@ -44,16 +34,14 @@ namespace MyTeam.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] FOURNISSEUR obj)
         {
-            var data = ArtDetails.FOURNISSEUR.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = FournisseurDatabaseBusinessProvider.Instance.Add(obj);
             return Ok(new { success = true });
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] FOURNISSEUR obj)
         {
-            var data = ArtDetails.FOURNISSEUR.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = FournisseurDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok(new { success = true });
         }
 
@@ -64,9 +52,7 @@ namespace MyTeam.Controllers
             bool success = false;
             try
             {
-                var data = ArtDetails.FOURNISSEUR.Where(a => a.Id == id).FirstOrDefault();
-                ArtDetails.FOURNISSEUR.Remove(data);
-                ArtDetails.SaveChanges();
+                FournisseurDatabaseBusinessProvider.Instance.Remove(id);
                 return Ok(new { success = true });
             }
             catch (Exception ex)

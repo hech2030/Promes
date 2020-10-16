@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAcess
+namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;

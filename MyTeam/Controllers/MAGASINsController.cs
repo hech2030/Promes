@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 using MyTeam.Common.Requests.bo.Users;
 
@@ -13,10 +14,8 @@ namespace MyTeam.Controllers
     [ApiController]
     public class MAGASINsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public MAGASINsController(SolarThermalEntities MAGASINContext)
+        public MAGASINsController()
         {
-            ArtDetails = MAGASINContext;
         }
 
         [HttpPost]
@@ -24,16 +23,7 @@ namespace MyTeam.Controllers
         public IActionResult findMAGASIN(MAGASINFindRequest request)
         {
             IEnumerable<MAGASIN> data = new List<MAGASIN>();
-            if (request.id > 0)
-            {
-                data = (from a in ArtDetails.MAGASIN
-                        select a).Where(a => a.Id == request.id).ToList();
-            }
-            else
-            {
-                data = (from a in ArtDetails.MAGASIN
-                        select a).ToList();
-            }
+            data = MagasinDatabaseBusinessProvider.Instance.Find(request.id);
             if (request.nomMagasin != null)
             {
                 data = data.Where(x => x.nomMagasin == request.nomMagasin);
@@ -44,16 +34,14 @@ namespace MyTeam.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] MAGASIN obj)
         {
-            var data = ArtDetails.MAGASIN.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = MagasinDatabaseBusinessProvider.Instance.Add(obj);
             return Ok(new { success = true });
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] MAGASIN obj)
         {
-            var data = ArtDetails.MAGASIN.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = MagasinDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok(new { success = true });
         }
 
@@ -64,9 +52,7 @@ namespace MyTeam.Controllers
             bool success = false;
             try
             {
-                var data = ArtDetails.MAGASIN.Where(a => a.Id == id).FirstOrDefault();
-                ArtDetails.MAGASIN.Remove(data);
-                ArtDetails.SaveChanges();
+                MagasinDatabaseBusinessProvider.Instance.Remove(id);
                 return Ok(new { success = true });
             }
             catch (Exception ex)

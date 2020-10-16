@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAcess
+namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class STOCK
+    public partial class SORTIE
     {
-        public string Id { get; set; }
-        public string designation { get; set; }
-        public string marque { get; set; }
-        public string type { get; set; }
-        public string quantite { get; set; }
-        public string codeFournisseur { get; set; }
-        public string fournisseur { get; set; }
-        public string prixAchat { get; set; }
+        public long Id { get; set; }
+        public Nullable<long> numSortie { get; set; }
+        public Nullable<long> quantite { get; set; }
+        public Nullable<System.DateTime> dateSortie { get; set; }
+        public Nullable<long> prixDSortie { get; set; }
+        public long ARTICLEId { get; set; }
+    
+        public virtual ARTICLE ARTICLE { get; set; }
     }
 }

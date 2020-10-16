@@ -7,21 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAcess
+namespace DataAcess.Models
 {
-    using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
     
     public partial class SolarThermalEntities : DbContext
     {
-        public SolarThermalEntities(DbContextOptions<SolarThermalEntities> options) : base(options)
+        public SolarThermalEntities()
+            : base("name=SolarThermalEntities")
         {
-
         }
-
-        public virtual DbSet<user> user { get; set; }
-        public virtual DbSet<STOCK> STOCK { get; set; }
-        // public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
+        public virtual DbSet<AGENCE> AGENCE { get; set; }
         public virtual DbSet<ARTICLE> ARTICLE { get; set; }
         public virtual DbSet<CATEGORIE_ART> CATEGORIE_ART { get; set; }
         public virtual DbSet<COMMANDE> COMMANDE { get; set; }
@@ -31,6 +35,7 @@ namespace DataAcess
         public virtual DbSet<MAGASIN> MAGASIN { get; set; }
         public virtual DbSet<RECEPTION> RECEPTION { get; set; }
         public virtual DbSet<SORTIE> SORTIE { get; set; }
-        public virtual DbSet<AGENCE> AGENCE { get; set; }
+        public virtual DbSet<STOCK> STOCK { get; set; }
+        public virtual DbSet<user> user { get; set; }
     }
 }

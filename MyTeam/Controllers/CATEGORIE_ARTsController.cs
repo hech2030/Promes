@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 using MyTeam.Common.Requests.bo.Users;
 
@@ -13,27 +14,18 @@ namespace MyTeam.Controllers
     [ApiController]
     public class CATEGORIE_ARTsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public CATEGORIE_ARTsController(SolarThermalEntities CATEGORIE_ARTContext)
+        public object CategorieArtDatabaseBusinessProvider { get; private set; }
+
+        public CATEGORIE_ARTsController()
         {
-            ArtDetails = CATEGORIE_ARTContext;
         }
 
         [HttpPost]
         [Route("FindCATEGORIE_ART")]
-        public IActionResult findCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
+        public IActionResult FindCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
         {
             IEnumerable<CATEGORIE_ART> data = new List<CATEGORIE_ART>();
-            if (request.id > 0)
-            {
-                data = (from a in ArtDetails.CATEGORIE_ART
-                        select a).Where(a => a.Id == request.id).ToList();
-            }
-            else
-            {
-                data = (from a in ArtDetails.CATEGORIE_ART
-                        select a).ToList();
-            }
+            DataAcess.Business.CategorieArtDatabaseBusinessProvider.Instance.Find(request.id);
             if (request.nomCategorie != null)
             {
                 data = data.Where(x => x.nomCate == request.nomCategorie);
@@ -44,16 +36,14 @@ namespace MyTeam.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CATEGORIE_ART obj)
         {
-            var data = ArtDetails.CATEGORIE_ART.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = DataAcess.Business.CategorieArtDatabaseBusinessProvider.Instance.Add(obj);
             return Ok(new { success = true });
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] CATEGORIE_ART obj)
         {
-            var data = ArtDetails.CATEGORIE_ART.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = DataAcess.Business.CategorieArtDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok(new { success = true });
         }
 
@@ -64,9 +54,7 @@ namespace MyTeam.Controllers
             bool success = false;
             try
             {
-                var data = ArtDetails.CATEGORIE_ART.Where(a => a.Id == id).FirstOrDefault();
-                ArtDetails.CATEGORIE_ART.Remove(data);
-                ArtDetails.SaveChanges();
+                DataAcess.Business.CategorieArtDatabaseBusinessProvider.Instance.Remove(id);
                 return Ok(new { success = true });
             }
             catch (Exception ex)

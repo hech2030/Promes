@@ -7,14 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAcess
+namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class C__EFMigrationsHistory
+    public partial class STOCK
     {
-        public string MigrationId { get; set; }
-        public string ProductVersion { get; set; }
+        public string Id { get; set; }
+        public string designation { get; set; }
+        public string marque { get; set; }
+        public string type { get; set; }
+        public string quantite { get; set; }
+        public string codeFournisseur { get; set; }
+        public string fournisseur { get; set; }
+        public string prixAchat { get; set; }
     }
 }

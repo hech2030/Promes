@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,32 +13,28 @@ namespace MyTeam.Controllers
     [ApiController]
     public class ENTREEsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public ENTREEsController(SolarThermalEntities ENTREEContext)
+        public ENTREEsController()
         {
-            ArtDetails = ENTREEContext;
         }
 
         [HttpGet]
         public IEnumerable<ENTREE> Get()
         {
-            var data = ArtDetails.ENTREE.ToList();
+            var data = EntreeDatabaseBusinessProvider.Instance.Get();
             return data;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] ENTREE obj)
         {
-            var data = ArtDetails.ENTREE.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = EntreeDatabaseBusinessProvider.Instance.Add(obj);
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ENTREE obj)
         {
-            var data = ArtDetails.ENTREE.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = EntreeDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok();
         }
 
@@ -45,9 +42,7 @@ namespace MyTeam.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.ENTREE.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.ENTREE.Remove(data);
-            ArtDetails.SaveChanges();
+            EntreeDatabaseBusinessProvider.Instance.Remove(id);
             return Ok();
 
         }

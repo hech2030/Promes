@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,32 +13,28 @@ namespace MyTeam.Controllers
     [ApiController]
     public class SORTIEsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public SORTIEsController(SolarThermalEntities SORTIEContext)
+        public SORTIEsController()
         {
-            ArtDetails = SORTIEContext;
         }
 
         [HttpGet]
         public IEnumerable<SORTIE> Get()
         {
-            var data = ArtDetails.SORTIE.ToList();
+            var data = SortieDatabaseBusinessProvider.Instance.Get();
             return data;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] SORTIE obj)
         {
-            var data = ArtDetails.SORTIE.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = SortieDatabaseBusinessProvider.Instance.Add(obj);
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] SORTIE obj)
         {
-            var data = ArtDetails.SORTIE.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = SortieDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok();
         }
 
@@ -45,9 +42,7 @@ namespace MyTeam.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.SORTIE.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.SORTIE.Remove(data);
-            ArtDetails.SaveChanges();
+            SortieDatabaseBusinessProvider.Instance.Remove(id);
             return Ok();
 
         }

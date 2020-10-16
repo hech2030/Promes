@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,32 +13,28 @@ namespace MyTeam.Controllers
     [ApiController]
     public class LIGNE_COMMANDEsController : ControllerBase
     {
-        readonly SolarThermalEntities ArtDetails;
-        public LIGNE_COMMANDEsController(SolarThermalEntities LIGNE_COMMANDEContext)
+        public LIGNE_COMMANDEsController()
         {
-            ArtDetails = LIGNE_COMMANDEContext;
         }
 
         [HttpGet]
         public IEnumerable<LIGNE_COMMANDE> Get()
         {
-            var data = ArtDetails.LIGNE_COMMANDE.ToList();
+            var data = LigneCommandeDatabaseBusinessProvider.Instance.Get();
             return data;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] LIGNE_COMMANDE obj)
         {
-            var data = ArtDetails.LIGNE_COMMANDE.Add(obj);
-            ArtDetails.SaveChanges();
+            var data = LigneCommandeDatabaseBusinessProvider.Instance.Add(obj);
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] LIGNE_COMMANDE obj)
         {
-            var data = ArtDetails.LIGNE_COMMANDE.Update(obj);
-            ArtDetails.SaveChanges();
+            var data = LigneCommandeDatabaseBusinessProvider.Instance.Update(id, obj);
             return Ok();
         }
 
@@ -45,9 +42,7 @@ namespace MyTeam.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var data = ArtDetails.LIGNE_COMMANDE.Where(a => a.Id == id).FirstOrDefault();
-            ArtDetails.LIGNE_COMMANDE.Remove(data);
-            ArtDetails.SaveChanges();
+            LigneCommandeDatabaseBusinessProvider.Instance.Remove(id);
             return Ok();
 
         }

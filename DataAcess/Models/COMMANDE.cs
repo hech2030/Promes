@@ -7,23 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAcess
+namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class MAGASIN
+    public partial class COMMANDE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MAGASIN()
+        public COMMANDE()
         {
-            this.ARTICLE = new HashSet<ARTICLE>();
+            this.LIGNE_COMMANDE = new HashSet<LIGNE_COMMANDE>();
         }
     
         public long Id { get; set; }
-        public string nomMagasin { get; set; }
+        public Nullable<long> numCommande { get; set; }
+        public Nullable<System.DateTime> dateCOMMANDE { get; set; }
+        public string etat { get; set; }
+        public long RECEPTIONId { get; set; }
+        public long FOURNISSEURId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ARTICLE> ARTICLE { get; set; }
+        public virtual ICollection<LIGNE_COMMANDE> LIGNE_COMMANDE { get; set; }
+        public virtual FOURNISSEUR FOURNISSEUR { get; set; }
+        public virtual RECEPTION RECEPTION { get; set; }
     }
 }

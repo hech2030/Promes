@@ -3,12 +3,12 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
 using DataAcess;
+using DataAcess.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,13 +40,13 @@ namespace MyTeam
             //services.AddDbContext<UserContext>(options=>
             //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             //);
-            services.AddDbContext<StockContext>(options=>
-                options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
-            );
-            services.AddDbContext<SolarThermalEntities>(options=>
-                options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
-            );
-            services.AddDefaultIdentity<user>().AddEntityFrameworkStores<SolarThermalEntities>();
+            //services.AddDbContext<StockContext>(options=>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
+            //);
+            //services.AddDbContext<SolarThermalEntities>(options=>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
+            //);
+            //services.AddDefaultIdentity<user>().AddEntityFrameworkStores<SolarThermalEntities>();
 
 
             services.Configure<IdentityOptions>(options =>

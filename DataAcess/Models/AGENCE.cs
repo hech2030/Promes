@@ -7,24 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAcess
+namespace DataAcess.Models
 {
-    using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    public partial class user : IdentityUser
+    
+    public partial class AGENCE
     {
-        [Column(TypeName = "int")]
-        public int role { get; set; }
-
-        [Column(TypeName = "VARCHAR(50)")]
-        public string roleLabel { get; set; }
-
-        [Column(TypeName = "VARCHAR(100)")]
-        public string FullName { get; set; }
-
-        public string Image { get; set; }
+        public long Id { get; set; }
+        public string nom { get; set; }
+        public string ville { get; set; }
+        public string adresse { get; set; }
+        public string telephone { get; set; }
     }
 }

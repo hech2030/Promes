@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using DataAcess;
 using MyTeam.Common.Requests.Auth;
 using MyTeam.Common.Requests.bo.Users;
+using DataAcess.Models;
 
 namespace MyTeam.Controllers
 {
