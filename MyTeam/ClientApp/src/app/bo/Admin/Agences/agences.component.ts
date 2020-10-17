@@ -36,8 +36,8 @@ export class AgencesComponent implements OnInit {
     this.agence.telephone = this.agence.telephone.toString();
     this.agenceService.SaveAgence(this.agence).subscribe(
       (res: any) => {
-        if (res.id>0) {
-          this.ngOnInit();
+        if (res.id > 0) {
+          this.reset();
           $("[data-dismiss=modal]").trigger({ type: "click" });
           this.tools.ShowSuccessNotification("Agence", "Agence ajouté avec succeés", '10000');
         }
@@ -47,7 +47,7 @@ export class AgencesComponent implements OnInit {
       },
       err => {
         if (err.status == 400) {
-          this.tools.ShowErrorNotification("Agence", "Quelque chose ne va pas... veuillez contacter l\'administrateur", '10000');
+          this.tools.ShowErrorNotification("Agence", err.error.message, '10000');
         }
         else {
           return console.log(err);
