@@ -4,6 +4,7 @@ import { Agence } from '../../../Models/bo/Agence/agence.model';
 import Swal from 'sweetalert2';
 import * as $ from 'jquery';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class AgencesComponent implements OnInit {
   agences: Agence[];
   Isloading: boolean;
   agence: Agence = new Agence();
-  constructor(private agenceService: AgenceService, private tools: MyToolsService) { }
+  constructor(private agenceService: AgenceService, private tools: MyToolsService, private router: Router) { }
 
   ngOnInit() {
     this.Isloading = true;
@@ -88,7 +89,7 @@ export class AgencesComponent implements OnInit {
     })
   }
   updateAgence(id) {
-    $("[data-dismiss=modal]").trigger({ type: "click" });
+    this.router.navigate(['Agence/agenceDetails/'+id]);
   }
   reset() {
     this.SearchCriteria.ville = '';

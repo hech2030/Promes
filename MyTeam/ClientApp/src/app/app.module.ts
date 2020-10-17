@@ -30,7 +30,8 @@ import { UsersDetailsComponent } from './bo/Admin/users/userDetails/users-detail
 import { ProfileComponent } from './bo/MainUser/profile/profile.component';
 import { ArticleComponent } from './bo/Stock/Article/article.component';
 import { ArticleDetailsComponent } from './bo/Stock/Article/articleDetails/article-details.component';
-import { AgencesComponent } from './bo/Admin/Agences/agences.component'
+import { AgencesComponent } from './bo/Admin/Agences/agences.component';
+import { AgenceDetailsComponent } from './bo/Admin/Agences/details/details.component';
 
 
 
@@ -48,7 +49,8 @@ import { AgencesComponent } from './bo/Admin/Agences/agences.component'
     UsersDetailsComponent,
     ProfileComponent,
     ArticleComponent,
-    ArticleDetailsComponent, AgencesComponent
+    ArticleDetailsComponent, AgencesComponent,
+    AgenceDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -64,7 +66,8 @@ import { AgencesComponent } from './bo/Admin/Agences/agences.component'
       { path: 'User/MyProfile', component: ProfileComponent, canActivate: [AuthGuard] },
       { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] },
       { path: 'Article/articleDetails/:id', component: ArticleDetailsComponent, canActivate: [AuthGuard] },
-      { path: 'Agence', component: AgencesComponent, canActivate: [AuthGuard] }
+      { path: 'Agence', component: AgencesComponent, canActivate: [AuthGuard] },
+      { path: 'Agence/agenceDetails/:id', component: AgenceDetailsComponent, canActivate: [AuthGuard] }
     ]),
     //InputsModule,
     BrowserAnimationsModule,

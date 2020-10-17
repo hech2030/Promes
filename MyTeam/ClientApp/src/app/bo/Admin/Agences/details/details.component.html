@@ -1,0 +1,54 @@
+<!--<div class="content-wrapper">-->
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Agence Details</h4>
+        <form class="form-sample" (ngSubmit)="Update()">
+          <p class="card-description"></p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nom de l'agence</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="agenceName" placeholder="Enter name" name="agenceName" [(ngModel)]="agence.nom">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">ville de l'agence</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="AgencyCountry" name="AgencyCountry" [(ngModel)]="agence.ville">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">adresse</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="agencyAdress" name="agencyAdress" [(ngModel)]="agence.adresse">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Numéro de Téléphone</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="telAgence" name="telAgence" [(ngModel)]="agence.telephone">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
+            <button type="submit" class="btn btn-success">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--</div>-->

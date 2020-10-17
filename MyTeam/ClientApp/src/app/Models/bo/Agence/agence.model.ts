@@ -1,5 +1,5 @@
 export class Agence {
-  Id: number;
+  id: number;
   nom: string;
   ville: string;
   adresse: string;
