@@ -38,5 +38,8 @@ export class ArticleService {
       })
     )
   }
-
+  Update(id,article) {
+    var host = this.BaseURI + '/ARTICLEs/' + id;
+    return this.http.put(host, article);
+  }
 }

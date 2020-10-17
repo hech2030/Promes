@@ -9,6 +9,7 @@
 
 namespace DataAcess.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -31,18 +32,28 @@ namespace DataAcess.Models
         public Nullable<long> prix { get; set; }
         public Nullable<long> newAttr { get; set; }
         public string emplacement { get; set; }
+        [JsonProperty("CATEGORIE_ARTId")]
         public long CATEGORIE_ARTId { get; set; }
+        [JsonProperty("FOURNISSEURId")]
         public long FOURNISSEURId { get; set; }
+        [JsonProperty("MAGASINId")]
         public long MAGASINId { get; set; }
-    
+        public int  isDeleted { get; set; }
+
+        [JsonProperty("CATEGORIE_ART")]
         public virtual CATEGORIE_ART CATEGORIE_ART { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonProperty("ENTREE")]
         public virtual ICollection<ENTREE> ENTREE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonProperty("LIGNE_COMMANDE")]
         public virtual ICollection<LIGNE_COMMANDE> LIGNE_COMMANDE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonProperty("SORTIE")]
         public virtual ICollection<SORTIE> SORTIE { get; set; }
+        [JsonProperty("FOURNISSEUR")]
         public virtual FOURNISSEUR FOURNISSEUR { get; set; }
+        [JsonProperty("MAGASIN")]
         public virtual MAGASIN MAGASIN { get; set; }
     }
 }

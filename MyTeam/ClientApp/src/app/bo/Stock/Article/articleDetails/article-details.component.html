@@ -17,9 +17,9 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Unit</label>
+                <label class="col-sm-3 col-form-label">Quantité à modifier</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="Unit" placeholder="Enter unit" name="unit" [(ngModel)]="article.unit">
+                  <input type="number" class="form-control" id="Quantite" placeholder="Enter quantité" name="quantite" [(ngModel)]="article.quantite">
                 </div>
               </div>
             </div>
@@ -27,26 +27,40 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Prix</label>
+                <label class="col-sm-3 col-form-label">Unit</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="Prix" placeholder="Enter prix" name="prix" [(ngModel)]="article.prix">
+                  <input type="text" class="form-control" id="Unit" placeholder="Enter unit" name="unit" [(ngModel)]="article.unit">
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">MAGASIN</label>
+                <label class="col-sm-3 col-form-label">Prix</label>
                 <div class="col-sm-9">
-                  <input id="magasinDropdownList" />
+                  <input type="number" class="form-control" id="Prix" placeholder="Enter prix" name="prix" [(ngModel)]="article.prix">
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-12 text-right">
-            <button type="button" class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
-            <button type="submit" class="btn btn-success">Update</button>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Magasin</label>
+                <div class="col-sm-9">
+                  <kendo-dropdownlist [data]="Magasins"
+                                      [textField]="'nomMagasin'"
+                                      valueField="id"
+                                      [(ngModel)]="SelectedMagasin" name="MagasinsDDL">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
           </div>
-        </form>
+            <div class="col-md-12 text-right">
+              <button type="button" class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
+              <button type="submit" class="btn btn-success">Update</button>
+            </div>
+</form>
       </div>
     </div>
   </div>

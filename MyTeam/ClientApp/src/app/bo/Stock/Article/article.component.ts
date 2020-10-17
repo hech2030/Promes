@@ -28,6 +28,7 @@ export class ArticleComponent implements OnInit {
     CATEGORIE_ARTId: 1,
     FOURNISSEURId: 1,
     MAGASINId: 1,
+    isDeleted: 0,
     CATEGORIE_ART: null,
     ENTREE: null,
     SORTIE: null,
@@ -53,10 +54,10 @@ export class ArticleComponent implements OnInit {
       this.SearchCriteria.MAGASINId = this.SelectedMagasin.id;
     }
     this.magasinService.GetMagasin({})
-        .subscribe((data: any) => {
-          console.log(data.result);
-          this.Magasins = data.result;
-        });    
+      .subscribe((data: any) => {
+        console.log(data.result);
+        this.Magasins = data.result;
+      });
     this.articleService.GetArticle(this.SearchCriteria)
       .subscribe((data: any) => {
         console.log(data.result);
@@ -106,10 +107,10 @@ export class ArticleComponent implements OnInit {
       }
     })
   }
-  AddArticle(Articleform: NgForm) {    
-  this.articleService.addArticle(this.articleModel).subscribe(
+  AddArticle(Articleform: NgForm) {
+    this.articleService.addArticle(this.articleModel).subscribe(
       (res: any) => {
-      if (res.success) {
+        if (res.success) {
           this.ngOnInit();
           this.resetModel();
           $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -130,23 +131,23 @@ export class ArticleComponent implements OnInit {
     );
   }
 
-  resetModel(){
-    
-    this.articleModel.designation= '';
-    this.articleModel.unit= '';
-    this.articleModel.quantite= -1;
-    this.articleModel.prix= -1;
-    this.articleModel.newAttr= -1;
-    this.articleModel.emplacement= '';
-    this.articleModel.CATEGORIE_ARTId= -1;
-    this.articleModel.FOURNISSEURId= -1;
-    this.articleModel.MAGASINId= -1;
-    this.articleModel.CATEGORIE_ART= null;
-    this.articleModel.ENTREE= null;
-    this.articleModel.SORTIE= null;
-    this.articleModel.LIGNE_COMMANDE= null;
-    this.articleModel.FOURNISSEUR= null;
-    this.articleModel.MAGASIN= null
+  resetModel() {
+
+    this.articleModel.designation = '';
+    this.articleModel.unit = '';
+    this.articleModel.quantite = -1;
+    this.articleModel.prix = -1;
+    this.articleModel.newAttr = -1;
+    this.articleModel.emplacement = '';
+    this.articleModel.CATEGORIE_ARTId = -1;
+    this.articleModel.FOURNISSEURId = -1;
+    this.articleModel.MAGASINId = -1;
+    this.articleModel.CATEGORIE_ART = null;
+    this.articleModel.ENTREE = null;
+    this.articleModel.SORTIE = null;
+    this.articleModel.LIGNE_COMMANDE = null;
+    this.articleModel.FOURNISSEUR = null;
+    this.articleModel.MAGASIN = null
   }
 
   UpdateArticle(id) {

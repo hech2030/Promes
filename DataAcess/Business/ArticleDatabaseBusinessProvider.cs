@@ -43,14 +43,14 @@ namespace DataAcess.Business
             {
                 using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    return Context.ARTICLE.Where(x => x.Id == id).ToList();
+                    return Context.ARTICLE.Where(x => x.Id == id && x.isDeleted == 0).ToList();
                 }
             }
             else
             {
                 using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    return Context.ARTICLE.ToList();
+                    return Context.ARTICLE.Where(x => x.isDeleted == 0).ToList();
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace DataAcess.Business
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
                 var myObj = Context.ARTICLE.Find(id);
-                Context.ARTICLE.Remove(myObj);
+                myObj.isDeleted = 1;
                 var sortie = AddSortie(myObj);
                 Context.SaveChanges();
                 transaction.Complete();

@@ -31,13 +31,14 @@ namespace MyTeam.Controllers
             if (request.MAGASINId > 0)
             {
                 data = data.Where(x => x.MAGASINId == request.MAGASINId);
-            }            
-            return Ok(new { result = data});
+            }
+            return Ok(new { result = data });
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] ARTICLE obj)
         {
+            obj.isDeleted = 0;
             var data = ArticleDatabaseBusinessProvider.Instance.Add(obj);
             return Ok(new { success = true });
         }
