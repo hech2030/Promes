@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyTeam.Common.Requests.bo.Agence;
 using System;
+using System.Linq;
 
 namespace MyTeam.Controllers
 {
@@ -43,7 +44,7 @@ namespace MyTeam.Controllers
             catch (Exception ex)
             {
                 Console.Write("Exception : " + ex.Message);
-                return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
+                return BadRequest(new { Message = ex.HelpLink });
             }
         }        
         [HttpPost]
