@@ -22,6 +22,10 @@ namespace DataAcess.Models
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MAGASIN>()
+                        .HasMany<ARTICLE>(g => g.ARTICLE)
+                        .WithRequired(s => s.MAGASIN)
+                        .HasForeignKey<long>(s => s.MAGASINId);
             //throw new UnintentionalCodeFirstException();
         }
     

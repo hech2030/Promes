@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 
 namespace DataAcess.Business
@@ -56,10 +57,23 @@ namespace DataAcess.Business
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                DataAccessProvider.AddOrUpdate(value);
-                Context.SaveChanges();
-                transaction.Complete();
-                return value;
+                var control = Find(0, string.Empty);
+                if (value.Id > 0)
+                {
+                    var CurrenctValue = control.Where(x => x.Id == value.Id).FirstOrDefault();
+                    control.Remove(CurrenctValue);
+                }
+                if (control.Where(x => x.nom.Equals(value.nom)).Count() == 0)
+                {
+                    DataAccessProvider.AddOrUpdate(value);
+                    Context.SaveChanges();
+                    transaction.Complete();
+                    return value;
+                }
+                else
+                {
+                    throw new Exception() { HelpLink = "Le nom de l'agence existe déjà" };
+                }
             }
         }
 
