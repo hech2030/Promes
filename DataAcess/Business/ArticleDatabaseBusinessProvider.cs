@@ -11,6 +11,7 @@ namespace DataAcess.Business
 {
     public class ArticleDatabaseBusinessProvider
     {
+        private static SolarThermalEntities Context = new SolarThermalEntities();
         /// <summary>
         /// lock object
         /// </summary>
@@ -42,14 +43,14 @@ namespace DataAcess.Business
             {
                 using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    return new SolarThermalEntities().ARTICLE.Where(x => x.Id == id).ToList();
+                    return Context.ARTICLE.Where(x => x.Id == id).ToList();
                 }
             }
             else
             {
                 using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    return new SolarThermalEntities().ARTICLE.ToList();
+                    return Context.ARTICLE.ToList();
                 }
             }
         }
@@ -58,11 +59,11 @@ namespace DataAcess.Business
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.ARTICLE.Add(obj);
-                context.SaveChanges();
+                var myObj = Context.ARTICLE.Add(obj);
+                var entree = AddEntree(myObj);
+                Context.SaveChanges();
                 transaction.Complete();
-                return myObj;
+                return obj;
             }
         }
 
@@ -70,11 +71,22 @@ namespace DataAcess.Business
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.ARTICLE.FirstOrDefault(x => x.Id == id);
-                myObj = obj;
-                // a tester sinon :  context.ARTICLE.AddOrUpdate<ARTICLE>(obj);
-                context.SaveChanges();
+                var myObj = Context.ARTICLE.SingleOrDefault(x => x.Id == id);
+                if (myObj != null)
+                {
+                    long oldQuantity = (long)myObj.quantite;
+                    myObj = obj;
+                    if (obj.quantite > 0)
+                    {
+                        var entree = AddEntree(myObj);
+                    }
+                    else
+                    {
+                        var sortie = AddSortie(myObj);
+                    }
+                    myObj.quantite = oldQuantity + obj.quantite;
+                }
+                Context.SaveChanges();
                 transaction.Complete();
                 return myObj;
             }
@@ -84,12 +96,33 @@ namespace DataAcess.Business
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.ARTICLE.Find(id);
-                context.ARTICLE.Remove(myObj);
-                context.SaveChanges();
+                var myObj = Context.ARTICLE.Find(id);
+                Context.ARTICLE.Remove(myObj);
+                var sortie = AddSortie(myObj);
+                Context.SaveChanges();
                 transaction.Complete();
             }
+        }
+
+        public ENTREE AddEntree(ARTICLE myObj)
+        {
+            ENTREE entree = new ENTREE();
+            entree.dateEntree = DateTime.UtcNow;
+            entree.prixDentree = myObj.prix;
+            entree.quantite = myObj.quantite;
+            entree.numEntree = DateTime.UtcNow.Ticks;
+            entree.ARTICLEId = myObj.Id;
+            return Context.ENTREE.Add(entree);
+        }
+        public SORTIE AddSortie(ARTICLE myObj)
+        {
+            SORTIE sortie = new SORTIE();
+            sortie.dateSortie = DateTime.UtcNow;
+            sortie.prixDSortie = myObj.prix;
+            sortie.quantite = myObj.quantite;
+            sortie.numSortie = DateTime.UtcNow.Ticks;
+            sortie.ARTICLEId = myObj.Id;
+            return Context.SORTIE.Add(sortie);
         }
     }
 }

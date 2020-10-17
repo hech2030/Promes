@@ -23,7 +23,7 @@ namespace MyTeam.Controllers
         public IActionResult FindArticle(ArticleFindRequest request)
         {
             IEnumerable<ARTICLE> data = new List<ARTICLE>();
-            ArticleDatabaseBusinessProvider.Instance.Find(request.id);
+            data = ArticleDatabaseBusinessProvider.Instance.Find(request.id);
             if (request.designation != null)
             {
                 data = data.Where(x => x.designation == request.designation);

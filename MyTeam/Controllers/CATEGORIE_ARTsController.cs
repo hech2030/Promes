@@ -25,7 +25,7 @@ namespace MyTeam.Controllers
         public IActionResult FindCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
         {
             IEnumerable<CATEGORIE_ART> data = new List<CATEGORIE_ART>();
-            DataAcess.Business.CategorieArtDatabaseBusinessProvider.Instance.Find(request.id);
+            data = DataAcess.Business.CategorieArtDatabaseBusinessProvider.Instance.Find(request.id);
             if (request.nomCategorie != null)
             {
                 data = data.Where(x => x.nomCate == request.nomCategorie);
