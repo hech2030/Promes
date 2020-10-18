@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DataAcess.Business;
 using DataAcess.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using MyTeam.Common.Requests.bo.Users;
 
 namespace MyTeam.Controllers
 {
@@ -17,11 +17,21 @@ namespace MyTeam.Controllers
         {
         }
 
-        [HttpGet]
-        public IEnumerable<SORTIE> Get()
+        [HttpPost]
+        [Route("FindSORTIE")]
+        public IActionResult findSORTIE(SortieFindRequest request)
         {
-            var data = SortieDatabaseBusinessProvider.Instance.Get();
-            return data;
+            IEnumerable<SORTIE> data = new List<SORTIE>();
+            data = SortieDatabaseBusinessProvider.Instance.Find(request.id);
+            if (request.numSortie > 0)
+            {
+                data = data.Where(x => x.numSortie == request.numSortie);
+            }
+            if (request.ARTICLEId > 0)
+            {
+                data = data.Where(x => x.ARTICLEId == request.ARTICLEId);
+            }
+            return Ok(new { result = data });
         }
 
         [HttpPost]

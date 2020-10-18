@@ -32,6 +32,8 @@ import { ArticleComponent } from './bo/Stock/Article/article.component';
 import { ArticleDetailsComponent } from './bo/Stock/Article/articleDetails/article-details.component';
 import { AgencesComponent } from './bo/Admin/Agences/agences.component';
 import { AgenceDetailsComponent } from './bo/Admin/Agences/details/details.component';
+import { EntreeComponent } from './bo/Stock/Entree/entree.component';
+import { SortieComponent } from './bo/Stock/Sortie/sortie.component';
 
 
 
@@ -49,7 +51,10 @@ import { AgenceDetailsComponent } from './bo/Admin/Agences/details/details.compo
     UsersDetailsComponent,
     ProfileComponent,
     ArticleComponent,
-    ArticleDetailsComponent, AgencesComponent,
+    ArticleDetailsComponent,
+    EntreeComponent,
+    SortieComponent,
+    AgencesComponent,
     AgenceDetailsComponent
   ],
   imports: [
@@ -66,6 +71,8 @@ import { AgenceDetailsComponent } from './bo/Admin/Agences/details/details.compo
       { path: 'User/MyProfile', component: ProfileComponent, canActivate: [AuthGuard] },
       { path: 'Article', component: ArticleComponent, canActivate: [AuthGuard] },
       { path: 'Article/articleDetails/:id', component: ArticleDetailsComponent, canActivate: [AuthGuard] },
+      { path: 'Entree', component: EntreeComponent, canActivate: [AuthGuard] },
+      { path: 'Sortie', component: SortieComponent, canActivate: [AuthGuard] },
       { path: 'Agence', component: AgencesComponent, canActivate: [AuthGuard] },
       { path: 'Agence/agenceDetails/:id', component: AgenceDetailsComponent, canActivate: [AuthGuard] }
     ]),

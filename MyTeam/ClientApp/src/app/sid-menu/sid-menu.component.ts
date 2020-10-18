@@ -35,6 +35,12 @@ export class sideMenuComponent implements OnInit {
   GetArticle() {
     this.router.navigate(['/Article']);
   }
+  GetSortie() {
+    this.router.navigate(['/Sortie']);
+  }
+  GetEntree() {
+    this.router.navigate(['/Entree']);
+  }
 
   GetHome() {
     this.router.navigate(['/Home']);
