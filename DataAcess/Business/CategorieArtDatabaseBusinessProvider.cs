@@ -6,11 +6,15 @@ using System.Linq;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
+using System.Runtime.InteropServices;
 
 namespace DataAcess.Business
 {
     public class CategorieArtDatabaseBusinessProvider
     {
+        private static SolarThermalEntities Context = new SolarThermalEntities();
+        private readonly DbSet<CATEGORIE_ART> DataAccessProvider = Context.CATEGORIE_ART;
         /// <summary>
         /// lock object
         /// </summary>
@@ -25,7 +29,6 @@ namespace DataAcess.Business
         /// Gets Instance.
         /// </summary>
         public static CategorieArtDatabaseBusinessProvider Instance
-
         {
             get
             {
@@ -36,47 +39,40 @@ namespace DataAcess.Business
             }
         }
 
-        public IEnumerable<CATEGORIE_ART> Find(long id)
+        public IEnumerable<CATEGORIE_ART> Find(long id, string nomCategorie)
         {
+            var query = DataAccessProvider.AsQueryable();
             if (id > 0)
             {
-                using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-                {
-                    return new SolarThermalEntities().CATEGORIE_ART.Where(x => x.Id == id).ToList();
-                }
+                query = query.Where(x => x.Id == id);
             }
-            else
+            if (!string.IsNullOrEmpty(nomCategorie))
             {
-                using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-                {
-                    return new SolarThermalEntities().CATEGORIE_ART.ToList();
-                }
+                query = query.Where(x => x.nomCate == nomCategorie);
             }
+            return query.ToList();
         }
 
-        public CATEGORIE_ART Add(CATEGORIE_ART obj)
+        public CATEGORIE_ART Save(CATEGORIE_ART obj)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.CATEGORIE_ART.Add(obj);
-                context.SaveChanges();
-                transaction.Complete();
-                return myObj;
-            }
-        }
-
-        public CATEGORIE_ART Update(int id, CATEGORIE_ART obj)
-        {
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-            {
-                var context = new SolarThermalEntities();
-                var myObj = context.CATEGORIE_ART.FirstOrDefault(x => x.Id == id);
-                myObj = obj;
-                // a tester sinon :  context.CATEGORIE_ART.AddOrUpdate<CATEGORIE_ART>(obj);
-                context.SaveChanges();
-                transaction.Complete();
-                return myObj;
+                var currentList = DataAccessProvider.ToList();
+                if(obj.Id>0)
+                {
+                    currentList.Remove(currentList.Where(x => x.Id == obj.Id).FirstOrDefault());
+                }
+                if (currentList.Where(x => x.nomCate.Equals(obj.nomCate)).Count() > 0)
+                {
+                    throw new Exception() { HelpLink = "Ce nom de catégorie existe déjà" };
+                }
+                else
+                {
+                    DataAccessProvider.AddOrUpdate(obj);
+                    Context.SaveChanges();
+                    transaction.Complete();
+                    return obj;
+                }
             }
         }
 
@@ -84,10 +80,17 @@ namespace DataAcess.Business
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.CATEGORIE_ART.Find(id);
-                context.CATEGORIE_ART.Remove(myObj);
-                context.SaveChanges();
+
+                var obj = DataAccessProvider.Find(id);
+                if (obj.ARTICLE.Count > 0)
+                {
+                    throw new Exception() { HelpLink = "Cette catégorie contient des articles" };
+                }
+                else
+                {
+                    DataAccessProvider.Remove(obj);
+                    Context.SaveChanges();
+                }
                 transaction.Complete();
             }
         }

@@ -6,11 +6,14 @@ using System.Linq;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
 
 namespace DataAcess.Business
 {
     public class FournisseurDatabaseBusinessProvider
     {
+        private static SolarThermalEntities Context = new SolarThermalEntities();
+        private readonly DbSet<FOURNISSEUR> DataAccessProvider = Context.FOURNISSEUR;
         /// <summary>
         /// lock object
         /// </summary>
@@ -36,63 +39,50 @@ namespace DataAcess.Business
             }
         }
 
-        public IEnumerable<FOURNISSEUR> Find(long id)
+        public IEnumerable<FOURNISSEUR> Find(long id, string nomFournissuer)
         {
+            var query = DataAccessProvider.AsQueryable();
             if (id > 0)
             {
-                using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+                query = query.Where(x => x.Id == id);
+            }
+            if (!string.IsNullOrEmpty(nomFournissuer))
+            {
+                query = query.Where(x => x.NomF == nomFournissuer);
+            }
+            return query.ToList();
+        }
+
+        public FOURNISSEUR Save(FOURNISSEUR obj)
+        {
+            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+            {
+                var currentList = DataAccessProvider.ToList();
+                if (obj.Id > 0)
                 {
-                    return new SolarThermalEntities().FOURNISSEUR.Where(x => x.Id == id).ToList();
+                    currentList.Remove(currentList.Where(x => x.Id == obj.Id).FirstOrDefault());
+                }
+                if (currentList.Where(x => x.NomF.Equals(obj.NomF)).Count() > 0)
+                {
+                    throw new Exception() { HelpLink = "Ce nom de fournisseur existe déjà" };
+                }
+                else
+                {
+                    DataAccessProvider.AddOrUpdate(obj);
+                    Context.SaveChanges();
+                    transaction.Complete();
+                    return obj;
                 }
             }
-            else
-            {
-                using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-                {
-                    return new SolarThermalEntities().FOURNISSEUR.ToList();
-                }
-            }
         }
 
-        public FOURNISSEUR Add(FOURNISSEUR obj)
+        public void Remove(long id)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.FOURNISSEUR.Add(obj);
-                context.SaveChanges();
-                transaction.Complete();
-                return myObj;
-            }
-        }
-
-        public FOURNISSEUR Update(int id, FOURNISSEUR obj)
-        {
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-            {
-                var context = new SolarThermalEntities();
-                var myObj = context.FOURNISSEUR.FirstOrDefault(x => x.Id == id);
-                myObj = obj;
-                // a tester sinon :  context.FOURNISSEUR.AddOrUpdate<CATEGORIE_ART>(obj);
-                context.SaveChanges();
-                transaction.Complete();
-                return myObj;
-            }
-        }
-
-        public IEnumerable<FOURNISSEUR> Get()
-        {
-            return new SolarThermalEntities().FOURNISSEUR.ToList();
-        }
-
-        public void Remove(int id)
-        {
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-            {
-                var context = new SolarThermalEntities();
-                var myObj = context.FOURNISSEUR.Find(id);
-                context.FOURNISSEUR.Remove(myObj);
-                context.SaveChanges();
+                var obj = DataAccessProvider.Find(id);
+                DataAccessProvider.Remove(obj);
+                Context.SaveChanges();
                 transaction.Complete();
             }
         }

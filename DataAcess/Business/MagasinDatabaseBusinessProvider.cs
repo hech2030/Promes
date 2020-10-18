@@ -25,7 +25,6 @@ namespace DataAcess.Business
         /// Gets Instance.
         /// </summary>
         public static MagasinDatabaseBusinessProvider Instance
-
         {
             get
             {
