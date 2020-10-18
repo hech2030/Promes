@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAcess.Business;
 using DataAcess.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyTeam.Common.Requests.bo.Stock.Fournisseur;
 using MyTeam.Common.Requests.bo.Users;
 
 namespace MyTeam.Controllers
@@ -17,48 +19,47 @@ namespace MyTeam.Controllers
         public FOURNISSEURsController()
         {
         }
-
         [HttpPost]
-        [Route("FindFOURNISSEUR")]
-        public IActionResult FindFOURNISSEUR(FOURNISSEURFindRequest request)
+        [Authorize]
+        [Route("FindFournisseur")]
+        public IActionResult FindCATEGORIE_ART(FOURNISSEURFindRequest request)
         {
-            IEnumerable<FOURNISSEUR> data = new List<FOURNISSEUR>();
-            data = FournisseurDatabaseBusinessProvider.Instance.Find(request.id);
-            if (request.nomFournisseur != null)
-            {
-                data = data.Where(x => x.NomF == request.nomFournisseur);
-            }
+            var data = FournisseurDatabaseBusinessProvider.Instance.Find(request.id, request.nomFournisseur);
             return Ok(new { result = data });
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] FOURNISSEUR obj)
+        [Authorize]
+        [Route("SaveFournissuer")]
+        public IActionResult SaveCateogorie(FournisseurSaveRequest request)
         {
-            var data = FournisseurDatabaseBusinessProvider.Instance.Add(obj);
-            return Ok(new { success = true });
+            try
+            {
+                return Ok(FournisseurDatabaseBusinessProvider.Instance.Save(request.value));
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { Message = ex.HelpLink });
+            }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] FOURNISSEUR obj)
-        {
-            var data = FournisseurDatabaseBusinessProvider.Instance.Update(id, obj);
-            return Ok(new { success = true });
-        }
 
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost]
+        [Authorize]
+        [Route("DeleteFournisseur")]
+        public IActionResult DeleteCategorie(FournissuerDeleteRequest request)
         {
             bool success = false;
             try
             {
-                FournisseurDatabaseBusinessProvider.Instance.Remove(id);
+                FournisseurDatabaseBusinessProvider.Instance.Remove(request.id);
                 return Ok(new { success = true });
             }
             catch (Exception ex)
             {
                 Console.Write("Exception : " + ex.Message);
-                return BadRequest(new { success });
+                return BadRequest(new { success, ex.HelpLink });
             }
         }
     }
