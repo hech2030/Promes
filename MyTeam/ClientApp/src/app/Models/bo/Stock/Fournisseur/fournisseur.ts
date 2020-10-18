@@ -3,9 +3,9 @@ import { Commande } from ".././Commande/commande";
 
 export class Fournisseur {
   constructor() {
-  this.id = '';
-}
-  id: string = '';
+    this.id = 0;
+  }
+  id: number;
   numF: string;
   NomF: string;
   adresse: string;

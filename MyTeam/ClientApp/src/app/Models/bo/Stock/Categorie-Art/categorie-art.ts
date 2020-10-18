@@ -2,9 +2,9 @@ import { Article } from ".././Article/article";
 
 export class CategorieArt {
   constructor() {
-    this.id = '';
+    this.id = 0;
   }
-  id: string = '';
+  id: number;
   nomCate: string;
   description: string;
   ARTICLE: Article[];

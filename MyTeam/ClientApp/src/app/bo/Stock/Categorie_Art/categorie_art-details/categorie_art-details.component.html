@@ -3,46 +3,69 @@
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">User Details</h4>
+        <h4 class="card-title">Categorie Details</h4>
         <form class="form-sample" (ngSubmit)="Update()">
           <p class="card-description"></p>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Nom Complet</label>
+                <label class="col-sm-3 col-form-label">Nom du catégorie</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="FulName" placeholder="Enter full name" name="fullName" [(ngModel)]="user.fullName">
+                  <input type="text" class="form-control" id="CatName" placeholder="Enter name" name="CatName" [(ngModel)]="categorie.nomCate">
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">User Name</label>
+                <label class="col-sm-3 col-form-label">Description du catégorie</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="userName" placeholder="Enter user name" name="UserName" [(ngModel)]="user.userName">
+                  <input type="text" class="form-control" id="CategDesc" name="CategDesc" [(ngModel)]="categorie.description">
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Email</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="Email" placeholder="Enter full name" name="Email" [(ngModel)]="user.email">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Role de l'utilisateur</label>
-                <div class="col-sm-9">
-                  <input id="dropdownlist" />
-                  <!--<input type="text" class="form-control" id="Role" placeholder="Enter user Role" name="RoleLabel" [(ngModel)]="user.roleLabel">-->
-                </div>
-              </div>
-            </div>
+
+          <div class="grid-wrapper">
+            <!--<div id="grid"></div>-->
+            <!--          <div *ngIf="Isloading" class="k-i-loading"></div>-->
+            <kendo-grid [kendoGridBinding]="categorie.article"
+                        [pageSize]="20"
+                        [pageable]="true"
+                        [sortable]="true"
+                        [groupable]="true"
+                        [reorderable]="true"
+                        [resizable]="true"
+                        [height]="480"
+                        [columnMenu]="{ filter: true }">
+              <kendo-grid-column title="Désignation" field="designation"></kendo-grid-column>
+              <kendo-grid-column title="Magasin" field="magasin.nomMagasin"></kendo-grid-column>
+              <kendo-grid-column title="Quantité" field="quantite"></kendo-grid-column>
+
+              <kendo-grid-messages filterContainsOperator="Contient"
+                                   filterEndsWithOperator="Termine par"
+                                   filterEqOperator="égale"
+                                   filterNotEqOperator="Différent de"
+                                   filterNotContainsOperator="Ne contient pas"
+                                   filterStartsWithOperator="Commence par"
+                                   filterIsNullOperator="Est Null"
+                                   filterIsNotNullOperator="N'est pas NULL"
+                                   filterIsEmptyOperator="Est vide"
+                                   filterIsNotEmptyOperator="N'est pas Vide"
+                                   noRecords="Aucun élément a afficher"
+                                   filter="Filtrer"
+                                   columns="Colonnes"
+                                   columnsApply="Confirmer"
+                                   columnsReset="Supprimer"
+                                   sortAscending="Tri ascendant"
+                                   sortDescending="Tri descendant"
+                                   pagerOf="de"
+                                   groupPanelEmpty="Glisser les colonnes ici pour grouper">
+              </kendo-grid-messages>
+            </kendo-grid>
+            <div *ngIf="Isloading" class="k-i-loading"></div>
           </div>
+          <br/>
+          <br/>
           <div class="col-md-12 text-right">
             <button type="button" class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
             <button type="submit" class="btn btn-success">Update</button>
@@ -52,4 +75,3 @@
     </div>
   </div>
 </div>
-<!--</div>-->

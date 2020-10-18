@@ -3,23 +3,23 @@
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">User Details</h4>
+        <h4 class="card-title">Fournisseur Details</h4>
         <form class="form-sample" (ngSubmit)="Update()">
           <p class="card-description"></p>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Nom Complet</label>
+                <label class="col-sm-3 col-form-label">Nom du founirsseur</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="FulName" placeholder="Enter full name" name="fullName" [(ngModel)]="user.fullName">
+                  <input type="text" class="form-control" id="FourName" placeholder="Enter name" name="FourName" [(ngModel)]="fournisseur.nomF">
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">User Name</label>
+                <label class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="userName" placeholder="Enter user name" name="UserName" [(ngModel)]="user.userName">
+                  <input type="text" class="form-control" id="EmailF" name="EmailF" [(ngModel)]="fournisseur.email">
                 </div>
               </div>
             </div>
@@ -27,18 +27,27 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Email</label>
+                <label class="col-sm-3 col-form-label">Pays</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="Email" placeholder="Enter full name" name="Email" [(ngModel)]="user.email">
+                  <input type="text" class="form-control" id="PaysFour" placeholder="Enter name" name="PaysFour" [(ngModel)]="fournisseur.payes">
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Role de l'utilisateur</label>
+                <label class="col-sm-3 col-form-label">Ville</label>
                 <div class="col-sm-9">
-                  <input id="dropdownlist" />
-                  <!--<input type="text" class="form-control" id="Role" placeholder="Enter user Role" name="RoleLabel" [(ngModel)]="user.roleLabel">-->
+                  <input type="text" class="form-control" id="VilleF" name="VilleF" [(ngModel)]="fournisseur.ville">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Telephone</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="TeleFour" placeholder="Enter name" name="TeleFour" [(ngModel)]="fournisseur.tele">
                 </div>
               </div>
             </div>
@@ -52,4 +61,3 @@
     </div>
   </div>
 </div>
-<!--</div>-->

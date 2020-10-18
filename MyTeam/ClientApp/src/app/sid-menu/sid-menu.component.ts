@@ -51,4 +51,10 @@ export class sideMenuComponent implements OnInit {
   GetAgences() {
     this.router.navigate(['/Agence']);
   }
+  GetCategorie() {
+    this.router.navigate(['/Categorie']);
+  }
+  GetFournisseur() {
+    this.router.navigate(['/Fournisseur']);
+  }
 }
