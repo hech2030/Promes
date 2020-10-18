@@ -6,6 +6,7 @@ using System.Linq;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
 
 namespace DataAcess.Business
 {
@@ -59,7 +60,17 @@ namespace DataAcess.Business
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var myObj = Context.ARTICLE.Add(obj);
+                var myObj = Context.ARTICLE.AsNoTracking().SingleOrDefault(x => x.designation == obj.designation);
+                if (myObj != null)
+                {
+                    Context.ARTICLE.Attach(myObj);
+                    obj.Id = myObj.Id;
+                    myObj = obj;
+                }
+                else
+                {
+                    myObj = Context.ARTICLE.Add(obj);
+                }
                 var entree = AddEntree(myObj);
                 Context.SaveChanges();
                 transaction.Complete();
@@ -72,6 +83,7 @@ namespace DataAcess.Business
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
                 var myObj = Context.ARTICLE.SingleOrDefault(x => x.Id == id);
+                Context.ARTICLE.Attach(myObj);
                 if (myObj != null)
                 {
                     long oldQuantity = (long)myObj.quantite;
@@ -99,6 +111,7 @@ namespace DataAcess.Business
                 var myObj = Context.ARTICLE.Find(id);
                 myObj.isDeleted = 1;
                 var sortie = AddSortie(myObj);
+                myObj.quantite = 0;
                 Context.SaveChanges();
                 transaction.Complete();
             }
