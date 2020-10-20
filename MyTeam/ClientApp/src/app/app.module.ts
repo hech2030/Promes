@@ -32,6 +32,8 @@ import { ArticleComponent } from './bo/Stock/Article/article.component';
 import { ArticleDetailsComponent } from './bo/Stock/Article/articleDetails/article-details.component';
 import { AgencesComponent } from './bo/Admin/Agences/agences.component';
 import { AgenceDetailsComponent } from './bo/Admin/Agences/details/details.component';
+import { SousTraitantsComponent } from './bo/Admin/SousTraitants/soustraitants.component';
+import { SousTraitantDetailsComponent } from './bo/Admin/SousTraitants/details/details.component';
 import { CategorieArtComponent } from './bo/Stock/Categorie_Art/categorie_art.component';
 import { categorie_artDetailsComponent } from './bo/Stock/Categorie_Art/categorie_art-details/categorie_art-details.component';
 import { FournisseurComponent } from './bo/Stock/Fournisseur/fournisseur.component';
@@ -55,6 +57,8 @@ import { FournisseurDetailsComponent } from './bo/Stock/Fournisseur/fournisseur-
     ArticleComponent,
     ArticleDetailsComponent, AgencesComponent,
     AgenceDetailsComponent,
+    SousTraitantsComponent,
+    SousTraitantDetailsComponent,
     CategorieArtComponent,
     categorie_artDetailsComponent,
     FournisseurComponent, FournisseurDetailsComponent
@@ -75,6 +79,8 @@ import { FournisseurDetailsComponent } from './bo/Stock/Fournisseur/fournisseur-
       { path: 'Article/articleDetails/:id', component: ArticleDetailsComponent, canActivate: [AuthGuard] },
       { path: 'Agence', component: AgencesComponent, canActivate: [AuthGuard] },
       { path: 'Agence/agenceDetails/:id', component: AgenceDetailsComponent, canActivate: [AuthGuard] },
+      { path: 'SousTraitant', component: SousTraitantsComponent, canActivate: [AuthGuard] },
+      { path: 'SousTraitant/sousTraitantDetails/:id', component: SousTraitantDetailsComponent, canActivate: [AuthGuard] },
       { path: 'Categorie/categorieDetails/:id', component: categorie_artDetailsComponent, canActivate: [AuthGuard] },
       { path: 'Categorie', component: CategorieArtComponent, canActivate: [AuthGuard] },
       { path: 'Fournisseur', component: FournisseurComponent, canActivate: [AuthGuard] },

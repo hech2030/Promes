@@ -9,9 +9,9 @@
 
 namespace DataAcess.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    [Table("SOUS_TRAITANT")]
     public partial class SOUS_TRAITANT
     {
         public long Id { get; set; }
