@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\SousTraitantDataBaseBusinessProvider.cs" />
     <Compile Include="Business\AgenceDataBaseBusinessProvider.cs" />
     <Compile Include="Business\ReceptionDatabaseBusinessProvider.cs" />
     <Compile Include="Business\EntreeDatabaseBusinessProvider.cs" />
@@ -111,6 +112,9 @@
       <DependentUpon>SolarModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SORTIE.cs">
+      <DependentUpon>SolarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SOUS_TRAITANT.cs">
       <DependentUpon>SolarModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\STOCK.cs">

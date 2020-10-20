@@ -26,6 +26,7 @@
         <AssociationConnector Association="SolarThermalModel.FK_COMMANDELIGNE_COMMANDE" ManuallyRouted="false" />
         <AssociationConnector Association="SolarThermalModel.FK_FOURNISSEURCOMMANDE" ManuallyRouted="false" />
         <AssociationConnector Association="SolarThermalModel.FK_RECEPTIONCOMMANDE" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SolarThermalModel.SOUS_TRAITANT" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

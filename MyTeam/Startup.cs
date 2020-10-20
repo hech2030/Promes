@@ -45,15 +45,6 @@ namespace MyTeam
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             );
 
- 
-            //services.AddDbContext<StockContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
-            //);
-
-            //services.AddDbContext<SolarThermalEntities>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
-            //);
-
             services.AddDefaultIdentity<User>().AddEntityFrameworkStores<UserContext>();
 
 

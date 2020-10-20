@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SolarThermalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SolarThermalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AGENCE">
           <Key>
             <PropertyRef Name="Id" />
@@ -113,6 +113,16 @@
           <Property Name="dateSortie" Type="datetime" />
           <Property Name="prixDSortie" Type="bigint" />
           <Property Name="ARTICLEId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SOUS_TRAITANT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar(max)" />
+          <Property Name="ville" Type="nvarchar" MaxLength="100" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="200" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="STOCK">
           <Key>
@@ -270,6 +280,7 @@
           <EntitySet Name="MAGASIN" EntityType="Self.MAGASIN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RECEPTION" EntityType="Self.RECEPTION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SORTIE" EntityType="Self.SORTIE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SOUS_TRAITANT" EntityType="Self.SOUS_TRAITANT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STOCK" EntityType="Self.STOCK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ARTICLECATEGORIE_ART" Association="Self.FK_ARTICLECATEGORIE_ART">
@@ -635,7 +646,18 @@
             <End Role="RECEPTION" EntitySet="RECEPTION" />
             <End Role="COMMANDE" EntitySet="COMMANDE" />
           </AssociationSet>
+          <EntitySet Name="SOUS_TRAITANT" EntityType="SolarThermalModel.SOUS_TRAITANT" />
         </EntityContainer>
+        <EntityType Name="SOUS_TRAITANT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ville" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -797,6 +819,17 @@
                 <ScalarProperty Name="roleLabel" ColumnName="roleLabel" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SOUS_TRAITANT">
+            <EntityTypeMapping TypeName="SolarThermalModel.SOUS_TRAITANT">
+              <MappingFragment StoreEntitySet="SOUS_TRAITANT">
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
