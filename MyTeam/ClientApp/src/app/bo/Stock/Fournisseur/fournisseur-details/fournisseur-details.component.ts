@@ -30,7 +30,7 @@ export class FournisseurDetailsComponent implements OnInit {
       });
   }
   Quit() {
-    this.router.navigate(['/Fournissuer']);
+    this.router.navigate(['/Fournisseur']);
   }
   Update() {
     this.fournisseurService.SaveFournisseur(this.fournisseur).subscribe(
