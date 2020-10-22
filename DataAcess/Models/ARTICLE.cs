@@ -38,7 +38,6 @@ namespace DataAcess.Models
         public long FOURNISSEURId { get; set; }
         [JsonProperty("MAGASINId")]
         public long MAGASINId { get; set; }
-        public int  isDeleted { get; set; }
 
         [JsonProperty("CATEGORIE_ART")]
         public virtual CATEGORIE_ART CATEGORIE_ART { get; set; }

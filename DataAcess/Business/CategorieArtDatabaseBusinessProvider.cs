@@ -41,16 +41,23 @@ namespace DataAcess.Business
 
         public IEnumerable<CATEGORIE_ART> Find(long id, string nomCategorie)
         {
-            var query = DataAccessProvider.AsQueryable();
+            List<ARTICLE> articles = new List<ARTICLE>();
+             var query = DataAccessProvider.AsQueryable();
             if (id > 0)
             {
+                articles =  Context.ARTICLE.AsQueryable().Where(x => x.CATEGORIE_ARTId == id).ToList();
                 query = query.Where(x => x.Id == id);
             }
             if (!string.IsNullOrEmpty(nomCategorie))
             {
                 query = query.Where(x => x.nomCate == nomCategorie);
             }
-            return query.ToList();
+            var result = query.ToList();
+            if (articles.Count > 0)
+            {
+                result[0].ARTICLE = articles;
+            }
+            return result;
         }
 
         public CATEGORIE_ART Save(CATEGORIE_ART obj)

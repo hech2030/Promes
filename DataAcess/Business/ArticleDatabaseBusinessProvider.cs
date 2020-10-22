@@ -13,6 +13,8 @@ namespace DataAcess.Business
     public class ArticleDatabaseBusinessProvider
     {
         private static SolarThermalEntities Context = new SolarThermalEntities();
+        private readonly DbSet<ARTICLE> DataAccessProvider = Context.ARTICLE;       
+        
         /// <summary>
         /// lock object
         /// </summary>
@@ -38,104 +40,69 @@ namespace DataAcess.Business
             }
         }
 
-        public IEnumerable<ARTICLE> Find(long id)
+        public IList<ARTICLE> Find(long id, long magasinId, string designation)
         {
+
+            var query = DataAccessProvider.AsQueryable();
             if (id > 0)
             {
-                using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-                {
-                    return Context.ARTICLE.Where(x => x.Id == id && x.isDeleted == 0).ToList();
-                }
+                query = query.Where(x => x.Id == id);
             }
-            else
+            if (!string.IsNullOrEmpty(designation))
             {
-                using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-                {
-                    return Context.ARTICLE.Where(x => x.isDeleted == 0).ToList();
-                }
+                query = query.Where(x => x.designation.Contains(designation));
             }
+            if (magasinId > 0)
+            {
+                query = query.Where(x => x.MAGASINId == magasinId);
+            }
+            return query.ToList();
         }
 
-        public ARTICLE Add(ARTICLE obj)
+        public ARTICLE Save(ARTICLE value)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var myObj = Context.ARTICLE.AsNoTracking().SingleOrDefault(x => x.designation == obj.designation);
-                if (myObj != null)
+                var control = Find(0,0, string.Empty);
+                if (value.Id > 0)
                 {
-                    Context.ARTICLE.Attach(myObj);
-                    obj.Id = myObj.Id;
-                    myObj = obj;
+                    var CurrenctValue = control.Where(x => x.Id == value.Id).FirstOrDefault();
+                    control.Remove(CurrenctValue);
+                }
+                if (control.Where(x => x.designation.Equals(value.designation)).Count() == 0)
+                {
+                    DataAccessProvider.AddOrUpdate(value);
+                    Context.SaveChanges();
+                    transaction.Complete();
+                    return value;
                 }
                 else
                 {
-                    myObj = Context.ARTICLE.Add(obj);
+                    throw new Exception() { HelpLink = "Le désignation de l'article existe déjà" };
                 }
-                var entree = AddEntree(myObj);
-                Context.SaveChanges();
-                transaction.Complete();
-                return obj;
             }
         }
 
-        public ARTICLE Update(int id, ARTICLE obj)
+
+        public bool Remove(long id)
         {
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+            try
             {
-                var myObj = Context.ARTICLE.SingleOrDefault(x => x.Id == id);
-                Context.ARTICLE.Attach(myObj);
-                if (myObj != null)
+                using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    long oldQuantity = (long)myObj.quantite;
-                    myObj = obj;
-                    if (obj.quantite > 0)
-                    {
-                        var entree = AddEntree(myObj);
-                    }
-                    else
-                    {
-                        var sortie = AddSortie(myObj);
-                    }
-                    myObj.quantite = oldQuantity + obj.quantite;
+                    var value = DataAccessProvider.Find(id);
+                    DataAccessProvider.Remove(value);
+                    Context.SaveChanges();
+                    transaction.Complete();
+                    return true;
                 }
-                Context.SaveChanges();
-                transaction.Complete();
-                return myObj;
             }
-        }
-
-        public void Remove(int id)
-        {
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+            catch (Exception ex)
             {
-                var myObj = Context.ARTICLE.Find(id);
-                myObj.isDeleted = 1;
-                var sortie = AddSortie(myObj);
-                myObj.quantite = 0;
-                Context.SaveChanges();
-                transaction.Complete();
+                Console.WriteLine(ex.Message);
+                return false;
             }
         }
-
-        public ENTREE AddEntree(ARTICLE myObj)
-        {
-            ENTREE entree = new ENTREE();
-            entree.dateEntree = DateTime.UtcNow;
-            entree.prixDentree = myObj.prix;
-            entree.quantite = myObj.quantite;
-            entree.numEntree = DateTime.UtcNow.Ticks;
-            entree.ARTICLEId = myObj.Id;
-            return Context.ENTREE.Add(entree);
-        }
-        public SORTIE AddSortie(ARTICLE myObj)
-        {
-            SORTIE sortie = new SORTIE();
-            sortie.dateSortie = DateTime.UtcNow;
-            sortie.prixDSortie = myObj.prix;
-            sortie.quantite = myObj.quantite;
-            sortie.numSortie = DateTime.UtcNow.Ticks;
-            sortie.ARTICLEId = myObj.Id;
-            return Context.SORTIE.Add(sortie);
-        }
+    
     }
 }
