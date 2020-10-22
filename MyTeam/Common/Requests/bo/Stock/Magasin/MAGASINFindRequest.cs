@@ -1,9 +1,9 @@
-﻿namespace MyTeam.Common.Requests.bo.Users
+﻿namespace MyTeam.Common.Requests.bo.Stock.Magasin
 {
     public class MAGASINFindRequest
     {
         public long id { get; set; }
-        public string nomMagasin { get; set; }
+        public string NomMagasin { get; set; }
 
     }
 }

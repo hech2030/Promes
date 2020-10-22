@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAcess.Business;
-using DataAcess.Models;
+﻿using DataAcess.Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyTeam.Common.Requests.bo.Stock.Article;
 using MyTeam.Common.Requests.bo.Users;
+using System;
 
 namespace MyTeam.Controllers
 {
@@ -19,50 +16,49 @@ namespace MyTeam.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("FindArticle")]
-        public IActionResult FindArticle(ArticleFindRequest request)
+        public ActionResult FindArticle(ArticleFindRequest Request)
         {
-            IEnumerable<ARTICLE> data = new List<ARTICLE>();
-            data = ArticleDatabaseBusinessProvider.Instance.Find(request.id);
-            if (request.designation != null)
-            {
-                data = data.Where(x => x.designation == request.designation);
-            }
-            if (request.MAGASINId > 0)
-            {
-                data = data.Where(x => x.MAGASINId == request.MAGASINId);
-            }
-            return Ok(new { result = data });
-        }
-
-        [HttpPost]
-        public IActionResult Post([FromBody] ARTICLE obj)
-        {
-            obj.isDeleted = 0;
-            var data = ArticleDatabaseBusinessProvider.Instance.Add(obj);
-            return Ok(new { success = true });
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] ARTICLE obj)
-        {
-            var data = ArticleDatabaseBusinessProvider.Instance.Update(id, obj);
-            return Ok(new { success = true });
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            bool success = false;
             try
             {
-                ArticleDatabaseBusinessProvider.Instance.Remove(id);
-                return Ok(new { success = true });
+                var result = ArticleDatabaseBusinessProvider.Instance.Find(Request.id, Request.MAGASINId,Request.designation);
+                return Ok(new { result });
             }
             catch (Exception ex)
             {
                 Console.Write("Exception : " + ex.Message);
-                return BadRequest(new { success });
+                return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
+            }
+        }
+        [HttpPost]
+        [Authorize]
+        [Route("SaveArticle")]
+        public ActionResult SaveArticle(ArticleSaveRequest Request)
+        {
+            try
+            {
+                return Ok(ArticleDatabaseBusinessProvider.Instance.Save(Request.value));
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { Message = ex.HelpLink });
+            }
+        }
+        [HttpPost]
+        [Authorize]
+        [Route("DeleteArticle")]
+        public ActionResult DeleteArticle(ArticleRemoveRequest Request)
+        {
+            try
+            {
+                return Ok(ArticleDatabaseBusinessProvider.Instance.Remove(Request.Id));
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
             }
         }
     }
