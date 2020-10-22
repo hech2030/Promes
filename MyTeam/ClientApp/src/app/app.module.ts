@@ -38,7 +38,8 @@ import { CategorieArtComponent } from './bo/Stock/Categorie_Art/categorie_art.co
 import { categorie_artDetailsComponent } from './bo/Stock/Categorie_Art/categorie_art-details/categorie_art-details.component';
 import { FournisseurComponent } from './bo/Stock/Fournisseur/fournisseur.component';
 import { FournisseurDetailsComponent } from './bo/Stock/Fournisseur/fournisseur-details/fournisseur-details.component';
-
+import { MagasinComponent } from './bo/Stock/Magasin/magasin.component';
+import { MagasinDetailsComponent } from './bo/Stock/Magasin/magasin-details/magasin-details.component';
 
 
 
@@ -61,7 +62,7 @@ import { FournisseurDetailsComponent } from './bo/Stock/Fournisseur/fournisseur-
     SousTraitantDetailsComponent,
     CategorieArtComponent,
     categorie_artDetailsComponent,
-    FournisseurComponent, FournisseurDetailsComponent
+    FournisseurComponent, FournisseurDetailsComponent, MagasinComponent, MagasinDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -85,6 +86,8 @@ import { FournisseurDetailsComponent } from './bo/Stock/Fournisseur/fournisseur-
       { path: 'Categorie', component: CategorieArtComponent, canActivate: [AuthGuard] },
       { path: 'Fournisseur', component: FournisseurComponent, canActivate: [AuthGuard] },
       { path: 'Fournisseur/fournisseurDetails/:id', component: FournisseurDetailsComponent, canActivate: [AuthGuard] },
+      { path: 'Magasin', component: MagasinComponent, canActivate: [AuthGuard] },
+      { path: 'Magasin/magasinDetails/:id', component: MagasinDetailsComponent, canActivate: [AuthGuard] }
     ]),
     //InputsModule,
     BrowserAnimationsModule,

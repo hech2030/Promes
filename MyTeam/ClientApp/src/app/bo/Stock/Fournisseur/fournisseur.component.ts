@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Fournisseur } from '../../../Models/bo/Stock/Fournisseur/Fournisseur';
+import { Fournisseur } from '../../../Models/bo/Stock/Fournisseur/fournisseur';
 import { FournisseurService } from '../../../Shared/Stock/Fournisseur/Fournisseur.service';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
 import { Router } from '@angular/router';

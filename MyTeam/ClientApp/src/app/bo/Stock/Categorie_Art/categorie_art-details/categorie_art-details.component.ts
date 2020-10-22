@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../../../../Models/bo/Stock/Article/article';
 import { CategorieArt } from '../../../../Models/bo/Stock/Categorie-Art/categorie-art';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategorieArtService } from '../../../../Shared/Stock/categorie_art/categorie_art.service';

@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Quantité à modifier</label>
+                <label class="col-sm-3 col-form-label">Quantité</label>
                 <div class="col-sm-9">
                   <input type="number" class="form-control" id="Quantite" placeholder="Enter quantité" name="quantite" [(ngModel)]="article.quantite">
                 </div>
@@ -55,12 +55,38 @@
                 </div>
               </div>
             </div>
-          </div>
-            <div class="col-md-12 text-right">
-              <button type="button" class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
-              <button type="submit" class="btn btn-success">Update</button>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Catégorie</label>
+                <div class="col-sm-9">
+                  <kendo-dropdownlist [data]="Categories"
+                                      [textField]="'nomCate'"
+                                      valueField="id"
+                                      [(ngModel)]="SelectedCategorie" name="CategoriesDDL">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
             </div>
-</form>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Fournisseur</label>
+                <div class="col-sm-9">
+                  <kendo-dropdownlist [data]="Fournisseurs"
+                                      [textField]="'nomF'"
+                                      valueField="id"
+                                      [(ngModel)]="SelectedFournisseur" name="FournisseurDDL">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
+            <button type="submit" class="btn btn-success">Update</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

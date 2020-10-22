@@ -1,34 +1,93 @@
+<!--<div class="content-wrapper">-->
 <div class="row">
   <div class="col-lg-12 grid-margin stretch-card">
+
     <div class="card">
+      <div class="col-md-12 col-sm-12">
+        <br />
+
+        <button type="button" class="btn btn-dark btn-fw float-right" data-toggle="modal" data-target="#userModal">Ajouter</button>
+        <h4 class="card-title">Liste des magasins</h4>
+      </div>
       <div class="card-body">
-        <h4 class="card-title">Article Table</h4>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>DESIGNATION</th>
-              <th>UNIT</th>
-              <th>QUANTITE</th>
-              <th>PRIX</th>
-              <th>EMPACEMENT</th>
-              <th>CATEGORIE ART Id</th>
-              <th>FOURNISSEUR Id</th>
-              <th>MAGASIN Id</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of products; let i = index">
-              <td> {{item.designation}} </td>
-              <td> {{item.unit}} </td>
-              <td> {{item.quantite}} </td>
-              <td> {{item.prix}} </td>
-              <td> {{item.emplacement}} </td>
-              <td> {{item.CATEGORIE_ARTId}} </td>
-              <td> {{item.FOURNISSEURId}} </td>
-              <td> {{item.MAGASINId}} </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="grid-wrapper">
+          <!--<div id="grid"></div>-->
+          <!--          <div *ngIf="Isloading" class="k-i-loading"></div>-->
+          <kendo-grid [kendoGridBinding]="magasins"
+                      [pageSize]="20"
+                      [pageable]="true"
+                      [sortable]="true"
+                      [groupable]="true"
+                      [reorderable]="true"
+                      [resizable]="true"
+                      [height]="480"
+                      [columnMenu]="{ filter: true }">
+            <kendo-grid-column title="Nom catégorie" field="nomMagasin"></kendo-grid-column>
+            <kendo-grid-column title="Modifier">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <button class="close rounded-circle col-md-6" kendoButton (click)="DeleteMagasin(dataItem.id)">
+                  <span aria-hidden="true">&times;</span>
+                  <!--<i class="fa fa-window-close"></i>-->
+                </button>
+                <button class="close rounded-circle col-md-6" kendoButton (click)="UpdateMagasin(dataItem.id)">
+                  <i class="fa fa-eye"></i>
+                </button>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-messages filterContainsOperator="Contient"
+                                 filterEndsWithOperator="Termine par"
+                                 filterEqOperator="égale"
+                                 filterNotEqOperator="Différent de"
+                                 filterNotContainsOperator="Ne contient pas"
+                                 filterStartsWithOperator="Commence par"
+                                 filterIsNullOperator="Est Null"
+                                 filterIsNotNullOperator="N'est pas NULL"
+                                 filterIsEmptyOperator="Est vide"
+                                 filterIsNotEmptyOperator="N'est pas Vide"
+                                 noRecords="Aucun élément a afficher"
+                                 filter="Filtrer"
+                                 columns="Colonnes"
+                                 columnsApply="Confirmer"
+                                 columnsReset="Supprimer"
+                                 sortAscending="Tri ascendant"
+                                 sortDescending="Tri descendant"
+                                 pagerOf="de"
+                                 groupPanelEmpty="Glisser les colonnes ici pour grouper">
+            </kendo-grid-messages>
+          </kendo-grid>
+          <div *ngIf="Isloading" class="k-i-loading"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalLabel">Nouvelle magasin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row flex-grow">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <form class="forms-sample" (ngSubmit)="AddMagasin()" validate>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nom</label>
+                  <input type="text" class="form-control" id="NomMagasin" placeholder="Entrer le nom du Magasin" name="NomMagasin" [(ngModel)]="magasin.nomMagasin" required>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Quitter</button>
+                  <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -141,6 +141,36 @@
                   <label>Emplacement</label>
                   <input type="text" class="form-control" id="emplacement" placeholder="Enter emplacement" name="emplacement" [(ngModel)]="articleModel.emplacement" required>
                 </div>
+                <div class="form-group">
+                  <label>Magasin</label><br />
+                  <div class="d-flex p-2">
+                    <kendo-dropdownlist [data]="Magasins"
+                                        [textField]="'nomMagasin'"
+                                        valueField="id"
+                                        [(ngModel)]="SelectedMagasin" name="MagasinsDDL">
+                    </kendo-dropdownlist>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Fournisseur</label><br />
+                  <div class="d-flex p-2">
+                    <kendo-dropdownlist [data]="Fournisseurs"
+                                        [textField]="'nomF'"
+                                        valueField="id"
+                                        [(ngModel)]="SelectedFournisseur" name="FournisseurDDL">
+                    </kendo-dropdownlist>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Catégorie</label><br />
+                  <div class="d-flex p-2">
+                    <kendo-dropdownlist [data]="Categories"
+                                        [textField]="'nomCate'"
+                                        valueField="id"
+                                        [(ngModel)]="SelectedCategorie" name="CategoriesDDL">
+                    </kendo-dropdownlist>
+                  </div>
+                </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary">Save changes</button>

@@ -43,7 +43,7 @@ export class FournisseurService {
         }
         else {
           if (error.error.helpLink != null && error.error.helpLink != undefined) {
-            this.tools.ShowErrorNotification('Categorie', error.error.helpLink, 10000);
+            this.tools.ShowErrorNotification('Fournisseur', error.error.helpLink, 10000);
           }
           return throwError('Something went wrong!');
         }

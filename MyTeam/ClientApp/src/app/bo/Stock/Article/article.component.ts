@@ -8,6 +8,10 @@ import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
 import { NgForm } from '@angular/forms';
+import { FournisseurService } from '../../../Shared/Stock/Fournisseur/Fournisseur.service';
+import { CategorieArtService } from '../../../Shared/Stock/categorie_art/categorie_art.service';
+import { Fournisseur } from '../../../Models/bo/Stock/Fournisseur/fournisseur';
+import { CategorieArt } from '../../../Models/bo/Stock/Categorie-Art/categorie-art';
 
 
 
@@ -21,14 +25,13 @@ export class ArticleComponent implements OnInit {
   articleModel = {
     designation: '',
     unit: '',
-    quantite: -1,
-    prix: -1,
-    newAttr: -1,
+    quantite: 0,
+    prix: 0,
+    newAttr: 0,
     emplacement: '',
-    CATEGORIE_ARTId: 1,
-    FOURNISSEURId: 1,
-    MAGASINId: 1,
-    isDeleted: 0,
+    CATEGORIE_ARTId: 0,
+    FOURNISSEURId: 0,
+    MAGASINId: 0,
     CATEGORIE_ART: null,
     ENTREE: null,
     SORTIE: null,
@@ -41,12 +44,17 @@ export class ArticleComponent implements OnInit {
     MAGASINId: -1
   }
   SelectedMagasin: any;
+  SelectedFournisseur: any;
+  SelectedCategorie: any;
   Isloading: boolean;
   artciles: Article[];
   public artcilesData: Article[];
   Magasins: Magasin[];
+  Fournisseurs: Fournisseur[];
+  Categories: CategorieArt[];
 
-  constructor(private articleService: ArticleService, private magasinService: MagasinService, private tools: MyToolsService, private router: Router) { }
+  constructor(private fournisseurService: FournisseurService, private CategorieService: CategorieArtService,
+    private articleService: ArticleService, private magasinService: MagasinService, private tools: MyToolsService, private router: Router) { }
 
   ngOnInit() {
     this.Isloading = true;
@@ -57,6 +65,16 @@ export class ArticleComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data.result);
         this.Magasins = data.result;
+      });
+    this.fournisseurService.GetFournisseur({})
+      .subscribe((data: any) => {
+        console.log(data.result);
+        this.Fournisseurs = data.result;
+      });
+    this.CategorieService.GetCategorieArt({})
+      .subscribe((data: any) => {
+        console.log(data.result);
+        this.Categories = data.result;
       });
     this.articleService.GetArticle(this.SearchCriteria)
       .subscribe((data: any) => {
@@ -108,9 +126,12 @@ export class ArticleComponent implements OnInit {
     })
   }
   AddArticle(Articleform: NgForm) {
-    this.articleService.addArticle(this.articleModel).subscribe(
+    this.articleModel.FOURNISSEURId = this.SelectedFournisseur.id;
+    this.articleModel.MAGASINId = this.SelectedMagasin.id;
+    this.articleModel.CATEGORIE_ARTId = this.SelectedCategorie.id;
+    this.articleService.SaveArticle(this.articleModel).subscribe(
       (res: any) => {
-        if (res.success) {
+        if (res.id > 0) {
           this.ngOnInit();
           this.resetModel();
           $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -122,7 +143,7 @@ export class ArticleComponent implements OnInit {
       },
       err => {
         if (err.status == 400) {
-          this.tools.ShowErrorNotification("Article", "Something went wrong", '10000');
+          this.tools.ShowErrorNotification("Article", err.error.message, '10000');
         }
         else {
           return console.log(err);

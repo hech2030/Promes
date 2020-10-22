@@ -60,4 +60,7 @@ export class sideMenuComponent implements OnInit {
   GetFournisseur() {
     this.router.navigate(['/Fournisseur']);
   }
+  GetMagasin() {
+    this.router.navigate(['/Magasin']);
+  }
 }

@@ -2,9 +2,9 @@ import { Article } from ".././Article/article";
 
 export class Magasin {
   constructor() {
-    this.id = '';
+    this.id = 0;
   }
-  id: string = '';
+  id: number;
   nomMagasin: string;
   ARTICLE: Article[];
 }
