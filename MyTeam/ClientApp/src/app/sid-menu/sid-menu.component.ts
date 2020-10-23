@@ -63,4 +63,7 @@ export class sideMenuComponent implements OnInit {
   GetMagasin() {
     this.router.navigate(['/Magasin']);
   }
+  GetMouvement() {
+    this.router.navigate(['/Mouvement']);
+  }
 }
