@@ -59,6 +59,16 @@ namespace DataAcess.Business
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
                 var context = new SolarThermalEntities();
+                var art = obj.ARTICLE;
+                art.quantite -= obj.quantite;
+                if (art.quantite < 0)
+                {
+                    throw new Exception() { HelpLink = "La Quantité ne peut pas être négatif" };
+                }
+                art.prix = (art.prix + obj.prixDSortie) / 2;
+                ArticleDatabaseBusinessProvider.Instance.Save(art);
+                obj.ARTICLE = null;
+                obj.dateSortie = DateTime.Now;
                 var myObj = context.SORTIE.Add(obj);
                 context.SaveChanges();
                 transaction.Complete();

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using System.Data.Entity.Migrations;
+using System.Runtime.Remoting.Contexts;
 
 namespace DataAcess.Business
 {
@@ -64,6 +65,12 @@ namespace DataAcess.Business
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
                 var context = new SolarThermalEntities();
+                var art = obj.ARTICLE;
+                art.quantite += obj.quantite;
+                art.prix = (art.prix + obj.prixDentree) / 2;
+                ArticleDatabaseBusinessProvider.Instance.Save(art);
+                obj.ARTICLE = null;
+                obj.dateEntree = DateTime.Now;
                 var myObj = context.ENTREE.Add(obj);
                 context.SaveChanges();
                 transaction.Complete();
