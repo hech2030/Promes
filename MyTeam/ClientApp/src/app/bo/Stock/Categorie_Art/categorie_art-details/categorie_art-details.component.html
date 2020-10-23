@@ -25,47 +25,48 @@
             </div>
           </div>
 
-          <div class="grid-wrapper">
-            <!--<div id="grid"></div>-->
-            <!--          <div *ngIf="Isloading" class="k-i-loading"></div>-->
-            <kendo-grid [kendoGridBinding]="categorie.article"
-                        [pageSize]="20"
-                        [pageable]="true"
-                        [sortable]="true"
-                        [groupable]="true"
-                        [reorderable]="true"
-                        [resizable]="true"
-                        [height]="480"
-                        [columnMenu]="{ filter: true }">
-              <kendo-grid-column title="Désignation" field="designation"></kendo-grid-column>
-              <kendo-grid-column title="Magasin" field="MAGASIN.nomMagasin"></kendo-grid-column>
-              <kendo-grid-column title="Quantité" field="quantite"></kendo-grid-column>
+          <!--A decommenter si on va implementer la notion d'affichage de articles pour chaque categ-->
+          <!--<div class="grid-wrapper">-->
+          <!--<div id="grid"></div>-->
+          <!--          <div *ngIf="Isloading" class="k-i-loading"></div>-->
+          <!--<kendo-grid [kendoGridBinding]="categorie.article"
+                [pageSize]="20"
+                [pageable]="true"
+                [sortable]="true"
+                [groupable]="true"
+                [reorderable]="true"
+                [resizable]="true"
+                [height]="480"
+                [columnMenu]="{ filter: true }">
+      <kendo-grid-column title="Désignation" field="designation"></kendo-grid-column>
+      <kendo-grid-column title="Magasin" field="MAGASIN.nomMagasin"></kendo-grid-column>
+      <kendo-grid-column title="Quantité" field="quantite"></kendo-grid-column>
 
-              <kendo-grid-messages filterContainsOperator="Contient"
-                                   filterEndsWithOperator="Termine par"
-                                   filterEqOperator="égale"
-                                   filterNotEqOperator="Différent de"
-                                   filterNotContainsOperator="Ne contient pas"
-                                   filterStartsWithOperator="Commence par"
-                                   filterIsNullOperator="Est Null"
-                                   filterIsNotNullOperator="N'est pas NULL"
-                                   filterIsEmptyOperator="Est vide"
-                                   filterIsNotEmptyOperator="N'est pas Vide"
-                                   noRecords="Aucun élément a afficher"
-                                   filter="Filtrer"
-                                   columns="Colonnes"
-                                   columnsApply="Confirmer"
-                                   columnsReset="Supprimer"
-                                   sortAscending="Tri ascendant"
-                                   sortDescending="Tri descendant"
-                                   pagerOf="de"
-                                   groupPanelEmpty="Glisser les colonnes ici pour grouper">
-              </kendo-grid-messages>
-            </kendo-grid>
-            <div *ngIf="Isloading" class="k-i-loading"></div>
-          </div>
-          <br/>
-          <br/>
+      <kendo-grid-messages filterContainsOperator="Contient"
+                           filterEndsWithOperator="Termine par"
+                           filterEqOperator="égale"
+                           filterNotEqOperator="Différent de"
+                           filterNotContainsOperator="Ne contient pas"
+                           filterStartsWithOperator="Commence par"
+                           filterIsNullOperator="Est Null"
+                           filterIsNotNullOperator="N'est pas NULL"
+                           filterIsEmptyOperator="Est vide"
+                           filterIsNotEmptyOperator="N'est pas Vide"
+                           noRecords="Aucun élément a afficher"
+                           filter="Filtrer"
+                           columns="Colonnes"
+                           columnsApply="Confirmer"
+                           columnsReset="Supprimer"
+                           sortAscending="Tri ascendant"
+                           sortDescending="Tri descendant"
+                           pagerOf="de"
+                           groupPanelEmpty="Glisser les colonnes ici pour grouper">
+      </kendo-grid-messages>
+    </kendo-grid>
+    <div *ngIf="Isloading" class="k-i-loading"></div>
+  </div>-->
+          <br />
+          <br />
           <div class="col-md-12 text-right">
             <button type="button" class="btn btn-light  mr-5" (click)="Quit()">Quit</button>
             <button type="submit" class="btn btn-success">Update</button>
