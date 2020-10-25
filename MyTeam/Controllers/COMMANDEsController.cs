@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAcess.Business;
-using DataAcess.Models;
+﻿using DataAcess.Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using MyTeam.Common.Requests.bo.Stock.Commande;
+using System;
 
 namespace MyTeam.Controllers
 {
@@ -17,34 +14,52 @@ namespace MyTeam.Controllers
         {
         }
 
-        [HttpGet]
-        public IEnumerable<COMMANDE> Get()
-        {
-            var data = CommandeDatabaseBusinessProvider.Instance.Get();
-            return data;
-        }
 
         [HttpPost]
-        public IActionResult Post([FromBody] COMMANDE obj)
+        [Authorize]
+        [Route("FindCommande")]
+        public ActionResult FindCommande(CommandFindRequest Request)
         {
-            var data = CommandeDatabaseBusinessProvider.Instance.Add(obj);
-            return Ok();
+            try
+            {
+                var result = CommandeDatabaseBusinessProvider.Instance.Find(Request.Id, Request.Fournisseur, Request.date);
+                return Ok(new { result });
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
+            }
         }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] COMMANDE obj)
+        [HttpPost]
+        [Authorize]
+        [Route("SaveCommande")]
+        public ActionResult SaveCommande(CommandSaveRequest Request)
         {
-            var data = CommandeDatabaseBusinessProvider.Instance.Update(id, obj);
-            return Ok();
+            try
+            {
+                return Ok(CommandeDatabaseBusinessProvider.Instance.Save(Request.Value));
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { Message = ex.HelpLink });
+            }
         }
-
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost]
+        [Authorize]
+        [Route("DeleteCommande")]
+        public ActionResult DeleteCommande(CommandDeleteRequest Request)
         {
-            CommandeDatabaseBusinessProvider.Instance.Remove(id);
-            return Ok();
-
+            try
+            {
+                return Ok(CommandeDatabaseBusinessProvider.Instance.Remove(Request.Id));
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Exception : " + ex.Message);
+                return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
+            }
         }
     }
 }
