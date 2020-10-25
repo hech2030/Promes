@@ -9,10 +9,9 @@
 
 namespace DataAcess.Models
 {
+    using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("MAGASIN")]
+    
     public partial class MAGASIN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

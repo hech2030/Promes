@@ -10,9 +10,8 @@
 namespace DataAcess.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("LIGNE_COMMANDE")]
+    using System.Collections.Generic;
+    
     public partial class LIGNE_COMMANDE
     {
         public long Id { get; set; }

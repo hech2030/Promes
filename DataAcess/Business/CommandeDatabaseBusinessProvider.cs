@@ -6,11 +6,15 @@ using System.Linq;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
 
 namespace DataAcess.Business
 {
     public class CommandeDatabaseBusinessProvider
     {
+
+        private static SolarThermalEntities Context = new SolarThermalEntities();
+        private readonly DbSet<COMMANDE> DataAccessProvider = Context.COMMANDE;
         /// <summary>
         /// lock object
         /// </summary>
@@ -36,46 +40,63 @@ namespace DataAcess.Business
             }
         }
 
-        public IEnumerable<COMMANDE> Get()
+        public IList<COMMANDE> Find(long id, FOURNISSEUR fournisseur, DateTime? date)
         {
-            return new SolarThermalEntities().COMMANDE.ToList();
+
+            var query = DataAccessProvider.AsQueryable();
+            if (id > 0)
+            {
+                query = query.Where(x => x.Id == id);
+            }
+            if (fournisseur != null)
+            {
+                query = query.Where(x => x.FOURNISSEURId == fournisseur.Id);
+            }
+            if (date != null)
+            {
+                query = query.Where(x => x.dateCOMMANDE == date);
+            }
+            return query.Include("FOURNISSEUR").ToList();
         }
 
-        public COMMANDE Add(COMMANDE obj)
+        public COMMANDE Save(COMMANDE value)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.COMMANDE.Add(obj);
-                context.SaveChanges();
+                value.FOURNISSEURId = value.FOURNISSEUR.Id;
+                value.FOURNISSEUR = null;
+                foreach (var item in value.LIGNE_COMMANDE)
+                {
+                    item.ARTICLEId = item.ARTICLE.Id;
+                    item.ARTICLE = null;
+                }
+                value.etat = "Envoyé";
+                value.dateCOMMANDE = DateTime.Now;
+                DataAccessProvider.AddOrUpdate(value);
+                Context.SaveChanges();
                 transaction.Complete();
-                return myObj;
+                return value;
             }
         }
 
-        public COMMANDE Update(int id, COMMANDE obj)
-        {
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-            {
-                var context = new SolarThermalEntities();
-                var myObj = context.COMMANDE.FirstOrDefault(x => x.Id == id);
-                myObj = obj;
-                // a tester sinon :  context.COMMANDE.AddOrUpdate<COMMANDE>(obj);
-                context.SaveChanges();
-                transaction.Complete();
-                return myObj;
-            }
-        }
 
-        public void Remove(int id)
+        public bool Remove(long id)
         {
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+            try
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.COMMANDE.Find(id);
-                context.COMMANDE.Remove(myObj);
-                context.SaveChanges();
-                transaction.Complete();
+                using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+                {
+                    var value = DataAccessProvider.Find(id);
+                    DataAccessProvider.Remove(value);
+                    Context.SaveChanges();
+                    transaction.Complete();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
         }
     }

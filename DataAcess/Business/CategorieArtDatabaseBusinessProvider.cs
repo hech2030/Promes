@@ -42,7 +42,7 @@ namespace DataAcess.Business
         public IEnumerable<CATEGORIE_ART> Find(long id, string nomCategorie)
         {
             List<ARTICLE> articles = new List<ARTICLE>();
-             var query = DataAccessProvider.AsQueryable();
+            var query = DataAccessProvider.AsQueryable();
             if (id > 0)
             {
                 articles =  Context.ARTICLE.AsQueryable().Where(x => x.CATEGORIE_ARTId == id).ToList();
@@ -53,6 +53,13 @@ namespace DataAcess.Business
                 query = query.Where(x => x.nomCate == nomCategorie);
             }
             var result = query.ToList();
+            //var test = from a in query
+            //           join art in Context.ARTICLE on a.Id equals art.CATEGORIE_ARTId
+            //           select new CATEGORIE_ART
+            //           {
+            //               Id = a.Id,
+            //               ARTICLE = art
+            //           };
             if (articles.Count > 0)
             {
                 result[0].ARTICLE = articles;

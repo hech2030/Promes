@@ -19,7 +19,6 @@ namespace DataAcess.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FOURNISSEUR()
         {
-            this.ARTICLE = new HashSet<ARTICLE>();
             this.COMMANDE = new HashSet<COMMANDE>();
         }
     
@@ -34,8 +33,6 @@ namespace DataAcess.Models
         public Nullable<long> fax { get; set; }
         public string email { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ARTICLE> ARTICLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COMMANDE> COMMANDE { get; set; }
     }

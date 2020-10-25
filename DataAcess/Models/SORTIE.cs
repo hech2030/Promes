@@ -10,9 +10,8 @@
 namespace DataAcess.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("SORTIE")]
+    using System.Collections.Generic;
+    
     public partial class SORTIE
     {
         public long Id { get; set; }

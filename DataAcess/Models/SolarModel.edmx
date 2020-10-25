@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nom" Type="nvarchar(max)" />
           <Property Name="ville" Type="nvarchar" MaxLength="100" />
           <Property Name="adresse" Type="nvarchar" MaxLength="200" />
@@ -27,7 +27,6 @@
           <Property Name="newAttr" Type="bigint" />
           <Property Name="emplacement" Type="nvarchar(max)" />
           <Property Name="CATEGORIE_ARTId" Type="bigint" Nullable="false" />
-          <Property Name="FOURNISSEURId" Type="bigint" Nullable="false" />
           <Property Name="MAGASINId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="CATEGORIE_ART">
@@ -46,7 +45,6 @@
           <Property Name="numCommande" Type="bigint" />
           <Property Name="dateCOMMANDE" Type="datetime" />
           <Property Name="etat" Type="nvarchar(max)" />
-          <Property Name="RECEPTIONId" Type="bigint" Nullable="false" />
           <Property Name="FOURNISSEURId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="ENTREE">
@@ -102,6 +100,7 @@
           <Property Name="numReception" Type="bigint" />
           <Property Name="dateReception" Type="datetime" />
           <Property Name="quantiteLivree" Type="bigint" />
+          <Property Name="CommandeId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="SORTIE">
           <Key>
@@ -221,15 +220,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FOURNISSEURARTICLE">
-          <End Role="FOURNISSEUR" Type="Self.FOURNISSEUR" Multiplicity="1" />
-          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="*" />
+        <Association Name="FK_COMMANDERECEPTION">
+          <End Role="COMMANDE" Type="Self.COMMANDE" Multiplicity="1" />
+          <End Role="RECEPTION" Type="Self.RECEPTION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="FOURNISSEUR">
+            <Principal Role="COMMANDE">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ARTICLE">
-              <PropertyRef Name="FOURNISSEURId" />
+            <Dependent Role="RECEPTION">
+              <PropertyRef Name="CommandeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -257,19 +256,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECEPTIONCOMMANDE">
-          <End Role="RECEPTION" Type="Self.RECEPTION" Multiplicity="1" />
-          <End Role="COMMANDE" Type="Self.COMMANDE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RECEPTION">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="COMMANDE">
-              <PropertyRef Name="RECEPTIONId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="SolarThermalModelStoreContainer">
+         <EntityContainer Name="SolarThermalModelStoreContainer">
           <EntitySet Name="AGENCE" EntityType="Self.AGENCE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ARTICLE" EntityType="Self.ARTICLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIE_ART" EntityType="Self.CATEGORIE_ART" Schema="dbo" store:Type="Tables" />
@@ -303,9 +290,9 @@
             <End Role="COMMANDE" EntitySet="COMMANDE" />
             <End Role="LIGNE_COMMANDE" EntitySet="LIGNE_COMMANDE" />
           </AssociationSet>
-          <AssociationSet Name="FK_FOURNISSEURARTICLE" Association="Self.FK_FOURNISSEURARTICLE">
-            <End Role="FOURNISSEUR" EntitySet="FOURNISSEUR" />
-            <End Role="ARTICLE" EntitySet="ARTICLE" />
+          <AssociationSet Name="FK_COMMANDERECEPTION" Association="Self.FK_COMMANDERECEPTION">
+            <End Role="COMMANDE" EntitySet="COMMANDE" />
+            <End Role="RECEPTION" EntitySet="RECEPTION" />
           </AssociationSet>
           <AssociationSet Name="FK_FOURNISSEURCOMMANDE" Association="Self.FK_FOURNISSEURCOMMANDE">
             <End Role="FOURNISSEUR" EntitySet="FOURNISSEUR" />
@@ -315,21 +302,63 @@
             <End Role="MAGASIN" EntitySet="MAGASIN" />
             <End Role="ARTICLE" EntitySet="ARTICLE" />
           </AssociationSet>
-          <AssociationSet Name="FK_RECEPTIONCOMMANDE" Association="Self.FK_RECEPTIONCOMMANDE">
-            <End Role="RECEPTION" EntitySet="RECEPTION" />
-            <End Role="COMMANDE" EntitySet="COMMANDE" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SolarThermalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SolarThermalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AGENCE" EntityType="SolarThermalModel.AGENCE" />
+          <EntitySet Name="ARTICLE" EntityType="SolarThermalModel.ARTICLE" />
+          <EntitySet Name="CATEGORIE_ART" EntityType="SolarThermalModel.CATEGORIE_ART" />
+          <EntitySet Name="COMMANDE" EntityType="SolarThermalModel.COMMANDE" />
+          <EntitySet Name="ENTREE" EntityType="SolarThermalModel.ENTREE" />
+          <EntitySet Name="FOURNISSEUR" EntityType="SolarThermalModel.FOURNISSEUR" />
+          <EntitySet Name="LIGNE_COMMANDE" EntityType="SolarThermalModel.LIGNE_COMMANDE" />
+          <EntitySet Name="MAGASIN" EntityType="SolarThermalModel.MAGASIN" />
+          <EntitySet Name="RECEPTION" EntityType="SolarThermalModel.RECEPTION" />
+          <EntitySet Name="SORTIE" EntityType="SolarThermalModel.SORTIE" />
+          <EntitySet Name="SOUS_TRAITANT" EntityType="SolarThermalModel.SOUS_TRAITANT" />
+          <EntitySet Name="STOCK" EntityType="SolarThermalModel.STOCK" />
+          <EntitySet Name="user" EntityType="SolarThermalModel.user" />
+          <AssociationSet Name="FK_ARTICLECATEGORIE_ART" Association="SolarThermalModel.FK_ARTICLECATEGORIE_ART">
+            <End Role="CATEGORIE_ART" EntitySet="CATEGORIE_ART" />
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ARTICLEENTREE" Association="SolarThermalModel.FK_ARTICLEENTREE">
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+            <End Role="ENTREE" EntitySet="ENTREE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ARTICLELIGNE_COMMANDE" Association="SolarThermalModel.FK_ARTICLELIGNE_COMMANDE">
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+            <End Role="LIGNE_COMMANDE" EntitySet="LIGNE_COMMANDE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ARTICLESORTIE" Association="SolarThermalModel.FK_ARTICLESORTIE">
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+            <End Role="SORTIE" EntitySet="SORTIE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MAGASINARTICLE" Association="SolarThermalModel.FK_MAGASINARTICLE">
+            <End Role="MAGASIN" EntitySet="MAGASIN" />
+            <End Role="ARTICLE" EntitySet="ARTICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMANDELIGNE_COMMANDE" Association="SolarThermalModel.FK_COMMANDELIGNE_COMMANDE">
+            <End Role="COMMANDE" EntitySet="COMMANDE" />
+            <End Role="LIGNE_COMMANDE" EntitySet="LIGNE_COMMANDE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COMMANDERECEPTION" Association="SolarThermalModel.FK_COMMANDERECEPTION">
+            <End Role="COMMANDE" EntitySet="COMMANDE" />
+            <End Role="RECEPTION" EntitySet="RECEPTION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOURNISSEURCOMMANDE" Association="SolarThermalModel.FK_FOURNISSEURCOMMANDE">
+            <End Role="FOURNISSEUR" EntitySet="FOURNISSEUR" />
+            <End Role="COMMANDE" EntitySet="COMMANDE" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AGENCE">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ville" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -347,14 +376,12 @@
           <Property Name="newAttr" Type="Int64" />
           <Property Name="emplacement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CATEGORIE_ARTId" Type="Int64" Nullable="false" />
-          <Property Name="FOURNISSEURId" Type="Int64" Nullable="false" />
           <Property Name="MAGASINId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CATEGORIE_ART" Relationship="Self.FK_ARTICLECATEGORIE_ART" FromRole="ARTICLE" ToRole="CATEGORIE_ART" />
-          <NavigationProperty Name="ENTREE" Relationship="Self.FK_ARTICLEENTREE" FromRole="ARTICLE" ToRole="ENTREE" />
-          <NavigationProperty Name="LIGNE_COMMANDE" Relationship="Self.FK_ARTICLELIGNE_COMMANDE" FromRole="ARTICLE" ToRole="LIGNE_COMMANDE" />
-          <NavigationProperty Name="SORTIE" Relationship="Self.FK_ARTICLESORTIE" FromRole="ARTICLE" ToRole="SORTIE" />
-          <NavigationProperty Name="FOURNISSEUR" Relationship="Self.FK_FOURNISSEURARTICLE" FromRole="ARTICLE" ToRole="FOURNISSEUR" />
-          <NavigationProperty Name="MAGASIN" Relationship="Self.FK_MAGASINARTICLE" FromRole="ARTICLE" ToRole="MAGASIN" />
+          <NavigationProperty Name="CATEGORIE_ART" Relationship="SolarThermalModel.FK_ARTICLECATEGORIE_ART" FromRole="ARTICLE" ToRole="CATEGORIE_ART" />
+          <NavigationProperty Name="ENTREE" Relationship="SolarThermalModel.FK_ARTICLEENTREE" FromRole="ARTICLE" ToRole="ENTREE" />
+          <NavigationProperty Name="LIGNE_COMMANDE" Relationship="SolarThermalModel.FK_ARTICLELIGNE_COMMANDE" FromRole="ARTICLE" ToRole="LIGNE_COMMANDE" />
+          <NavigationProperty Name="SORTIE" Relationship="SolarThermalModel.FK_ARTICLESORTIE" FromRole="ARTICLE" ToRole="SORTIE" />
+          <NavigationProperty Name="MAGASIN" Relationship="SolarThermalModel.FK_MAGASINARTICLE" FromRole="ARTICLE" ToRole="MAGASIN" />
         </EntityType>
         <EntityType Name="CATEGORIE_ART">
           <Key>
@@ -363,7 +390,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nomCate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_ARTICLECATEGORIE_ART" FromRole="CATEGORIE_ART" ToRole="ARTICLE" />
+          <NavigationProperty Name="ARTICLE" Relationship="SolarThermalModel.FK_ARTICLECATEGORIE_ART" FromRole="CATEGORIE_ART" ToRole="ARTICLE" />
         </EntityType>
         <EntityType Name="COMMANDE">
           <Key>
@@ -373,11 +400,10 @@
           <Property Name="numCommande" Type="Int64" />
           <Property Name="dateCOMMANDE" Type="DateTime" Precision="3" />
           <Property Name="etat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RECEPTIONId" Type="Int64" Nullable="false" />
           <Property Name="FOURNISSEURId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="LIGNE_COMMANDE" Relationship="Self.FK_COMMANDELIGNE_COMMANDE" FromRole="COMMANDE" ToRole="LIGNE_COMMANDE" />
-          <NavigationProperty Name="FOURNISSEUR" Relationship="Self.FK_FOURNISSEURCOMMANDE" FromRole="COMMANDE" ToRole="FOURNISSEUR" />
-          <NavigationProperty Name="RECEPTION" Relationship="Self.FK_RECEPTIONCOMMANDE" FromRole="COMMANDE" ToRole="RECEPTION" />
+          <NavigationProperty Name="LIGNE_COMMANDE" Relationship="SolarThermalModel.FK_COMMANDELIGNE_COMMANDE" FromRole="COMMANDE" ToRole="LIGNE_COMMANDE" />
+          <NavigationProperty Name="RECEPTION" Relationship="SolarThermalModel.FK_COMMANDERECEPTION" FromRole="COMMANDE" ToRole="RECEPTION" />
+          <NavigationProperty Name="FOURNISSEUR" Relationship="SolarThermalModel.FK_FOURNISSEURCOMMANDE" FromRole="COMMANDE" ToRole="FOURNISSEUR" />
         </EntityType>
         <EntityType Name="ENTREE">
           <Key>
@@ -389,7 +415,7 @@
           <Property Name="dateEntree" Type="DateTime" Precision="3" />
           <Property Name="prixDentree" Type="Int64" />
           <Property Name="ARTICLEId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_ARTICLEENTREE" FromRole="ENTREE" ToRole="ARTICLE" />
+          <NavigationProperty Name="ARTICLE" Relationship="SolarThermalModel.FK_ARTICLEENTREE" FromRole="ENTREE" ToRole="ARTICLE" />
         </EntityType>
         <EntityType Name="FOURNISSEUR">
           <Key>
@@ -405,8 +431,7 @@
           <Property Name="tele" Type="Int64" />
           <Property Name="fax" Type="Int64" />
           <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_FOURNISSEURARTICLE" FromRole="FOURNISSEUR" ToRole="ARTICLE" />
-          <NavigationProperty Name="COMMANDE" Relationship="Self.FK_FOURNISSEURCOMMANDE" FromRole="FOURNISSEUR" ToRole="COMMANDE" />
+          <NavigationProperty Name="COMMANDE" Relationship="SolarThermalModel.FK_FOURNISSEURCOMMANDE" FromRole="FOURNISSEUR" ToRole="COMMANDE" />
         </EntityType>
         <EntityType Name="LIGNE_COMMANDE">
           <Key>
@@ -419,8 +444,8 @@
           <Property Name="montant" Type="Double" />
           <Property Name="ARTICLEId" Type="Int64" Nullable="false" />
           <Property Name="COMMANDEId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_ARTICLELIGNE_COMMANDE" FromRole="LIGNE_COMMANDE" ToRole="ARTICLE" />
-          <NavigationProperty Name="COMMANDE" Relationship="Self.FK_COMMANDELIGNE_COMMANDE" FromRole="LIGNE_COMMANDE" ToRole="COMMANDE" />
+          <NavigationProperty Name="ARTICLE" Relationship="SolarThermalModel.FK_ARTICLELIGNE_COMMANDE" FromRole="LIGNE_COMMANDE" ToRole="ARTICLE" />
+          <NavigationProperty Name="COMMANDE" Relationship="SolarThermalModel.FK_COMMANDELIGNE_COMMANDE" FromRole="LIGNE_COMMANDE" ToRole="COMMANDE" />
         </EntityType>
         <EntityType Name="MAGASIN">
           <Key>
@@ -428,7 +453,7 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nomMagasin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_MAGASINARTICLE" FromRole="MAGASIN" ToRole="ARTICLE" />
+          <NavigationProperty Name="ARTICLE" Relationship="SolarThermalModel.FK_MAGASINARTICLE" FromRole="MAGASIN" ToRole="ARTICLE" />
         </EntityType>
         <EntityType Name="RECEPTION">
           <Key>
@@ -438,7 +463,8 @@
           <Property Name="numReception" Type="Int64" />
           <Property Name="dateReception" Type="DateTime" Precision="3" />
           <Property Name="quantiteLivree" Type="Int64" />
-          <NavigationProperty Name="COMMANDE" Relationship="Self.FK_RECEPTIONCOMMANDE" FromRole="RECEPTION" ToRole="COMMANDE" />
+          <Property Name="CommandeId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="COMMANDE" Relationship="SolarThermalModel.FK_COMMANDERECEPTION" FromRole="RECEPTION" ToRole="COMMANDE" />
         </EntityType>
         <EntityType Name="SORTIE">
           <Key>
@@ -450,13 +476,23 @@
           <Property Name="dateSortie" Type="DateTime" Precision="3" />
           <Property Name="prixDSortie" Type="Int64" />
           <Property Name="ARTICLEId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="ARTICLE" Relationship="Self.FK_ARTICLESORTIE" FromRole="SORTIE" ToRole="ARTICLE" />
+          <NavigationProperty Name="ARTICLE" Relationship="SolarThermalModel.FK_ARTICLESORTIE" FromRole="SORTIE" ToRole="ARTICLE" />
+        </EntityType>
+        <EntityType Name="SOUS_TRAITANT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ville" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="STOCK">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="designation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="marque" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -469,7 +505,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NormalizedUserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -490,8 +526,8 @@
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_ARTICLECATEGORIE_ART">
-          <End Role="CATEGORIE_ART" Type="Self.CATEGORIE_ART" Multiplicity="1" />
-          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="*" />
+          <End Type="SolarThermalModel.CATEGORIE_ART" Role="CATEGORIE_ART" Multiplicity="1" />
+          <End Type="SolarThermalModel.ARTICLE" Role="ARTICLE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CATEGORIE_ART">
               <PropertyRef Name="Id" />
@@ -502,8 +538,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ARTICLEENTREE">
-          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="1" />
-          <End Role="ENTREE" Type="Self.ENTREE" Multiplicity="*" />
+          <End Type="SolarThermalModel.ARTICLE" Role="ARTICLE" Multiplicity="1" />
+          <End Type="SolarThermalModel.ENTREE" Role="ENTREE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ARTICLE">
               <PropertyRef Name="Id" />
@@ -514,8 +550,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ARTICLELIGNE_COMMANDE">
-          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="1" />
-          <End Role="LIGNE_COMMANDE" Type="Self.LIGNE_COMMANDE" Multiplicity="*" />
+          <End Type="SolarThermalModel.ARTICLE" Role="ARTICLE" Multiplicity="1" />
+          <End Type="SolarThermalModel.LIGNE_COMMANDE" Role="LIGNE_COMMANDE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ARTICLE">
               <PropertyRef Name="Id" />
@@ -526,8 +562,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ARTICLESORTIE">
-          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="1" />
-          <End Role="SORTIE" Type="Self.SORTIE" Multiplicity="*" />
+          <End Type="SolarThermalModel.ARTICLE" Role="ARTICLE" Multiplicity="1" />
+          <End Type="SolarThermalModel.SORTIE" Role="SORTIE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ARTICLE">
               <PropertyRef Name="Id" />
@@ -537,21 +573,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FOURNISSEURARTICLE">
-          <End Role="FOURNISSEUR" Type="Self.FOURNISSEUR" Multiplicity="1" />
-          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FOURNISSEUR">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ARTICLE">
-              <PropertyRef Name="FOURNISSEURId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MAGASINARTICLE">
-          <End Role="MAGASIN" Type="Self.MAGASIN" Multiplicity="1" />
-          <End Role="ARTICLE" Type="Self.ARTICLE" Multiplicity="*" />
+          <End Type="SolarThermalModel.MAGASIN" Role="MAGASIN" Multiplicity="1" />
+          <End Type="SolarThermalModel.ARTICLE" Role="ARTICLE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MAGASIN">
               <PropertyRef Name="Id" />
@@ -562,8 +586,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_COMMANDELIGNE_COMMANDE">
-          <End Role="COMMANDE" Type="Self.COMMANDE" Multiplicity="1" />
-          <End Role="LIGNE_COMMANDE" Type="Self.LIGNE_COMMANDE" Multiplicity="*" />
+          <End Type="SolarThermalModel.COMMANDE" Role="COMMANDE" Multiplicity="1" />
+          <End Type="SolarThermalModel.LIGNE_COMMANDE" Role="LIGNE_COMMANDE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="COMMANDE">
               <PropertyRef Name="Id" />
@@ -573,9 +597,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_COMMANDERECEPTION">
+          <End Type="SolarThermalModel.COMMANDE" Role="COMMANDE" Multiplicity="1" />
+          <End Type="SolarThermalModel.RECEPTION" Role="RECEPTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COMMANDE">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RECEPTION">
+              <PropertyRef Name="CommandeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FOURNISSEURCOMMANDE">
-          <End Role="FOURNISSEUR" Type="Self.FOURNISSEUR" Multiplicity="1" />
-          <End Role="COMMANDE" Type="Self.COMMANDE" Multiplicity="*" />
+          <End Type="SolarThermalModel.FOURNISSEUR" Role="FOURNISSEUR" Multiplicity="1" />
+          <End Type="SolarThermalModel.COMMANDE" Role="COMMANDE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FOURNISSEUR">
               <PropertyRef Name="Id" />
@@ -585,79 +621,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RECEPTIONCOMMANDE">
-          <End Role="RECEPTION" Type="Self.RECEPTION" Multiplicity="1" />
-          <End Role="COMMANDE" Type="Self.COMMANDE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RECEPTION">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="COMMANDE">
-              <PropertyRef Name="RECEPTIONId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="SolarThermalEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AGENCE" EntityType="Self.AGENCE" />
-          <EntitySet Name="ARTICLE" EntityType="Self.ARTICLE" />
-          <EntitySet Name="CATEGORIE_ART" EntityType="Self.CATEGORIE_ART" />
-          <EntitySet Name="COMMANDE" EntityType="Self.COMMANDE" />
-          <EntitySet Name="ENTREE" EntityType="Self.ENTREE" />
-          <EntitySet Name="FOURNISSEUR" EntityType="Self.FOURNISSEUR" />
-          <EntitySet Name="LIGNE_COMMANDE" EntityType="Self.LIGNE_COMMANDE" />
-          <EntitySet Name="MAGASIN" EntityType="Self.MAGASIN" />
-          <EntitySet Name="RECEPTION" EntityType="Self.RECEPTION" />
-          <EntitySet Name="SORTIE" EntityType="Self.SORTIE" />
-          <EntitySet Name="STOCK" EntityType="Self.STOCK" />
-          <EntitySet Name="user" EntityType="Self.user" />
-          <AssociationSet Name="FK_ARTICLECATEGORIE_ART" Association="Self.FK_ARTICLECATEGORIE_ART">
-            <End Role="CATEGORIE_ART" EntitySet="CATEGORIE_ART" />
-            <End Role="ARTICLE" EntitySet="ARTICLE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ARTICLEENTREE" Association="Self.FK_ARTICLEENTREE">
-            <End Role="ARTICLE" EntitySet="ARTICLE" />
-            <End Role="ENTREE" EntitySet="ENTREE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ARTICLELIGNE_COMMANDE" Association="Self.FK_ARTICLELIGNE_COMMANDE">
-            <End Role="ARTICLE" EntitySet="ARTICLE" />
-            <End Role="LIGNE_COMMANDE" EntitySet="LIGNE_COMMANDE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ARTICLESORTIE" Association="Self.FK_ARTICLESORTIE">
-            <End Role="ARTICLE" EntitySet="ARTICLE" />
-            <End Role="SORTIE" EntitySet="SORTIE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FOURNISSEURARTICLE" Association="Self.FK_FOURNISSEURARTICLE">
-            <End Role="FOURNISSEUR" EntitySet="FOURNISSEUR" />
-            <End Role="ARTICLE" EntitySet="ARTICLE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MAGASINARTICLE" Association="Self.FK_MAGASINARTICLE">
-            <End Role="MAGASIN" EntitySet="MAGASIN" />
-            <End Role="ARTICLE" EntitySet="ARTICLE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_COMMANDELIGNE_COMMANDE" Association="Self.FK_COMMANDELIGNE_COMMANDE">
-            <End Role="COMMANDE" EntitySet="COMMANDE" />
-            <End Role="LIGNE_COMMANDE" EntitySet="LIGNE_COMMANDE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FOURNISSEURCOMMANDE" Association="Self.FK_FOURNISSEURCOMMANDE">
-            <End Role="FOURNISSEUR" EntitySet="FOURNISSEUR" />
-            <End Role="COMMANDE" EntitySet="COMMANDE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RECEPTIONCOMMANDE" Association="Self.FK_RECEPTIONCOMMANDE">
-            <End Role="RECEPTION" EntitySet="RECEPTION" />
-            <End Role="COMMANDE" EntitySet="COMMANDE" />
-          </AssociationSet>
-          <EntitySet Name="SOUS_TRAITANT" EntityType="SolarThermalModel.SOUS_TRAITANT" />
-        </EntityContainer>
-        <EntityType Name="SOUS_TRAITANT">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ville" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -667,158 +630,118 @@
           <EntitySetMapping Name="AGENCE">
             <EntityTypeMapping TypeName="SolarThermalModel.AGENCE">
               <MappingFragment StoreEntitySet="AGENCE">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="nom" ColumnName="nom" />
-                <ScalarProperty Name="ville" ColumnName="ville" />
-                <ScalarProperty Name="adresse" ColumnName="adresse" />
                 <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ARTICLE">
             <EntityTypeMapping TypeName="SolarThermalModel.ARTICLE">
               <MappingFragment StoreEntitySet="ARTICLE">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="designation" ColumnName="designation" />
-                <ScalarProperty Name="unit" ColumnName="unit" />
-                <ScalarProperty Name="quantite" ColumnName="quantite" />
-                <ScalarProperty Name="prix" ColumnName="prix" />
-                <ScalarProperty Name="newAttr" ColumnName="newAttr" />
-                <ScalarProperty Name="emplacement" ColumnName="emplacement" />
-                <ScalarProperty Name="CATEGORIE_ARTId" ColumnName="CATEGORIE_ARTId" />
-                <ScalarProperty Name="FOURNISSEURId" ColumnName="FOURNISSEURId" />
                 <ScalarProperty Name="MAGASINId" ColumnName="MAGASINId" />
+                <ScalarProperty Name="CATEGORIE_ARTId" ColumnName="CATEGORIE_ARTId" />
+                <ScalarProperty Name="emplacement" ColumnName="emplacement" />
+                <ScalarProperty Name="newAttr" ColumnName="newAttr" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIE_ART">
             <EntityTypeMapping TypeName="SolarThermalModel.CATEGORIE_ART">
               <MappingFragment StoreEntitySet="CATEGORIE_ART">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="nomCate" ColumnName="nomCate" />
                 <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="nomCate" ColumnName="nomCate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="COMMANDE">
             <EntityTypeMapping TypeName="SolarThermalModel.COMMANDE">
               <MappingFragment StoreEntitySet="COMMANDE">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="numCommande" ColumnName="numCommande" />
-                <ScalarProperty Name="dateCOMMANDE" ColumnName="dateCOMMANDE" />
-                <ScalarProperty Name="etat" ColumnName="etat" />
-                <ScalarProperty Name="RECEPTIONId" ColumnName="RECEPTIONId" />
                 <ScalarProperty Name="FOURNISSEURId" ColumnName="FOURNISSEURId" />
+                <ScalarProperty Name="etat" ColumnName="etat" />
+                <ScalarProperty Name="dateCOMMANDE" ColumnName="dateCOMMANDE" />
+                <ScalarProperty Name="numCommande" ColumnName="numCommande" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ENTREE">
             <EntityTypeMapping TypeName="SolarThermalModel.ENTREE">
               <MappingFragment StoreEntitySet="ENTREE">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="numEntree" ColumnName="numEntree" />
-                <ScalarProperty Name="quantite" ColumnName="quantite" />
-                <ScalarProperty Name="dateEntree" ColumnName="dateEntree" />
-                <ScalarProperty Name="prixDentree" ColumnName="prixDentree" />
                 <ScalarProperty Name="ARTICLEId" ColumnName="ARTICLEId" />
+                <ScalarProperty Name="prixDentree" ColumnName="prixDentree" />
+                <ScalarProperty Name="dateEntree" ColumnName="dateEntree" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="numEntree" ColumnName="numEntree" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FOURNISSEUR">
             <EntityTypeMapping TypeName="SolarThermalModel.FOURNISSEUR">
               <MappingFragment StoreEntitySet="FOURNISSEUR">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="numF" ColumnName="numF" />
-                <ScalarProperty Name="NomF" ColumnName="NomF" />
-                <ScalarProperty Name="adresse" ColumnName="adresse" />
-                <ScalarProperty Name="codP" ColumnName="codP" />
-                <ScalarProperty Name="ville" ColumnName="ville" />
-                <ScalarProperty Name="payes" ColumnName="payes" />
-                <ScalarProperty Name="tele" ColumnName="tele" />
-                <ScalarProperty Name="fax" ColumnName="fax" />
                 <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="tele" ColumnName="tele" />
+                <ScalarProperty Name="payes" ColumnName="payes" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="codP" ColumnName="codP" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="NomF" ColumnName="NomF" />
+                <ScalarProperty Name="numF" ColumnName="numF" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LIGNE_COMMANDE">
             <EntityTypeMapping TypeName="SolarThermalModel.LIGNE_COMMANDE">
               <MappingFragment StoreEntitySet="LIGNE_COMMANDE">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="index" ColumnName="index" />
-                <ScalarProperty Name="quantite" ColumnName="quantite" />
-                <ScalarProperty Name="prix" ColumnName="prix" />
-                <ScalarProperty Name="montant" ColumnName="montant" />
-                <ScalarProperty Name="ARTICLEId" ColumnName="ARTICLEId" />
                 <ScalarProperty Name="COMMANDEId" ColumnName="COMMANDEId" />
+                <ScalarProperty Name="ARTICLEId" ColumnName="ARTICLEId" />
+                <ScalarProperty Name="montant" ColumnName="montant" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="index" ColumnName="index" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MAGASIN">
             <EntityTypeMapping TypeName="SolarThermalModel.MAGASIN">
               <MappingFragment StoreEntitySet="MAGASIN">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="nomMagasin" ColumnName="nomMagasin" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RECEPTION">
             <EntityTypeMapping TypeName="SolarThermalModel.RECEPTION">
               <MappingFragment StoreEntitySet="RECEPTION">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="numReception" ColumnName="numReception" />
-                <ScalarProperty Name="dateReception" ColumnName="dateReception" />
+                <ScalarProperty Name="CommandeId" ColumnName="CommandeId" />
                 <ScalarProperty Name="quantiteLivree" ColumnName="quantiteLivree" />
+                <ScalarProperty Name="dateReception" ColumnName="dateReception" />
+                <ScalarProperty Name="numReception" ColumnName="numReception" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SORTIE">
             <EntityTypeMapping TypeName="SolarThermalModel.SORTIE">
               <MappingFragment StoreEntitySet="SORTIE">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="numSortie" ColumnName="numSortie" />
-                <ScalarProperty Name="quantite" ColumnName="quantite" />
-                <ScalarProperty Name="dateSortie" ColumnName="dateSortie" />
-                <ScalarProperty Name="prixDSortie" ColumnName="prixDSortie" />
                 <ScalarProperty Name="ARTICLEId" ColumnName="ARTICLEId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="STOCK">
-            <EntityTypeMapping TypeName="SolarThermalModel.STOCK">
-              <MappingFragment StoreEntitySet="STOCK">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="designation" ColumnName="designation" />
-                <ScalarProperty Name="marque" ColumnName="marque" />
-                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="prixDSortie" ColumnName="prixDSortie" />
+                <ScalarProperty Name="dateSortie" ColumnName="dateSortie" />
                 <ScalarProperty Name="quantite" ColumnName="quantite" />
-                <ScalarProperty Name="codeFournisseur" ColumnName="codeFournisseur" />
-                <ScalarProperty Name="fournisseur" ColumnName="fournisseur" />
-                <ScalarProperty Name="prixAchat" ColumnName="prixAchat" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="user">
-            <EntityTypeMapping TypeName="SolarThermalModel.user">
-              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="numSortie" ColumnName="numSortie" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="NormalizedUserName" ColumnName="NormalizedUserName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="NormalizedEmail" ColumnName="NormalizedEmail" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="ConcurrencyStamp" ColumnName="ConcurrencyStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEnd" ColumnName="LockoutEnd" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="role" ColumnName="role" />
-                <ScalarProperty Name="roleLabel" ColumnName="roleLabel" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -829,6 +752,45 @@
                 <ScalarProperty Name="adresse" ColumnName="adresse" />
                 <ScalarProperty Name="ville" ColumnName="ville" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STOCK">
+            <EntityTypeMapping TypeName="SolarThermalModel.STOCK">
+              <MappingFragment StoreEntitySet="STOCK">
+                <ScalarProperty Name="prixAchat" ColumnName="prixAchat" />
+                <ScalarProperty Name="fournisseur" ColumnName="fournisseur" />
+                <ScalarProperty Name="codeFournisseur" ColumnName="codeFournisseur" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="marque" ColumnName="marque" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="SolarThermalModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="roleLabel" ColumnName="roleLabel" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEnd" ColumnName="LockoutEnd" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ConcurrencyStamp" ColumnName="ConcurrencyStamp" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="NormalizedEmail" ColumnName="NormalizedEmail" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NormalizedUserName" ColumnName="NormalizedUserName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

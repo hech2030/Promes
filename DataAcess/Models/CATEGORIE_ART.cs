@@ -11,9 +11,7 @@ namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("CATEGORIE_ART")]
+    
     public partial class CATEGORIE_ART
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

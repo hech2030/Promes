@@ -9,9 +9,9 @@
 
 namespace DataAcess.Models
 {
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("STOCK")]
+    using System;
+    using System.Collections.Generic;
+    
     public partial class STOCK
     {
         public string Id { get; set; }

@@ -11,23 +11,15 @@ namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("RECEPTION")]
+    
     public partial class RECEPTION
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RECEPTION()
-        {
-            this.COMMANDE = new HashSet<COMMANDE>();
-        }
-    
         public long Id { get; set; }
         public Nullable<long> numReception { get; set; }
         public Nullable<System.DateTime> dateReception { get; set; }
         public Nullable<long> quantiteLivree { get; set; }
+        public long CommandeId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COMMANDE> COMMANDE { get; set; }
+        public virtual COMMANDE COMMANDE { get; set; }
     }
 }

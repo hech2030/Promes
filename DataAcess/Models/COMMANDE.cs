@@ -11,27 +11,26 @@ namespace DataAcess.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("COMMANDE")]
+    
     public partial class COMMANDE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public COMMANDE()
         {
             this.LIGNE_COMMANDE = new HashSet<LIGNE_COMMANDE>();
+            this.RECEPTION = new HashSet<RECEPTION>();
         }
     
         public long Id { get; set; }
         public Nullable<long> numCommande { get; set; }
         public Nullable<System.DateTime> dateCOMMANDE { get; set; }
         public string etat { get; set; }
-        public long RECEPTIONId { get; set; }
         public long FOURNISSEURId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LIGNE_COMMANDE> LIGNE_COMMANDE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RECEPTION> RECEPTION { get; set; }
         public virtual FOURNISSEUR FOURNISSEUR { get; set; }
-        public virtual RECEPTION RECEPTION { get; set; }
     }
 }

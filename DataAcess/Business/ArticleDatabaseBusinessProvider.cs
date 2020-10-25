@@ -56,7 +56,7 @@ namespace DataAcess.Business
             {
                 query = query.Where(x => x.MAGASINId == magasinId);
             }
-            return query.ToList();
+            return query.Include("MAGASIN").Include("CATEGORIE_ART").ToList();
         }
 
         public ARTICLE Save(ARTICLE value)
