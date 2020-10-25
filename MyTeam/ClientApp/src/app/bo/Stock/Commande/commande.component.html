@@ -1,0 +1,115 @@
+<!--<div class="content-wrapper">-->
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Filtre</h4>
+        <form class="form-sample" (ngSubmit)="ngOnInit()">
+          <p class="card-description"></p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Fournisseur</label>
+                <div class="col-sm-9">
+                  <kendo-dropdownlist [data]="Fournisseurs"
+                                      [textField]="'nomF'"
+                                      valueField="id"
+                                      [(ngModel)]="SelectedFournisseur" name="FournisseursDDL">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Article</label>
+                <div class="col-sm-9">
+                  <kendo-dropdownlist [data]="Articles"
+                                      [textField]="'designation'"
+                                      valueField="id"
+                                      [(ngModel)]="SelectedArticle" name="ArticlessDDL">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Etat</label>
+                <div class="col-sm-9">
+                  <kendo-dropdownlist [data]="Status"
+                                      [textField]="'Label'"
+                                      valueField="id"
+                                      [(ngModel)]="SelectedStatus" name="StatusDDL">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button class="btn btn-light  mr-5" (click)="InitSearchCriteria()">Réinitialiser</button>
+            <button type="submit" class="btn btn-success">Chercher</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 grid-margin stretch-card">
+
+    <div class="card">
+      <div class="col-md-12 col-sm-12">
+        <br />
+
+        <button type="button" class="btn btn-dark btn-fw float-right" (click)="NewCommand()">Passer une nouvelle commande</button>
+        <h4 class="card-title">Liste des commandes</h4>
+      </div>
+      <div class="card-body">
+        <div class="grid-wrapper">
+          <!--<div id="grid"></div>-->
+          <!--          <div *ngIf="Isloading" class="k-i-loading"></div>-->
+          <kendo-grid [kendoGridBinding]="commandesData"
+                      [pageSize]="20"
+                      [pageable]="true"
+                      [sortable]="true"
+                      [groupable]="true"
+                      [reorderable]="true"
+                      [resizable]="true"
+                      [height]="480"
+                      [columnMenu]="{ filter: true }">
+            <kendo-grid-column title="Fournisseur" field="fournisseur.nomF"></kendo-grid-column>
+            <kendo-grid-column title="Date" field="dateCOMMANDE"></kendo-grid-column>
+            <kendo-grid-column title="Status" field="etat"></kendo-grid-column>
+            <kendo-grid-column title="Action">
+              <ng-template kendoGridCellTemplate let-articleDataItem>
+                <button class="close rounded-circle col-md-6" kendoButton (click)="UpdateArticle(articleDataItem.id)">
+                  <i class="fa fa-eye"></i>
+                </button>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-messages filterContainsOperator="Contient"
+                                 filterEndsWithOperator="Termine par"
+                                 filterEqOperator="égale"
+                                 filterNotEqOperator="Différent de"
+                                 filterNotContainsOperator="Ne contient pas"
+                                 filterStartsWithOperator="Commence par"
+                                 filterIsNullOperator="Est Null"
+                                 filterIsNotNullOperator="N'est pas NULL"
+                                 filterIsEmptyOperator="Est vide"
+                                 filterIsNotEmptyOperator="N'est pas Vide"
+                                 noRecords="Aucun élément a afficher"
+                                 filter="Filtrer"
+                                 columns="Colonnes"
+                                 columnsApply="Confirmer"
+                                 columnsReset="Supprimer"
+                                 sortAscending="Tri ascendant"
+                                 sortDescending="Tri descendant"
+                                 pagerOf="de"
+                                 groupPanelEmpty="Glisser les colonnes ici pour grouper">
+            </kendo-grid-messages>
+          </kendo-grid>
+          <div *ngIf="Isloading" class="k-i-loading"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

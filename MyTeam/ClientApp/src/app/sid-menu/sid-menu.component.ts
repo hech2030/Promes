@@ -66,4 +66,7 @@ export class sideMenuComponent implements OnInit {
   GetMouvement() {
     this.router.navigate(['/Mouvement']);
   }
+  GetCommande() {
+    this.router.navigate(['/Commande']);
+  }
 }

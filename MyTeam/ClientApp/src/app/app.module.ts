@@ -41,7 +41,8 @@ import { FournisseurDetailsComponent } from './bo/Stock/Fournisseur/fournisseur-
 import { MagasinComponent } from './bo/Stock/Magasin/magasin.component';
 import { MagasinDetailsComponent } from './bo/Stock/Magasin/magasin-details/magasin-details.component';
 import { MouvementComponent } from './bo/Stock/Mouvement/mouvement.component';
-
+import { CommandeComponent } from './bo/Stock/Commande/commande.component';
+import { NewCommComponent } from './bo/Stock/Commande/new-comm/new-comm.component';
 
 
 @NgModule({
@@ -64,7 +65,7 @@ import { MouvementComponent } from './bo/Stock/Mouvement/mouvement.component';
     CategorieArtComponent,
     categorie_artDetailsComponent,
     FournisseurComponent, FournisseurDetailsComponent, MagasinComponent, MagasinDetailsComponent,
-    MouvementComponent
+    MouvementComponent, CommandeComponent, NewCommComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -90,7 +91,9 @@ import { MouvementComponent } from './bo/Stock/Mouvement/mouvement.component';
       { path: 'Fournisseur/fournisseurDetails/:id', component: FournisseurDetailsComponent, canActivate: [AuthGuard] },
       { path: 'Magasin', component: MagasinComponent, canActivate: [AuthGuard] },
       { path: 'Magasin/magasinDetails/:id', component: MagasinDetailsComponent, canActivate: [AuthGuard] },
-      { path: 'Mouvement', component: MouvementComponent, canActivate: [AuthGuard] }
+      { path: 'Mouvement', component: MouvementComponent, canActivate: [AuthGuard] },
+      { path: 'Commande', component: CommandeComponent, canActivate: [AuthGuard] },
+      { path: 'NewRequest', component: NewCommComponent, canActivate: [AuthGuard] }
     ]),
     //InputsModule,
     BrowserAnimationsModule,

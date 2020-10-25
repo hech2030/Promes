@@ -63,12 +63,6 @@
             <kendo-grid-column title="Quantité" field="quantite"></kendo-grid-column>
             <kendo-grid-column title="Prix" field="prix"></kendo-grid-column>
             <kendo-grid-column title="Emplacement" field="emplacement"></kendo-grid-column>
-            <!--<kendo-grid-column field="CATEGORIE_ART.nomCate" title="CATEGORIE ART">
-            </kendo-grid-column>
-            <kendo-grid-column field="FOURNISSEUR.numF" title="FOURNISSEUR">
-            </kendo-grid-column>
-            <kendo-grid-column field="MAGASIN.nomMagasin" title="MAGASIN">-->
-            <!--</kendo-grid-column>-->
             <kendo-grid-column title="Action">
               <ng-template kendoGridCellTemplate let-articleDataItem>
                 <button class="close rounded-circle col-md-6" kendoButton (click)="DeleteArticle(articleDataItem.id)">
@@ -148,16 +142,6 @@
                                         [textField]="'nomMagasin'"
                                         valueField="id"
                                         [(ngModel)]="SelectedMagasin" name="MagasinsDDL">
-                    </kendo-dropdownlist>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label>Fournisseur</label><br />
-                  <div class="d-flex p-2">
-                    <kendo-dropdownlist [data]="Fournisseurs"
-                                        [textField]="'nomF'"
-                                        valueField="id"
-                                        [(ngModel)]="SelectedFournisseur" name="FournisseurDDL">
                     </kendo-dropdownlist>
                   </div>
                 </div>

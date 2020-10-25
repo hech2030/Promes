@@ -1,16 +1,17 @@
 import { LigneCommande } from ".././Ligne-Commande/ligne-commande";
+import { Fournisseur } from "../Fournisseur/fournisseur";
 
 export class Commande {
   constructor() {
-    this.id = '';
+    this.id = 0;
   }
-  id: string = '';
+  id: number;
   numCommande: number;
   dateCOMMANDE: string;
   etat: string;
   RECEPTIONId: number;
   FOURNISSEURId: number;
   LIGNE_COMMANDE: LigneCommande[];
-  RECEPTION: Commande;
-  FOURNISSEUR: Commande;
+  //RECEPTION: Commande;
+  FOURNISSEUR: Fournisseur;
 }

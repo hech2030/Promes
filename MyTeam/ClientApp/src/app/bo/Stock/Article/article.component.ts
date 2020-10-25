@@ -8,9 +8,7 @@ import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
 import { NgForm } from '@angular/forms';
-import { FournisseurService } from '../../../Shared/Stock/Fournisseur/Fournisseur.service';
 import { CategorieArtService } from '../../../Shared/Stock/categorie_art/categorie_art.service';
-import { Fournisseur } from '../../../Models/bo/Stock/Fournisseur/fournisseur';
 import { CategorieArt } from '../../../Models/bo/Stock/Categorie-Art/categorie-art';
 
 
@@ -36,7 +34,6 @@ export class ArticleComponent implements OnInit {
     ENTREE: null,
     SORTIE: null,
     LIGNE_COMMANDE: null,
-    FOURNISSEUR: null,
     MAGASIN: null
   }
   SearchCriteria = {
@@ -44,16 +41,14 @@ export class ArticleComponent implements OnInit {
     MAGASINId: -1
   }
   SelectedMagasin: any;
-  SelectedFournisseur: any;
   SelectedCategorie: any;
   Isloading: boolean;
   artciles: Article[];
   public artcilesData: Article[];
   Magasins: Magasin[];
-  Fournisseurs: Fournisseur[];
   Categories: CategorieArt[];
 
-  constructor(private fournisseurService: FournisseurService, private CategorieService: CategorieArtService,
+  constructor(private CategorieService: CategorieArtService,
     private articleService: ArticleService, private magasinService: MagasinService, private tools: MyToolsService, private router: Router) { }
 
   ngOnInit() {
@@ -65,11 +60,6 @@ export class ArticleComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data.result);
         this.Magasins = data.result;
-      });
-    this.fournisseurService.GetFournisseur({})
-      .subscribe((data: any) => {
-        console.log(data.result);
-        this.Fournisseurs = data.result;
       });
     this.CategorieService.GetCategorieArt({})
       .subscribe((data: any) => {
@@ -126,7 +116,6 @@ export class ArticleComponent implements OnInit {
     })
   }
   AddArticle(Articleform: NgForm) {
-    this.articleModel.FOURNISSEURId = this.SelectedFournisseur.id;
     this.articleModel.MAGASINId = this.SelectedMagasin.id;
     this.articleModel.CATEGORIE_ARTId = this.SelectedCategorie.id;
     this.articleService.SaveArticle(this.articleModel).subscribe(
@@ -161,13 +150,11 @@ export class ArticleComponent implements OnInit {
     this.articleModel.newAttr = -1;
     this.articleModel.emplacement = '';
     this.articleModel.CATEGORIE_ARTId = -1;
-    this.articleModel.FOURNISSEURId = -1;
     this.articleModel.MAGASINId = -1;
     this.articleModel.CATEGORIE_ART = null;
     this.articleModel.ENTREE = null;
     this.articleModel.SORTIE = null;
     this.articleModel.LIGNE_COMMANDE = null;
-    this.articleModel.FOURNISSEUR = null;
     this.articleModel.MAGASIN = null
   }
 
