@@ -16,6 +16,7 @@ export class MagasinComponent implements OnInit {
   constructor(private MagasinService: MagasinService, private tools: MyToolsService,
     private router: Router) { }
 
+  Isloading : boolean;
   magasins: Magasin[];
   searchCriteria = {
     id: 0,
@@ -25,10 +26,12 @@ export class MagasinComponent implements OnInit {
 
 
   ngOnInit() {
+    this.Isloading = true;
     this.MagasinService.GetMagasin(this.searchCriteria)
       .subscribe((data: any) => {
         console.log(data.result);
         this.magasins = data.result;
+        this.Isloading = false;
       });
   }
 

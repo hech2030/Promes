@@ -115,7 +115,7 @@ export class ArticleComponent implements OnInit {
       }
     })
   }
-  AddArticle(Articleform: NgForm) {
+  AddArticle(Articleform) {
     this.articleModel.MAGASINId = this.SelectedMagasin.id;
     this.articleModel.CATEGORIE_ARTId = this.SelectedCategorie.id;
     this.articleService.SaveArticle(this.articleModel).subscribe(

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../Shared/user.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -34,7 +33,7 @@ export class AuthComponent implements OnInit {
 
 
 
-  OnSubmit(form: NgForm) {
+  OnSubmit(form) {
     this.service.login(form);
   } 
 

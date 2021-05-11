@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./categorie_art.component.css']
 })
 export class CategorieArtComponent implements OnInit {
+  Isloading: boolean;
 
   constructor(private CategorieArtService: CategorieArtService, private tools: MyToolsService,
     private router: Router) { }
@@ -25,10 +26,12 @@ export class CategorieArtComponent implements OnInit {
 
 
   ngOnInit() {
+    this.Isloading = true;
     this.CategorieArtService.GetCategorieArt(this.searchCriteria)
       .subscribe((data: any) => {
         console.log(data.result);
         this.categories = data.result;
+        this.Isloading = false;
       });
   }
 

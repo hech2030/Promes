@@ -49,5 +49,8 @@ export class CommandeComponent implements OnInit {
   NewCommand() {
     this.router.navigate(['NewRequest']);
   }
+  InitSearchCriteria(){
+    
+  }
 
 }

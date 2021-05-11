@@ -95,7 +95,7 @@ export class AdminUsersComponent implements OnInit {
     })
   }
 
-  AddUser(Userform: NgForm) {
+  AddUser(Userform) {
     if (this.userModel.Password != this.userModel.RepeatedPassword) {
       Swal.fire('Oops...', "Les mot de passes ne sont pas identiques", 'error');
     }

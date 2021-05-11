@@ -17,6 +17,7 @@ import { MyToolsService } from '../../../../Shared/Tools/my-tools.service';
 })
 export class NewCommComponent implements OnInit {
 
+  Isloading : boolean;
   Articles: Article[];
   SelectedArticle: Article;
   Fournisseurs: Fournisseur[];
@@ -32,6 +33,7 @@ export class NewCommComponent implements OnInit {
     private articleService: ArticleService, private commandeService: CommandeService, private router: Router) { }
 
   ngOnInit() {
+    this.Isloading = true;
     this.fournisseurService.GetFournisseur({})
       .subscribe((data: any) => {
         console.log(data.result);
@@ -41,6 +43,7 @@ export class NewCommComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data.result);
         this.Articles = data.result;
+        this.Isloading = false;
       });
   }
   AddLigneCommange() {
@@ -99,6 +102,8 @@ export class NewCommComponent implements OnInit {
         }
       });
   }
+
+  Init(){}
 
 
 }

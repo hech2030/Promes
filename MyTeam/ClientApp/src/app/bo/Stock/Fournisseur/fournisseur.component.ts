@@ -15,7 +15,7 @@ export class FournisseurComponent implements OnInit {
 
   constructor(private FournisseurService: FournisseurService, private tools: MyToolsService,
     private router: Router) { }
-
+  Isloading : boolean;
   fournisseurs: Fournisseur[];
   searchCriteria = {
     id: 0,
@@ -25,10 +25,12 @@ export class FournisseurComponent implements OnInit {
 
 
   ngOnInit() {
+    this.Isloading = true;
     this.FournisseurService.GetFournisseur(this.searchCriteria)
       .subscribe((data: any) => {
         console.log(data.result);
         this.fournisseurs = data.result;
+        this.Isloading = false;
       });
   }
 

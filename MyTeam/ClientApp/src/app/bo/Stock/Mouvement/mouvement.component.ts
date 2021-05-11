@@ -12,6 +12,7 @@ import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
   styleUrls: ['./mouvement.component.css']
 })
 export class MouvementComponent implements OnInit {
+  Isloading : boolean;
   counter: number = 0;
   mouvements: Mouvement[] = new Array();
   mouvement: Mouvement = new Mouvement();
@@ -27,10 +28,12 @@ export class MouvementComponent implements OnInit {
   Articles: Article[];
 
   ngOnInit() {
+    this.Isloading = true;
     this.articleService.GetArticle({})
       .subscribe((data: any) => {
         console.log(data.result);
         this.Articles = data.result;
+        this.Isloading = false;
       });
 
   }

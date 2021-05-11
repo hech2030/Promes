@@ -22,7 +22,7 @@
                       [resizable]="true"
                       [height]="480"
                       [columnMenu]="{ filter: true }">
-            <kendo-grid-column title="Nom Fournissuer" field="nomF"></kendo-grid-column>
+            <kendo-grid-column title="Nom Fournissuer" field="NomF"></kendo-grid-column>
             <kendo-grid-column title="Telephone" field="tele"></kendo-grid-column>
             <kendo-grid-column title="Email" field="email"></kendo-grid-column>
             <kendo-grid-column title="Pays" field="payes"></kendo-grid-column>
@@ -82,7 +82,7 @@
               <form class="forms-sample" (ngSubmit)="AddFournisseur()" validate>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nom</label>
-                  <input type="text" class="form-control" id="NomFournissuer" placeholder="Entrer le nom du fournisseur" name="Nomfournissuer" [(ngModel)]="fournisseur.nomF" required>
+                  <input type="text" class="form-control" id="NomFournissuer" placeholder="Entrer le nom du fournisseur" name="Nomfournissuer" [(ngModel)]="fournisseur.NomF" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Telephone</label>
