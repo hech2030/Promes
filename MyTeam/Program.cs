@@ -59,7 +59,7 @@ namespace MyTeam
                 var host = WebHost.CreateDefaultBuilder(webHostArgs)
                 .UseContentRoot(pathToContentRoot)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:" + PortNo)
+                .UseUrls("http://51.75.202.18:" + PortNo)
                 .Build();
 
                 host.RunAsService();

@@ -13,8 +13,8 @@ namespace DataAcess.Business
     public class ArticleDatabaseBusinessProvider
     {
         private static SolarThermalEntities Context = new SolarThermalEntities();
-        private readonly DbSet<ARTICLE> DataAccessProvider = Context.ARTICLE;       
-        
+        private readonly DbSet<ARTICLE> DataAccessProvider = Context.ARTICLE;
+
         /// <summary>
         /// lock object
         /// </summary>
@@ -56,14 +56,14 @@ namespace DataAcess.Business
             {
                 query = query.Where(x => x.MAGASINId == magasinId);
             }
-            return query.Include("MAGASIN").Include("CATEGORIE_ART").ToList();
+            return query.Include(a => a.MAGASIN).Include(a => a.CATEGORIE_ART).ToList();
         }
 
         public ARTICLE Save(ARTICLE value)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var control = Find(0,0, string.Empty);
+                var control = Find(0, 0, string.Empty);
                 if (value.Id > 0)
                 {
                     var CurrenctValue = control.Where(x => x.Id == value.Id).FirstOrDefault();
@@ -103,6 +103,6 @@ namespace DataAcess.Business
                 return false;
             }
         }
-    
+
     }
 }

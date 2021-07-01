@@ -56,7 +56,7 @@ namespace DataAcess.Business
             {
                 query = query.Where(x => x.dateCOMMANDE == date);
             }
-            return query.Include("FOURNISSEUR").ToList();
+            return query.Include(a => a.FOURNISSEUR).ToList();
         }
 
         public COMMANDE Save(COMMANDE value)
