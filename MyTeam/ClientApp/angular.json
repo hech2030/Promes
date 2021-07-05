@@ -15,7 +15,7 @@
           "options": {
             "progress": false,
             "extractCss": true,
-            "outputPath": "dist",
+            "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

@@ -67,6 +67,7 @@ namespace MyTeam
             else
             {
                 CreateHostBuilder(args).Build().Run();
+                Console.WriteLine("Promes App started...");
             }
         }
 
