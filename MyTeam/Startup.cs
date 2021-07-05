@@ -33,14 +33,15 @@ namespace MyTeam
         public void ConfigureServices(IServiceCollection services)
         {
             #region production config
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(
-            //      "CorsPolicy",
-            //      builder => builder.AllowAnyOrigin()
-            //      .AllowAnyMethod()
-            //      .AllowAnyHeader());
-            //}); services.AddControllersWithViews()
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                  "CorsPolicy",
+                  builder => builder.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader());
+            });
+            //services.AddControllersWithViews()
             //.AddNewtonsoftJson(options =>
             //options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             //    );
@@ -143,7 +144,7 @@ namespace MyTeam
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             #region prod config
-            //app.UseCors("CorsPolicy");
+            app.UseCors("CorsPolicy");
 
             //if (env.IsDevelopment())
             //{
