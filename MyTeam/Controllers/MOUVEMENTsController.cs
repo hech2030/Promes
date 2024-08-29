@@ -1,11 +1,9 @@
-﻿using DataAcess.Business;
+﻿using DataAcess.Business.Interfaces;
 using DataAcess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyTeam.Common.Requests.bo.Stock.Mouvement;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyTeam.Controllers
@@ -14,13 +12,19 @@ namespace MyTeam.Controllers
     [ApiController]
     public class MOUVEMENTsController : ControllerBase
     {
-        public MOUVEMENTsController()
+        private readonly IEntreeDatabaseBusinessProvider _entreeProvider;
+        private readonly ISortieDatabaseBusinessProvider _sortieProvider;
+
+        public MOUVEMENTsController(IEntreeDatabaseBusinessProvider entreeProvider, ISortieDatabaseBusinessProvider sortieProvider)
         {
+            _entreeProvider = entreeProvider;
+            _sortieProvider = sortieProvider;
         }
+
         [HttpPost]
         [Authorize]
         [Route("SaveMouvements")]
-        public ActionResult SaveMouvement(MouvementSaveRequest Request)
+        public async Task<ActionResult> SaveMouvementAsync(MouvementSaveRequest Request)
         {
             try
             {
@@ -31,7 +35,7 @@ namespace MyTeam.Controllers
                         //Case 1 is entry
                         case 1:
                             {
-                                EntreeDatabaseBusinessProvider.Instance.Add(new ENTREE()
+                                await _entreeProvider.Add(new ENTREE()
                                 {
                                     ARTICLE = item.Article,
                                     ARTICLEId = item.Article.Id,
@@ -43,7 +47,7 @@ namespace MyTeam.Controllers
                         //Case 2 is out
                         case 2:
                             {
-                                SortieDatabaseBusinessProvider.Instance.Add(new SORTIE()
+                                await _sortieProvider.Add(new SORTIE()
                                 {
                                     ARTICLE = item.Article,
                                     ARTICLEId = item.Article.Id,

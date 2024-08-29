@@ -1,47 +1,27 @@
-﻿using DataAcess.Models;
+﻿using DataAcess.Business.Interfaces;
+using DataAcess.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Transactions;
 
 namespace DataAcess.Business
 {
-    public class AgenceDataBaseBusinessProvider
+    public class AgenceDataBaseBusinessProvider : IAgenceDataBaseBusinessProvider
     {
-        private static SolarThermalEntities Context = new SolarThermalEntities();
-        private readonly DbSet<AGENCE> DataAccessProvider = Context.AGENCE;
-        /// <summary>
-        /// lock object
-        /// </summary>
-        private static readonly object Lck = new object();
+        private readonly SolarThermalEntities _dbContext;
 
-        /// <summary>
-        /// instance of DataBaseBusinessProvider
-        /// </summary>
-        private static AgenceDataBaseBusinessProvider instance;
-
-        /// <summary>
-        /// Gets Instance.
-        /// </summary>
-        public static AgenceDataBaseBusinessProvider Instance
-
+        public AgenceDataBaseBusinessProvider(SolarThermalEntities dbContext)
         {
-            get
-            {
-                lock (Lck)
-                {
-                    return instance ?? (instance = new AgenceDataBaseBusinessProvider());
-                }
-            }
+            _dbContext = dbContext;
         }
 
-        public IList<AGENCE> Find(long id, string ville)
+        public Task<List<AGENCE>> Find(long id, string ville)
         {
-
-            var query = DataAccessProvider.AsQueryable();
+            var query = _dbContext.AGENCE.AsQueryable();
             if (id > 0)
             {
                 query = query.Where(x => x.Id == id);
@@ -50,23 +30,23 @@ namespace DataAcess.Business
             {
                 query = query.Where(x => x.ville.Contains(ville));
             }
-            return query.ToList();
+            return query.ToListAsync();
         }
 
-        public AGENCE Save(AGENCE value)
+        public async Task<AGENCE> Save(AGENCE value)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var control = Find(0, string.Empty);
+                var control = await Find(0, string.Empty);
                 if (value.Id > 0)
                 {
-                    var CurrenctValue = control.Where(x => x.Id == value.Id).FirstOrDefault();
-                    control.Remove(CurrenctValue);
+                    var CurrenctValue = control.Find(x => x.Id == value.Id); //WTH???
+                    control.Remove(CurrenctValue); // WTH?
                 }
-                if (control.Where(x => x.nom.Equals(value.nom)).Count() == 0)
+                if (control.Exists(x => string.Equals(x.nom, value.nom, StringComparison.OrdinalIgnoreCase)))
                 {
-                    DataAccessProvider.AddOrUpdate(value);
-                    Context.SaveChanges();
+                    _dbContext.AGENCE.AddOrUpdate(value);
+                    _dbContext.SaveChanges();
                     transaction.Complete();
                     return value;
                 }
@@ -77,26 +57,24 @@ namespace DataAcess.Business
             }
         }
 
-
-        public bool Remove(long id)
+        public Task<bool> Remove(long id)
         {
             try
             {
                 using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    var value = DataAccessProvider.Find(id);
-                    DataAccessProvider.Remove(value);
-                    Context.SaveChanges();
+                    var value = _dbContext.AGENCE.Find(id);
+                    _dbContext.AGENCE.Remove(value);
+                    _dbContext.SaveChanges();
                     transaction.Complete();
-                    return true;
+                    return Task.FromResult(true);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return false;
+                return Task.FromResult(false);
             }
         }
     }
-
 }

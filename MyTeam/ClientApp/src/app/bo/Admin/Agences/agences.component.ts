@@ -6,7 +6,6 @@ import * as $ from 'jquery';
 import { MyToolsService } from '../../../Shared/Tools/my-tools.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   templateUrl: './agences.component.html',
   styleUrls: ['./agences.component.css'],
@@ -84,12 +83,11 @@ export class AgencesComponent implements OnInit {
               )
             }
           });
-
       }
     })
   }
   updateAgence(id) {
-    this.router.navigate(['Agence/agenceDetails/'+id]);
+    this.router.navigate(['Agence/agenceDetails/' + id]);
   }
   reset() {
     this.SearchCriteria.ville = '';

@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using MyTeam.Common.Models;
+using MyTeam.Common.Requests.Auth;
+using MyTeam.Common.Requests.bo.Users;
+using System;
+using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using MyTeam.Common.Requests.Auth;
-using MyTeam.Common.Requests.bo.Users;
-using DataAcess.Models;
-using MyTeam.Common.Models;
 
 namespace MyTeam.Controllers
 {
@@ -19,44 +19,43 @@ namespace MyTeam.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private UserManager<User> _userManager;
-        private SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController(SignInManager<User> SignInManager, UserManager<User> userManager)
+        public UsersController(UserManager<User> userManager)
         {
-            _signInManager = SignInManager;
             _userManager = userManager;
         }
+
         [HttpPost]
         [Route("Register")]
         public async Task<ActionResult> PostApplicationUser(RegisterRequest request)
         {
-            User User = null;
+            User user;
             if (request.id != null)
             {
-                User = await _userManager.FindByIdAsync(request.id);
+                user = await _userManager.FindByIdAsync(request.id);
                 if (request.newPassword != null)
                 {
-                    var test = await _userManager.ChangePasswordAsync(User, request.currentPassword, request.newPassword);
-                    if(test.Succeeded== false)
+                    var identityResult = await _userManager.ChangePasswordAsync(user, request.currentPassword, request.newPassword);
+                    if (!identityResult.Succeeded)
                     {
-                        return BadRequest(new { Message = test.Errors.FirstOrDefault().Description});
+                        return BadRequest(new { Message = identityResult.Errors.FirstOrDefault()?.Description });
                     }
                 }
-                User.UserName = request.username;
-                User.Email = request.email;
-                User.role = request.role;
-                User.roleLabel = request.roleLabel;
-                User.FullName = request.fullName;
-                User.PhoneNumber = request.phoneNumber;
-                if (request.image!= null)
+                user.UserName = request.username;
+                user.Email = request.email;
+                user.role = request.role;
+                user.roleLabel = request.roleLabel;
+                user.FullName = request.fullName;
+                user.PhoneNumber = request.phoneNumber;
+                if (request.image != null)
                 {
-                    User.Image = request.image;
+                    user.Image = request.image;
                 }
             }
             else
             {
-                User = new User
+                user = new User
                 {
                     UserName = request.username,
                     Email = request.email,
@@ -69,39 +68,40 @@ namespace MyTeam.Controllers
             {
                 if (request.password != null)
                 {
-                    var result = await _userManager.CreateAsync(User, request.password);
-                    return Ok(result);
+                    var identityResult = await _userManager.CreateAsync(user, request.password);
+                    if (identityResult.Succeeded)
+                    {
+                        return Ok(identityResult);
+                    }
+                    return BadRequest(new { Message = identityResult.Errors.FirstOrDefault()?.Description });
                 }
-                else
-                {
-                    var ExistingUser = await _userManager.FindByIdAsync(User.Id);
-                    User.PasswordHash = ExistingUser.PasswordHash;
-                    var result = await _userManager.UpdateAsync(User);
-                    return Ok(result);
-                }
+
+                var ExistingUser = await _userManager.FindByIdAsync(user.Id);
+                user.PasswordHash = ExistingUser.PasswordHash;
+                var result = await _userManager.UpdateAsync(user);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Message = ex.Message });
-                throw ex;
+                return BadRequest(new { ex.Message });
+                throw;
             }
         }
+
         [HttpPost]
         [Route("Login")]
         public async Task<ActionResult> Login(LoginRequest Request)
         {
             try
             {
-
                 var user = await _userManager.FindByNameAsync(Request.userName);
                 if (user != null && await _userManager.CheckPasswordAsync(user, Request.password))
                 {
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new Claim[] {
-                new Claim("UserId",user.Id.ToString())
-                }),
-                        Expires = DateTime.UtcNow.AddMinutes(5),
+                        new Claim("UserId",user.Id.ToString())}),
+                        Expires = DateTime.UtcNow.AddMinutes(50),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890123456789")), SecurityAlgorithms.HmacSha256Signature)
                     };
                     var tokenHandler = new JwtSecurityTokenHandler();
@@ -109,10 +109,7 @@ namespace MyTeam.Controllers
                     var token = tokenHandler.WriteToken(securityToken);
                     return Ok(new { token, user.UserName, user.roleLabel, user.role, user.Image });
                 }
-                else
-                {
-                    return BadRequest(new { Message = "UserName or password is incorrect." });
-                }
+                return BadRequest(new { Message = "UserName or password is incorrect." });
             }
             catch (Exception ex)
             {
@@ -124,12 +121,12 @@ namespace MyTeam.Controllers
         [HttpPost]
         [Authorize]
         [Route("FindUser")]
-        public ActionResult FindUser(UserGetRequest Request)
+        public async Task<ActionResult> FindUser(UserGetRequest Request)
         {
             try
             {
                 var user = _userManager.Users;
-                if(Request.FullUserName!=null)
+                if (Request.FullUserName != null)
                 {
                     user = user.Where(x => x.UserName == Request.FullUserName);
                 }
@@ -145,7 +142,7 @@ namespace MyTeam.Controllers
                 {
                     user = user.Where(x => x.role == Request.UserRole);
                 }
-                var result = user.ToList();
+                var result = await user.ToListAsync();
                 return Ok(new { result });
             }
             catch (Exception ex)
@@ -154,20 +151,21 @@ namespace MyTeam.Controllers
                 return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
             }
         }
+
         [HttpPost]
         [Authorize]
         [Route("DeleteUser")]
         public async Task<ActionResult> DeleteUser(UserDeleteRequest request)
         {
-            bool success = false;
             try
             {
                 var user = await _userManager.FindByIdAsync(request.id);
-                var result = await _userManager.DeleteAsync(user);
+                _ = await _userManager.DeleteAsync(user);
                 return Ok(new { success = true });
             }
             catch (Exception ex)
             {
+                bool success = false;
                 Console.Write("Exception : " + ex.Message);
                 return BadRequest(new { success });
             }

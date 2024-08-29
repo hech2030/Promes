@@ -1,27 +1,24 @@
-using System;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Text;
-using DataAcess;
+using DataAcess.Business;
+using DataAcess.Business.Interfaces;
 using DataAcess.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MyTeam.Common.Models;
-using MyTeam.Common.Models.Context;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Text;
 
 namespace MyTeam
 {
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,6 +30,7 @@ namespace MyTeam
         public void ConfigureServices(IServiceCollection services)
         {
             #region production config
+
             services.AddCors(options =>
             {
                 options.AddPolicy(
@@ -57,7 +55,6 @@ namespace MyTeam
 
             //services.AddDefaultIdentity<User>().AddEntityFrameworkStores<UserContext>();
 
-
             //services.Configure<IdentityOptions>(options =>
             //{
             //    options.Password.RequireDigit = false;
@@ -66,7 +63,6 @@ namespace MyTeam
             //    options.Password.RequireUppercase = false;
             //    options.Password.RequiredLength = 4;
             //});
-
 
             //var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWTSecret"].ToString());
             //services.AddAuthentication(x =>
@@ -88,24 +84,25 @@ namespace MyTeam
             //    };
             //}
             //);
-            #endregion
+
+            #endregion production config
 
             #region dev config
+
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             //// In production, the Angular files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/dist";
-            //});
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
 
             services.AddDbContext<UserContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"))
             );
 
             services.AddDefaultIdentity<User>().AddEntityFrameworkStores<UserContext>();
-
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -115,7 +112,6 @@ namespace MyTeam
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 4;
             });
-
 
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWTSecret"].ToString());
             services.AddAuthentication(x =>
@@ -137,13 +133,23 @@ namespace MyTeam
                 };
             }
             );
-            #endregion
+
+            #endregion dev config
+
+            services.AddScoped<SolarThermalEntities>();
+
+            services.AddScoped<ICategorieArtDatabaseBusinessProvider, CategorieArtDatabaseBusinessProvider>();
+            services.AddScoped<IArticleDatabaseBusinessProvider, ArticleDatabaseBusinessProvider>();
+            services.AddScoped<IAgenceDataBaseBusinessProvider, AgenceDataBaseBusinessProvider>();
+            services.AddScoped<IEntreeDatabaseBusinessProvider, EntreeDatabaseBusinessProvider>();
+            services.AddScoped<ISortieDatabaseBusinessProvider, SortieDatabaseBusinessProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             #region prod config
+
             app.UseCors("CorsPolicy");
 
             //if (env.IsDevelopment())
@@ -195,9 +201,11 @@ namespace MyTeam
             ////});
 
             //app.UseAuthentication();
-            #endregion
+
+            #endregion prod config
 
             #region dev config
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -210,7 +218,7 @@ namespace MyTeam
             }
 
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
@@ -234,22 +242,22 @@ namespace MyTeam
             //        pattern: "{controller}/{action=Index}/{id?}");
             //});
 
-            //app.UseSpa(spa =>
-            //{
-            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-            //    // see https://go.microsoft.com/fwlink/?linkid=864501
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
 
-            //    spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "ClientApp";
 
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseAngularCliServer(npmScript: "start");
-            //    }
-            //});
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+            });
 
             app.UseAuthentication();
-            #endregion
+
+            #endregion dev config
         }
     }
 }
-

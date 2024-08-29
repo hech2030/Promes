@@ -1,49 +1,29 @@
-﻿using System;
+﻿using DataAcess.Business.Interfaces;
 using DataAcess.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
-using System.Data.Entity.Migrations;
-using System.Data.Entity;
 
 namespace DataAcess.Business
 {
-    public class ArticleDatabaseBusinessProvider
+    public class ArticleDatabaseBusinessProvider : IArticleDatabaseBusinessProvider
     {
-        private static SolarThermalEntities Context = new SolarThermalEntities();
-        private readonly DbSet<ARTICLE> DataAccessProvider = Context.ARTICLE;
+        private readonly SolarThermalEntities _dbContext;
 
-        /// <summary>
-        /// lock object
-        /// </summary>
-        private static readonly object Lck = new object();
-
-        /// <summary>
-        /// instance of DataBaseBusinessProvider
-        /// </summary>
-        private static ArticleDatabaseBusinessProvider instance;
-
-        /// <summary>
-        /// Gets Instance.
-        /// </summary>
-        public static ArticleDatabaseBusinessProvider Instance
-
+        public ArticleDatabaseBusinessProvider(SolarThermalEntities dbContext)
         {
-            get
-            {
-                lock (Lck)
-                {
-                    return instance ?? (instance = new ArticleDatabaseBusinessProvider());
-                }
-            }
+            _dbContext = dbContext;
         }
 
-        public IList<ARTICLE> Find(long id, long magasinId, string designation)
+        public async Task<ICollection<ARTICLE>> Find(long id, long magasinId, string designation)
         {
-
-            var query = DataAccessProvider.AsQueryable();
+            var query = _dbContext.ARTICLE.AsQueryable();
             if (id > 0)
             {
                 query = query.Where(x => x.Id == id);
@@ -56,23 +36,24 @@ namespace DataAcess.Business
             {
                 query = query.Where(x => x.MAGASINId == magasinId);
             }
-            return query.Include(a => a.MAGASIN).Include(a => a.CATEGORIE_ART).ToList();
+            return await query.Include(a => a.MAGASIN)
+                        .Include(a => a.CATEGORIE_ART).ToListAsync();
         }
 
-        public ARTICLE Save(ARTICLE value)
+        public async Task<ARTICLE> Save(ARTICLE value)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var control = Find(0, 0, string.Empty);
+                var control = await Find(0, 0, string.Empty);
                 if (value.Id > 0)
                 {
-                    var CurrenctValue = control.Where(x => x.Id == value.Id).FirstOrDefault();
+                    var CurrenctValue = control.FirstOrDefault(x => x.Id == value.Id);
                     control.Remove(CurrenctValue);
                 }
-                if (control.Where(x => x.designation.Equals(value.designation)).Count() == 0)
+                if (control.Any(x => x.designation.Equals(value.designation)))
                 {
-                    DataAccessProvider.AddOrUpdate(value);
-                    Context.SaveChanges();
+                    _dbContext.ARTICLE.AddOrUpdate(value);
+                    _dbContext.SaveChanges();
                     transaction.Complete();
                     return value;
                 }
@@ -83,16 +64,15 @@ namespace DataAcess.Business
             }
         }
 
-
-        public bool Remove(long id)
+        public async Task<bool> Remove(long id)
         {
             try
             {
                 using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    var value = DataAccessProvider.Find(id);
-                    DataAccessProvider.Remove(value);
-                    Context.SaveChanges();
+                    var value = await _dbContext.ARTICLE.FindAsync(id);
+                    _dbContext.ARTICLE.Remove(value);
+                    _dbContext.SaveChanges();
                     transaction.Complete();
                     return true;
                 }
@@ -103,6 +83,5 @@ namespace DataAcess.Business
                 return false;
             }
         }
-
     }
 }

@@ -1,9 +1,9 @@
-﻿using DataAcess.Business;
+﻿using DataAcess.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyTeam.Common.Requests.bo.Agence;
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyTeam.Controllers
 {
@@ -11,19 +11,21 @@ namespace MyTeam.Controllers
     [ApiController]
     public class AgencesController : ControllerBase
     {
-        public AgencesController()
-        {
-        }
+        private readonly IAgenceDataBaseBusinessProvider _agencesProvider;
 
+        public AgencesController(IAgenceDataBaseBusinessProvider agencesProvider)
+        {
+            _agencesProvider = agencesProvider;
+        }
 
         [HttpPost]
         [Authorize]
         [Route("FindAgence")]
-        public ActionResult FindAgence(AgenceFindRequest Request)
+        public async Task<ActionResult> FindAgence(AgenceFindRequest Request)
         {
             try
             {
-                var result = AgenceDataBaseBusinessProvider.Instance.Find(Request.id,Request.ville);
+                var result = await _agencesProvider.Find(Request.id, Request.ville);
                 return Ok(new { result });
             }
             catch (Exception ex)
@@ -32,29 +34,31 @@ namespace MyTeam.Controllers
                 return BadRequest(new { Message = "Exception has been occured : " + ex.Message });
             }
         }
+
         [HttpPost]
         [Authorize]
         [Route("SaveAgence")]
-        public ActionResult SaveAgence(AgenceSaveRequest Request)
+        public async Task<ActionResult> SaveAgence(AgenceSaveRequest Request)
         {
             try
             {
-                return Ok(AgenceDataBaseBusinessProvider.Instance.Save(Request.value));
+                return Ok(await _agencesProvider.Save(Request.value));
             }
             catch (Exception ex)
             {
                 Console.Write("Exception : " + ex.Message);
                 return BadRequest(new { Message = ex.HelpLink });
             }
-        }        
+        }
+
         [HttpPost]
         [Authorize]
         [Route("DeleteAgence")]
-        public ActionResult DeleteAgence(AgenceDeleteRequest Request)
+        public async Task<ActionResult> DeleteAgence(AgenceDeleteRequest Request)
         {
             try
             {
-                return Ok(AgenceDataBaseBusinessProvider.Instance.Remove(Request.id));
+                return Ok(await _agencesProvider.Remove(Request.id));
             }
             catch (Exception ex)
             {

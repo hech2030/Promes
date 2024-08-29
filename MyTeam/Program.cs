@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.WindowsServices;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace MyTeam
 {
@@ -52,7 +48,6 @@ namespace MyTeam
                         JObject jObject = JObject.Parse(jsonData);
                         if (jObject["ServicePort"] != null)
                             PortNo = jObject["ServicePort"].ToString();
-
                     }
                 }
 

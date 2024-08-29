@@ -1,64 +1,47 @@
-﻿using System;
+﻿using DataAcess.Business.Interfaces;
 using DataAcess.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
-using System.Data.Entity.Migrations;
 
 namespace DataAcess.Business
 {
-    public class SortieDatabaseBusinessProvider
+    public class SortieDatabaseBusinessProvider : ISortieDatabaseBusinessProvider
     {
-        /// <summary>
-        /// lock object
-        /// </summary>
-        private static readonly object Lck = new object();
+        private readonly SolarThermalEntities _dbContext;
+        private readonly IArticleDatabaseBusinessProvider _articleDatabaseBusinessProvider;
 
-        /// <summary>
-        /// instance of DataBaseBusinessProvider
-        /// </summary>
-        private static SortieDatabaseBusinessProvider instance;
-
-        /// <summary>
-        /// Gets Instance.
-        /// </summary>
-        public static SortieDatabaseBusinessProvider Instance
-
+        public SortieDatabaseBusinessProvider(SolarThermalEntities dbContext, IArticleDatabaseBusinessProvider articleDatabaseBusinessProvider)
         {
-            get
-            {
-                lock (Lck)
-                {
-                    return instance ?? (instance = new SortieDatabaseBusinessProvider());
-                }
-            }
+            _dbContext = dbContext;
+            _articleDatabaseBusinessProvider = articleDatabaseBusinessProvider;
         }
 
-        public IEnumerable<SORTIE> Find(long id)
+        public Task<List<SORTIE>> Find(long id)
         {
             if (id > 0)
             {
                 using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
                 {
-                    return new SolarThermalEntities().SORTIE.Where(x => x.Id == id).ToList();
+                    return _dbContext.SORTIE.Where(x => x.Id == id).ToListAsync();
                 }
             }
-            else
+            using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                using (new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
-                {
-                    return new SolarThermalEntities().SORTIE.ToList();
-                }
+                return _dbContext.SORTIE.ToListAsync();
             }
         }
 
-        public SORTIE Add(SORTIE obj)
+        public async Task<SORTIE> Add(SORTIE obj)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
                 var art = obj.ARTICLE;
                 art.quantite -= obj.quantite;
                 if (art.quantite < 0)
@@ -66,43 +49,41 @@ namespace DataAcess.Business
                     throw new Exception() { HelpLink = "La Quantité ne peut pas être négatif" };
                 }
                 art.prix = (art.prix + obj.prixDSortie) / 2;
-                ArticleDatabaseBusinessProvider.Instance.Save(art);
+                await _articleDatabaseBusinessProvider.Save(art);
                 obj.ARTICLE = null;
                 obj.dateSortie = DateTime.Now;
-                var myObj = context.SORTIE.Add(obj);
-                context.SaveChanges();
+                var myObj = _dbContext.SORTIE.Add(obj);
+                await _dbContext.SaveChangesAsync();
                 transaction.Complete();
                 return myObj;
             }
         }
 
-        public SORTIE Update(int id, SORTIE obj)
+        public async Task<SORTIE> Update(int id, SORTIE obj)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.SORTIE.FirstOrDefault(x => x.Id == id);
-                myObj = obj;
-                // a tester sinon :  context.SORTIE.AddOrUpdate<SORTIE>(obj);
-                context.SaveChanges();
+                var myObj = _dbContext.SORTIE.FirstOrDefault(x => x.Id == id);
+                obj = myObj;
+                _dbContext.SORTIE.AddOrUpdate(obj);
+                await _dbContext.SaveChangesAsync();
                 transaction.Complete();
                 return myObj;
             }
         }
 
-        public IEnumerable<SORTIE> Get()
+        public Task<List<SORTIE>> Get()
         {
-            return new SolarThermalEntities().SORTIE.ToList();
+            return _dbContext.SORTIE.ToListAsync();
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
             using (var transaction = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
             {
-                var context = new SolarThermalEntities();
-                var myObj = context.SORTIE.Find(id);
-                context.SORTIE.Remove(myObj);
-                context.SaveChanges();
+                var myObj = _dbContext.SORTIE.Find(id);
+                _dbContext.SORTIE.Remove(myObj);
+                await _dbContext.SaveChangesAsync();
                 transaction.Complete();
             }
         }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAcess.Business;
-using DataAcess.Models;
+﻿using DataAcess.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyTeam.Common.Requests.bo.Stock.Categorie_Art;
 using MyTeam.Common.Requests.bo.Users;
+using System;
+using System.Threading.Tasks;
 
 namespace MyTeam.Controllers
 {
@@ -16,27 +12,30 @@ namespace MyTeam.Controllers
     [ApiController]
     public class CATEGORIE_ARTsController : ControllerBase
     {
-        public CATEGORIE_ARTsController()
+        private readonly ICategorieArtDatabaseBusinessProvider _categoryProvider;
+
+        public CATEGORIE_ARTsController(ICategorieArtDatabaseBusinessProvider categoryProvider)
         {
+            _categoryProvider = categoryProvider;
         }
 
         [HttpPost]
         [Authorize]
         [Route("FindCATEGORIE_ART")]
-        public IActionResult FindCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
+        public async Task<IActionResult> FindCATEGORIE_ART(CATEGORIE_ARTFindRequest request)
         {
-            var data = CategorieArtDatabaseBusinessProvider.Instance.Find(request.id,request.nomCategorie);
+            var data = await _categoryProvider.Find(request.id, request.nomCategorie);
             return Ok(new { result = data });
         }
 
         [HttpPost]
         [Authorize]
         [Route("SaveCategorie")]
-        public IActionResult SaveCateogorie(CategorieSaveRequest request)
+        public async Task<IActionResult> SaveCateogorie(CategorieSaveRequest request)
         {
             try
             {
-                return Ok(CategorieArtDatabaseBusinessProvider.Instance.Save(request.value));
+                return Ok(await _categoryProvider.Save(request.value));
             }
             catch (Exception ex)
             {
@@ -45,16 +44,15 @@ namespace MyTeam.Controllers
             }
         }
 
-
         [HttpPost]
         [Authorize]
         [Route("DeleteCategorie")]
-        public IActionResult DeleteCategorie(CategorieDeleteRequest request)
+        public async Task<IActionResult> DeleteCategorie(CategorieDeleteRequest request)
         {
             bool success = false;
             try
             {
-                CategorieArtDatabaseBusinessProvider.Instance.Remove(request.id);
+                await _categoryProvider.Remove(request.id);
                 return Ok(new { success = true });
             }
             catch (Exception ex)
@@ -63,7 +61,5 @@ namespace MyTeam.Controllers
                 return BadRequest(new { success, ex.HelpLink });
             }
         }
-
     }
 }
-

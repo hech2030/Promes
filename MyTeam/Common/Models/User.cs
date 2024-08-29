@@ -16,6 +16,5 @@ namespace MyTeam.Common.Models
         public string FullName { get; set; }
 
         public string Image { get; set; }
-
     }
 }
